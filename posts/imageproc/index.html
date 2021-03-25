@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Introduction to image processing using Python | Gabriel Carvalho</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto+Mono|Comfortaa:300" rel="stylesheet">
+
+    <meta property="og:title" content="Introduction to image processing using Python | Gabriel Carvalho">
+    <meta name="twitter:title" content="Introduction to image processing using Python | Gabriel Carvalho" />
+    <meta property="og:url" content="https://ggcarvalho.dev/posts/imageproc/">
+    
+    <meta name="description" content="Writing a basic image processing toolbox from scratch.">
+    <meta property="og:description" content="Writing a basic image processing toolbox from scratch.">
+    <meta name="twitter:description" content="Writing a basic image processing toolbox from scratch." />
+    
+    
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2021-04-19">
+    
+    <meta property="twitter:url" content="https://ggcarvalho.dev/posts/imageproc/">
+    
+    <meta name="og:image" content="https://ggcarvalho.dev/img/posts/image_proc/code.jpeg" />
+    <meta name="twitter:image" content="https://ggcarvalho.dev/img/posts/image_proc/code.jpeg" />
+    
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/v4-shims.css">
+
+
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.tpl.min.js"></script>
+    <link rel="stylesheet" href="/css/ggc.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+    <link rel="stylesheet" href="/css/cards.css">
+
+    
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+        CommonHTML: {
+            scale: 90
+            },
+        tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true},
+        jax: ["input/TeX","input/MathML","input/AsciiMath","output/CommonHTML"],
+        extensions: ["tex2jax.js","mml2jax.js","asciimath2jax.js","MathMenu.js","MathZoom.js","AssistiveMML.js", "[Contrib]/a11y/accessibility-menu.js"],
+        TeX: {
+        extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"],
+        equationNumbers: {
+        autoNumber: "AMS"
+        }
+        }
+        });
+     </script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+  <nav class="navbar navbar-inverse navbar-static-top" role="navigation" bs-navbar>
+      <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="color: #ffffff; margin-left: 15px; margin-right: 25px;">ggcarvalho.dev</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="/" style="color: #ffffff">home<span class="sr-only">(current)</span></a></li>
+            <li><a href="/resume.pdf" target="_blank" style="color: #ffffff">resume<span class="sr-only">(current)</span></a></li>
+            <li><a href="http://lattes.cnpq.br/3130568408244521" target="_blank" style="color: #ffffff">lattes cv<span class="sr-only">(current)</span></a></li>
+            <li><a href="/posts" style="color: #ffffff">blog posts<span class="sr-only">(current)</span></a></li>
+          </ul>
+        </div>
+      </div>
+  </nav>
+</div>
+
+</div>
+<div style="padding-bottom: 2%" class="container">
+        <div class="row">
+                <div class="col-sm-25 col-md-offset-25">
+                        <article style="font-size: 1.25em;">
+                                <h1>Introduction to image processing using Python</h1>
+
+                                
+                                <p>Posted in <time datetime="2021-04-19 00:00:00 &#43;0000 UTC"></time>Monday, 19 April 2021</time>.</p>
+                                <br>
+                                
+                                <p>Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks (this statement is particularly true if you are a Pythonist). However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will
+see how to implement basic image processing tools from scratch using Python.</p>
+
+<aside class="toc">
+    <dl>
+        <dt>
+            Table of Contents <label for="toc-toggle" class="toc-toggle-label">
+                show | hide
+            </label>
+        </dt>
+        <dd>
+            <input id="toc-toggle" type="checkbox" class="toc-toggle" />
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#requirements">Requirements</a></li>
+    <li><a href="#toolbox">Toolbox</a></li>
+    <li><a href="#basic-concepts">Basic concepts</a></li>
+    <li><a href="#grayscale-images">Grayscale images</a></li>
+    <li><a href="#halftone-images">Halftone images</a></li>
+    <li><a href="#cross-correlation-and-filters">Cross-correlation and filters</a></li>
+    <li><a href="#geometric-transformations">Geometric transformations</a>
+      <ul>
+        <li><a href="#rotations">Rotations</a></li>
+        <li><a href="#flips">Flips</a></li>
+      </ul>
+    </li>
+    <li><a href="#intensity-transformations">Intensity transformations</a></li>
+    <li><a href="#negative-images">Negative images</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+    <li><a href="#recommended-reading">Recommended reading</a></li>
+  </ul>
+</nav>
+        </dd>
+    </dl>
+</aside>
+
+
+<h2 id="requirements">Requirements</h2>
+<p>Besides Python 3 you will need:</p>
+<p>Imageio: To read and write images. Installation:</p>
+<pre><code>$ pip install imageio
+</code></pre><p>Numpy: Used to store and manipulate arrays. Installation:</p>
+<pre><code>$ pip install numpy
+</code></pre><p>Matplotlib: Used to plot the simplified RGB space. Installation:</p>
+<pre><code>$ pip install matplotlib
+</code></pre><p>tqdm: Used to generate progress bars. Installation:</p>
+<pre><code>$ pip install tqdm
+</code></pre><h2 id="toolbox">Toolbox</h2>
+<hr>
+<p>Our basic image processing toolbox will consist of:</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Tool</th>
+      <th scope="col">Effect</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Grayscale</th>
+      <td>Converts an RGB image into grayscale using the luminance of a pixel.</td>
+    </tr>
+    <tr>
+      <th scope="row">Halftone</th>
+      <td> Converts the range of a grayscale image to $[0, 9]$, i.e. $10$ shades of gray, and for each pixel value performs a mapping, such that the output is a black and white picture that resembles a grayscale picture with lower resolution.</td>
+    </tr>
+    <tr>
+      <th scope="row">Mean blur</th>
+      <td>Takes an average of $3 \times 3$ regions.</td>
+    </tr>
+    <tr>
+      <th scope="row">Gaussian blur</th>
+      <td>Takes a weighted average of a $3 \times 3$ region using a gaussian function.</td>
+    </tr>
+    <tr>
+      <th scope="row">Sharpen</th>
+      <td>Sharpens the image. Formally, it substracts the 4-neighbors laplacian from the original image.</td>
+    </tr>
+    <tr>
+      <th scope="row">Laplacian</th>
+      <td>Returns the $8-$neighbors laplacian applied to the image.</td>
+    </tr>
+    <tr>
+      <th scope="row">Emboss</th>
+      <td>Enhance image emboss.</td>
+    </tr>
+    <tr>
+      <th scope="row">Motion blur</th>
+      <td>Blurs the image as if the camera (or object) is moving.</td>
+    </tr>
+    <tr>
+      <th scope="row">Edge detectors</th>
+      <td>Sobel filters to detect vertical and horizontal edges, respectively.</td>
+    </tr>
+    <tr>
+      <th scope="row">$90^{\circ}$ rotation</th>
+      <td>Rotates the image $90^{\circ}$ clockwise.</td>
+    </tr>
+    <tr>
+      <th scope="row">$180^{\circ}$ rotation</th>
+      <td>Rotates the image $180^{\circ}$.</td>
+    </tr>
+    <tr>
+      <th scope="row">$-90^{\circ}$ rotation</th>
+      <td>Rotates the image $90^{\circ}$ counterclockwise.</td>
+    </tr>
+    <tr>
+      <th scope="row">Flips</th>
+      <td>Vertical and horizontal flips.</td>
+    </tr>
+    <tr>
+      <th scope="row">Intensity</th>
+      <td>Brightens or darkens the image.</td>
+    </tr>
+    <tr>
+      <th scope="row">Negative</th>
+      <td>Produces the negative of an image.</td>
+    </tr>
+  </tbody>
+</table>
+<h2 id="basic-concepts">Basic concepts</h2>
+<hr>
+<p>In a nutshell, digital cameras have a bidimensional array of sensors to record values proportional to the intensity of the light hitting that sensor in a given position (pixel). The digital image is then stored as a bidimensional array whose values (in a given scale) represent the intensity of light in that pixel position, as shown in the figure below.</p>
+<div style="text-align:center"><img src="/img/posts/image_proc/grays.png" style="width: 70%; padding-bottom: 2%; padding-top: 1%"></div>
+<p>For RGB images this process is very similar, the only difference being that we need three of such bidimensional arrays stacked to compose the image. The actual manner we combine the sensor data (bidimensional) to obtain RGB images (with an extra dimension representing the color channels) is a subject of its own and we will not deal with this problem here.</p>
+<div style="text-align:center"><img src="/img/posts/image_proc/rgbrep.png" style="width: 30%"></div>
+<p>The range of values allowed may vary. However, the two most common representations are $8-$bit integer images (discrete values in $[0, 255]$) and images whose pixels values are float numbers in $[0, 1]$.</p>
+<p>As we will see, any image processing tool is simply a manipulation of these pixel values, either changing the actual value or its position in the array.</p>
+<h2 id="grayscale-images">Grayscale images</h2>
+<hr>
+<p>There are many ways to convert RGB images into grayscale images. For instance, in the RGB representation, if the intensity values of the three channels in a pixel are the same, then the result color is a shade of gray. As you can see in the figure below, the diagonal of the <em>RGB space</em>, i.e. when $R=G=B$, is a grayscale line with black corresponding to $R=G=B=0$ and white corresponding to $R=G=B=1$ (or $255$).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">from</span> mpl_toolkits <span style="color:#f92672">import</span> mplot3d
+
+fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure()
+ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>axes(projection<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;3d&#34;</span>)
+
+t <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1000</span>, endpoint<span style="color:#f92672">=</span>True)
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> t:
+    ax<span style="color:#f92672">.</span>scatter3D(i, i, i, color<span style="color:#f92672">=</span>(i,i,i))
+    ax<span style="color:#f92672">.</span>scatter3D(i, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, color<span style="color:#f92672">=</span>(i,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>))
+    ax<span style="color:#f92672">.</span>scatter3D(<span style="color:#ae81ff">0</span>, i, <span style="color:#ae81ff">0</span>, color<span style="color:#f92672">=</span>(<span style="color:#ae81ff">0</span>,i,<span style="color:#ae81ff">0</span>))
+    ax<span style="color:#f92672">.</span>scatter3D(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, i, color<span style="color:#f92672">=</span>(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,i))
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div><div style="text-align:center"><img src="/img/posts/image_proc/rgb_cube.png" width="55%"></div>
+<p>One could therefore convert a colored image into a grayscale image by assigning the pixel value to have the average of the intensities in the red, green, and blue channels. In this article, however, we will use the <em>luminance</em> of a pixel to do this task. The luminance of a pixel is defined to be $$Y \equiv 0.299r + 0.587g + 0.114b, $$
+where $r$, $g$, and $b$ are the red, green, and blue pixel values of the image. Therefore, to convert our RGB image into grayscale, we need to assign the new pixel value to the corresponding luminance value of that pixel. Let us build our first image processing tool, the grayscale converter.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> imageio
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> tqdm <span style="color:#f92672">import</span> tqdm
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_shape</span>(image):
+    shape <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>shape
+    <span style="color:#66d9ef">if</span> len(shape)<span style="color:#f92672">==</span><span style="color:#ae81ff">3</span>:
+        <span style="color:#66d9ef">return</span> shape
+    <span style="color:#66d9ef">elif</span> len(shape)<span style="color:#f92672">==</span><span style="color:#ae81ff">2</span>:
+        <span style="color:#66d9ef">return</span> shape[<span style="color:#ae81ff">0</span>],shape[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#34;Sorry, something is wrong!&#34;</span>)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_grayscale</span>(image):
+    <span style="color:#66d9ef">if</span> get_shape(image)[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:
+        <span style="color:#66d9ef">return</span> False
+    <span style="color:#66d9ef">elif</span> get_shape(image)[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+        <span style="color:#66d9ef">return</span> True
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#34;Sorry, something is wrong!&#34;</span>)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_luminance</span>(image):
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0.299</span><span style="color:#f92672">*</span>image[:, :, <span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.587</span><span style="color:#f92672">*</span>image[:, :, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.114</span><span style="color:#f92672">*</span>image[:, :, <span style="color:#ae81ff">2</span>]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">zeros</span>(height, width, depth):
+    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>zeros((height, width, depth))
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convert_grayscale</span>(image):
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> is_grayscale(image):
+        height, width, _ <span style="color:#f92672">=</span> get_shape(image)
+        gray_image       <span style="color:#f92672">=</span> zeros(height, width, <span style="color:#ae81ff">1</span>)
+        gray_image[:, :, <span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> get_luminance(image)
+        <span style="color:#66d9ef">return</span> gray_image
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#66d9ef">return</span> image
+</code></pre></div><p>Let us apply to a picture and see the result:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python">path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;zagreb.jpg&#34;</span>
+image <span style="color:#f92672">=</span> imageio<span style="color:#f92672">.</span>imread(path)
+gray <span style="color:#f92672">=</span> convert_grayscale(image)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;zagreb_grayscale.png&#34;</span>, gray)
+</code></pre></div><div style= "text-align:center">
+<a href="/img/posts/image_proc/zagreb.jpg" target="_blank"><img src="/img/posts/image_proc/zagreb.jpg" style="width:40%; margin:4%"></a>
+<a href="/img/posts/image_proc/zagreb_grayscale.png" target="_blank"><img src="/img/posts/image_proc/zagreb_grayscale.png" style="width:40%; margin:4%"></a>
+</div>
+<p>Cool! We have built a grayscale image converter from scratch. Let&rsquo;s use it to generate a halftone image.</p>
+<h2 id="halftone-images">Halftone images</h2>
+<hr>
+<p>Halftone is a technique to approximate shades of gray using dot patterns. Here, we want to use $10$ shades of gray, thus each gray level will be represented by a $3\times 3$ pattern of black and white dots. To generate our halftone image, we need to rescale the pixel intensities to the discrete range $[0 , 9]$ and apply the mapping given in the figure below.</p>
+<div style="text-align:center"><img src="/img/posts/image_proc/halftone_map.png" style="width: 50%"></div>
+<p>The formula to rescale the pixel values to a given range is given by</p>
+<p>\begin{eqnarray*}
+\hat{I}(x,y) = &amp;\lambda&amp; * (I(x,y) - \min(I(x,y)))\newline
+&amp;+&amp; \text{newMin}
+\end{eqnarray*}
+with
+$$\lambda = \frac{\text{newMax} - \text{newMin}}{ \max(I(x,y)) - \min(I(x,y)) },$$</p>
+<!-- <div style="text-align:center"><img src="/img/posts/image_proc/rescale.svg" style="width: 65%; margin: 2%"></div>
+ -->
+<p>$I(x, y)$ representing the original image, and $\hat{I}(x,y)$ representing the image in the new range. These steps are summarized in the piece of code below.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#75715e"># Add this code after the grayscale converter</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_image_range</span>(image):
+   <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>min(image), np<span style="color:#f92672">.</span>max(image)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">adjust</span>(image, new_min, new_max):
+   image_min, image_max <span style="color:#f92672">=</span> get_image_range(image)
+   h, w, d  <span style="color:#f92672">=</span> get_shape(image)
+   adjusted <span style="color:#f92672">=</span> zeros(h, w, d)
+   adjusted <span style="color:#f92672">=</span> (image <span style="color:#f92672">-</span> image_min)<span style="color:#f92672">*</span>((new_max <span style="color:#f92672">-</span> new_min)<span style="color:#f92672">/</span>(image_max <span style="color:#f92672">-</span> image_min)) <span style="color:#f92672">+</span> new_min
+   <span style="color:#66d9ef">return</span> adjusted<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gen_halftone_masks</span>():
+   m <span style="color:#f92672">=</span> zeros(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">10</span>)
+
+   m[:, :, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">0</span>]
+   m[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+
+   m[:, :, <span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">1</span>]
+   m[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+
+   m[:, :, <span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">2</span>]
+   m[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+
+   m[:, :, <span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">3</span>]
+   m[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+
+   m[:, :, <span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">4</span>]
+   m[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+
+   m[:, :, <span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">5</span>]
+   m[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+
+   m[:, :, <span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">6</span>]
+   m[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+
+   m[:, :, <span style="color:#ae81ff">8</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">7</span>]
+   m[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">8</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+
+   m[:, :, <span style="color:#ae81ff">9</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">8</span>]
+   m[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">9</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+
+   <span style="color:#66d9ef">return</span> m
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">halftone</span>(image):
+   gray      <span style="color:#f92672">=</span> convert_grayscale(image)
+   adjusted  <span style="color:#f92672">=</span> adjust(gray, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">9</span>)
+   m         <span style="color:#f92672">=</span> gen_halftone_masks()
+
+   height, width, _ <span style="color:#f92672">=</span> get_shape(image)
+   halftoned        <span style="color:#f92672">=</span> zeros(<span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>height, <span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>width, <span style="color:#ae81ff">1</span>)
+   <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> tqdm(range(height), desc <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;halftone&#34;</span>):
+       <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(width):
+           index <span style="color:#f92672">=</span> adjusted[j, i]
+           halftoned[<span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>j:<span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>j, <span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>i:<span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>i] <span style="color:#f92672">=</span> m[:, :, index]
+
+   halftoned <span style="color:#f92672">=</span> <span style="color:#ae81ff">255</span><span style="color:#f92672">*</span>halftoned
+   <span style="color:#66d9ef">return</span> halftoned
+</code></pre></div><p>Time to test it!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python">path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;test.png&#34;</span>
+image <span style="color:#f92672">=</span> imageio<span style="color:#f92672">.</span>imread(path)
+ht <span style="color:#f92672">=</span> halftone(image)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;halftone.png&#34;</span>, ht)
+</code></pre></div><div style= "text-align:center">
+<a href="/img/posts/image_proc/test.png" target="_blank"><img src="/img/posts/image_proc/test.png" style="width:40%;padding-bottom: 2%; margin:4%"></a>
+<a href="/img/posts/image_proc/halftoned.png" target="_blank"><img src="/img/posts/image_proc/halftoned.png" style="width:40%; padding-bottom: 2%; margin:4%"></a>
+</div>
+<p>Remember, the image on the right-hand side is a black and white (binary) picture using the dot pattern above. How amazing is that? This technique was broadly used to print photographs in newspapers to simulate shades o grays.</p>
+<h2 id="cross-correlation-and-filters">Cross-correlation and filters</h2>
+<hr>
+<p>Arguably, the most popularized concept used in image processing is the one of a <em>convolution</em>. It has been used, successfully, in many Deep Learning architectures and popularized by the so-called <em>Convolutional Neural Networks</em>. Notwithstanding, what people call convolution in this context is actually formally called <em>cross-correlation</em> or <em>spatial correlation</em>. But what is it and how to implement it?</p>
+<p>Mathematically, the cross-correlation of a kernel $\omega$ of size $m \times n$ with an image $f(x,y)$ of size $M \times N$ is given by</p>
+<p>$$(\omega \ast f)(x,y) = {\sum_{s=-a}^{a}}{\sum_{t=-b}^{b}}\omega(s,t)f(x+s, y+t).$$</p>
+<!-- <div style="text-align:center"><img src="/img/posts/image_proc/convolution.svg" style="width: 45%; margin: 2%"></div> -->
+<p>Note that the center coefficient of the kernel, $\omega(0,0)$ , aligns with the pixel at location $( x , y )$, visiting it exactly once. For a kernel of size $m \times n$ , we assume that $m = 2 a + 1$ and $n = 2 b + 1$, where $a$ and $b$ are nonnegative integers. This means that our focus is on kernels of odd size in both coordinate directions.</p>
+<p>In English, one should &ldquo;slide&rdquo; the kernel $\omega$ through the image, evaluating the sum of the pixelwise product between the kernel and the corresponding region of the image, and assign that value to the current pixel location (the center of the kernel, in our case). This general idea is depicted in the animation below.</p>
+<div style="text-align:center"><img src="/img/posts/image_proc/conv.gif"></div>
+<p>If you don&rsquo;t know the differences between convolution and the correlation defined here, I encourage you to research it. However, there is a certain equivalence between these two operations.</p>
+<p>When dealing with convolution/cross-correlation, it is important to pay attention to the edges of the image. There are boundary conditions one could implement, such as zero paddings, or repeating the same values found in the edges of the image. I encourage you to implement them by yourself. In this article, however, we are going to implement the periodic, or wrapped, boundary condition. Briefly, whenever the filter crosses one edge, it comes through the opposite boundary, just like a Pacman game or a torus.</p>
+<div style="text-align:center"><img src="/img/posts/image_proc/torus.png" style="width: 60%"></div>
+<p>Ok, no more math. The final code consists of a dictionary containing all of our kernels and the <code>apply_kernel</code> function, aka the cross-correlation. Look at the descriptions at the beginning of this article, the definition of cross-correlation, and the corresponding kernels. Can you figure out why they work?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#75715e"># Add this after your halftone method</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">clip</span>(a):
+  <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>clip(a, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">255</span>)
+
+kernels <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;mean&#34;</span>      : np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>],
+                                   [<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>],
+                                   [<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>]]),
+
+           <span style="color:#e6db74">&#34;gaussian&#34;</span>  : np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">2</span><span style="color:#f92672">/</span><span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">16</span>],
+                                   [<span style="color:#ae81ff">2</span><span style="color:#f92672">/</span><span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">4</span><span style="color:#f92672">/</span><span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">2</span><span style="color:#f92672">/</span><span style="color:#ae81ff">16</span>],
+                                   [<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">2</span><span style="color:#f92672">/</span><span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">16</span>]]),
+
+           <span style="color:#e6db74">&#34;sharpen&#34;</span>   : np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">0</span> , <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">0</span>],
+                                   [<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">5</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>],
+                                   [<span style="color:#ae81ff">0</span> , <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">0</span>]]),
+
+           <span style="color:#e6db74">&#34;laplacian&#34;</span> : np<span style="color:#f92672">.</span>array([[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>],
+                                   [<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">8</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>],
+                                   [<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]),
+
+           <span style="color:#e6db74">&#34;emboss&#34;</span>    : np<span style="color:#f92672">.</span>array([[<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>],
+                                   [<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>],
+                                   [ <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>]]),
+
+           <span style="color:#e6db74">&#34;motion&#34;</span>    : np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
+                                   [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
+                                   [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
+                                   [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
+                                   [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
+                                   [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
+                                   [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
+                                   [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">0</span>],
+                                   [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>]]),
+
+           <span style="color:#e6db74">&#34;y_edge&#34;</span>    : np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span> ,  <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>],
+                                   [<span style="color:#ae81ff">0</span> ,  <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
+                                   [<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]),
+
+           <span style="color:#e6db74">&#34;x_edge&#34;</span>    : np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>],
+                                   [<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>],
+                                   [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]),
+
+            <span style="color:#e6db74">&#34;identity&#34;</span> : np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>],
+                                   [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>],
+                                   [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]])}
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">apply_kernel</span>(image, kernel):
+    kernel_matrix <span style="color:#f92672">=</span> kernels<span style="color:#f92672">.</span>get(kernel)
+    dim           <span style="color:#f92672">=</span> len(kernel_matrix)
+    center        <span style="color:#f92672">=</span> (dim <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>
+
+    height, width, _ <span style="color:#f92672">=</span> get_shape(image)
+
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> is_grayscale(image):
+        picture <span style="color:#f92672">=</span> zeros(height, width, <span style="color:#ae81ff">3</span>)
+
+        <span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> tqdm(range(height), desc <span style="color:#f92672">=</span> kernel):
+            <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(width):
+
+                red <span style="color:#f92672">=</span> zeros(dim, dim, <span style="color:#ae81ff">1</span>)
+                <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(dim):
+                    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(dim):
+                        red[i , j] <span style="color:#f92672">=</span> image[ (y <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> j)<span style="color:#f92672">%</span>height, (x <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> i)<span style="color:#f92672">%</span>width, <span style="color:#ae81ff">0</span>]
+
+                green <span style="color:#f92672">=</span> zeros(dim, dim, <span style="color:#ae81ff">1</span>)
+                <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(dim):
+                    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(dim):
+                        green[i , j] <span style="color:#f92672">=</span> image[ (y <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> j)<span style="color:#f92672">%</span>height, (x <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> i)<span style="color:#f92672">%</span>width, <span style="color:#ae81ff">1</span>]
+
+                blue <span style="color:#f92672">=</span> zeros(dim, dim, <span style="color:#ae81ff">1</span>)
+                <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(dim):
+                    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(dim):
+                        blue[i , j] <span style="color:#f92672">=</span> image[ (y <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> j)<span style="color:#f92672">%</span>height, (x <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> i)<span style="color:#f92672">%</span>width, <span style="color:#ae81ff">2</span>]
+
+                redc   <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(red[:, :, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>kernel_matrix)
+                greenc <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(green[:, :, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>kernel_matrix)
+                bluec  <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(blue[:, :, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>kernel_matrix)
+
+                r, g, b <span style="color:#f92672">=</span> map(int,  [redc, greenc, bluec])
+                r, g, b <span style="color:#f92672">=</span> map(clip, [r, g, b])
+
+                picture[y, x, <span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> r
+                picture[y, x, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> g
+                picture[y, x, <span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> b
+        <span style="color:#66d9ef">return</span> picture
+    <span style="color:#66d9ef">else</span>:
+        picture <span style="color:#f92672">=</span> zeros(height, width, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> tqdm(range(height), desc <span style="color:#f92672">=</span> kernel):
+            <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(width):
+
+                aux <span style="color:#f92672">=</span> zeros(dim, dim, <span style="color:#ae81ff">1</span>)
+                <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(dim):
+                    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(dim):
+                        aux[i , j] <span style="color:#f92672">=</span> image[ (y <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> j)<span style="color:#f92672">%</span>height, (x <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> i)<span style="color:#f92672">%</span>width]
+
+                gray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(aux[:, :, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>kernel_matrix)
+
+                pxl_intensity <span style="color:#f92672">=</span> round(gray)
+                pxl_intensity <span style="color:#f92672">=</span> clip(pxl_intensity)
+                picture[y, x] <span style="color:#f92672">=</span> int(pxl_intensity)
+        <span style="color:#66d9ef">return</span> picture
+</code></pre></div><p>Finally,</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python">path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;test.png&#34;</span>
+image <span style="color:#f92672">=</span> imageio<span style="color:#f92672">.</span>imread(path)
+<span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> kernels:
+    img <span style="color:#f92672">=</span> apply_kernel(image, key)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+    imageio<span style="color:#f92672">.</span>imwrite(key <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.png&#34;</span>, img)
+</code></pre></div><p>The results are given in the mosaic below (in a row-major manner).</p>
+<div style= "text-align:center">
+<a href="/img/posts/image_proc/mean.png" target="_blank"><img src="/img/posts/image_proc/mean.png"  alt="Mean" style="width:25%; margin:1%"></a>
+<a href="/img/posts/image_proc/gaussian.png" target="_blank"><img src="/img/posts/image_proc/gaussian.png"  alt="Gaussian" style="width:25%; margin:1%"></a>
+<a href="/img/posts/image_proc/sharpen.png" target="_blank"><img src="/img/posts/image_proc/sharpen.png"  alt="Sharpen" style="width:25%; margin:1%"></a>
+</div>
+<div style= "text-align:center">
+<a href="/img/posts/image_proc/laplacian.png" target="_blank"><img src="/img/posts/image_proc/laplacian.png"  alt="Laplacian" style="width:25%; margin:1%"r></a>
+<a href="/img/posts/image_proc/emboss.png" target="_blank"><img src="/img/posts/image_proc/emboss.png"  alt="Emboss" style="width:25%; margin:1%"></a>
+<a href="/img/posts/image_proc/motion.png" target="_blank"><img src="/img/posts/image_proc/motion.png"  alt="Motion blur" style="width:25%; margin:1%"></a>
+</div>
+<div style= "text-align:center">
+<a href="/img/posts/image_proc/y_edge.png" target="_blank"><img src="/img/posts/image_proc/y_edge.png"  alt="Y edge" style="width:25%; margin:1%"></a>
+<a href="/img/posts/image_proc/x_edge.png" target="_blank"><img src="/img/posts/image_proc/x_edge.png"  alt="X edge" style="width:25%; margin:1%"></a>
+<a href="/img/posts/image_proc/identity.png" target="_blank"><img src="/img/posts/image_proc/identity.png"  alt="Identity" style="width:25%; margin:1%"></a>
+</div>
+<h2 id="geometric-transformations">Geometric transformations</h2>
+<hr>
+<p>Let us now see some geometric transformations. These are transformations that change the order of the pixels, not their actual values. Here we include multiples of $90^{\circ}$ rotations and flips along the vertical and horizontal axes. For more general rotations and flips we need to use some form of interpolation and, for the sake of simplicity, we will avoid them here. The main ingredient here is the <em>slice notation</em> used in Python, so if you are not familiar with it that is a great use case for it!</p>
+<h3 id="rotations">Rotations</h3>
+<p>First, let us see the case of a $90^{\circ}$ rotation. In terms of matrices, we can think of a $90^{\circ}$ rotation as the composition of two simple operations. First, we transpose the matrix, then we rearrange the columns in the reverse order (try it with a $2 \times 2$ matrix). For a $180^{\circ}$ rotation we can reverse the order of the rows and columns. Finally, for a $-90^{\circ} = 270^{\circ}$ rotation we can apply the $180^{\circ}$ and $90^{\circ}$ together.</p>
+<h3 id="flips">Flips</h3>
+<p>Flips along the vertical or horizontal axis are very simple operations. A vertical flip is obtained by reversing the rows, whereas a horizontal flip is obtained by reversing the columns. Simple as that!</p>
+<div style="text-align:center" ><img src="/img/posts/image_proc/flip-horizontal-vertical.svg" style=" margin: 5%; width: 30%"></div>
+<p>Our Python code for geometric transformations is:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">transpose</span>(m):
+    height, width, depth <span style="color:#f92672">=</span> get_shape(m)
+
+    transposed <span style="color:#f92672">=</span> zeros(width, height, depth)
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(width):
+        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(height):
+            transposed[i, j] <span style="color:#f92672">=</span> m[j, i]
+    <span style="color:#66d9ef">return</span> transposed
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">aux90</span>(image):
+    <span style="color:#66d9ef">return</span> transpose(image)[:,::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rot90</span>(image):
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Rotating the image 90 degrees clockwise...&#34;</span>)
+    rot <span style="color:#f92672">=</span> aux90(image)
+    <span style="color:#66d9ef">return</span> transpose(image)[:,::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rot180</span>(image):
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Rotating the image 180 degrees...&#34;</span>)
+    rot <span style="color:#f92672">=</span> image[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, ::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+    <span style="color:#66d9ef">return</span> rot
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rotm90</span>(image):
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Rotating the image 90 degrees counterclockwise...&#34;</span>)
+    rot <span style="color:#f92672">=</span> aux90(image[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, ::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
+    <span style="color:#66d9ef">return</span> rot
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">vert_flip</span>(image):
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Flipping vertically...&#34;</span>)
+    flip <span style="color:#f92672">=</span> image[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+    <span style="color:#66d9ef">return</span> flip
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hor_flip</span>(image):
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Flipping horizontally...&#34;</span>)
+    flip <span style="color:#f92672">=</span> image[:, ::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+    <span style="color:#66d9ef">return</span> flip
+</code></pre></div><p>Collecting everything in a dictionary and running, we have:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python">geometric_transforms <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;rot90&#34;</span>     : rot90,
+                        <span style="color:#e6db74">&#34;rot180&#34;</span>    : rot180,
+                        <span style="color:#e6db74">&#34;rotm90&#34;</span>    : rotm90,
+                        <span style="color:#e6db74">&#34;vert_flip&#34;</span> : vert_flip,
+                        <span style="color:#e6db74">&#34;hor_flip&#34;</span>  : hor_flip}
+
+path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;arrows.jpg&#34;</span>
+image <span style="color:#f92672">=</span> imageio<span style="color:#f92672">.</span>imread(path)
+<span style="color:#66d9ef">for</span> key <span style="color:#f92672">in</span> geometric_transforms:
+    img <span style="color:#f92672">=</span> geometric_transforms[key](image)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+    imageio<span style="color:#f92672">.</span>imwrite(key <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.png&#34;</span>, img)
+</code></pre></div><div style= "text-align:center">
+<a href="/img/posts/image_proc/arrows.jpg" target="_blank"><img src="/img/posts/image_proc/arrows.jpg"  alt="Original" style="width:25%; margin:1%"></a>
+<a href="/img/posts/image_proc/rot90.png" target="_blank"><img src="/img/posts/image_proc/rot90.png"  alt="90 degrees" style="width:12%; margin:1%"></a>
+<a href="/img/posts/image_proc/rot180.png" target="_blank"><img src="/img/posts/image_proc/rot180.png"  alt="180 degrees" style="width:25%; margin:1%"></a>
+</div>
+<div style= "text-align:center">
+<a href="/img/posts/image_proc/rotm90.png" target="_blank"><img src="/img/posts/image_proc/rotm90.png"  alt="270 degrees" style="width:12%; margin:1%"r></a>
+<a href="/img/posts/image_proc/horizontal_flip.png" target="_blank"><img src="/img/posts/image_proc/horizontal_flip.png"  alt="Horizontal flip" style="width:25%; margin:1%"></a>
+<a href="/img/posts/image_proc/vertical_flip_flip.png" target="_blank"><img src="/img/posts/image_proc/vertical_flip.png"  alt="Vertical flip" style="width:25%; margin:1%"></a>
+</div>
+<h2 id="intensity-transformations">Intensity transformations</h2>
+<hr>
+<p>Now, we are going to see how to brighten/darken an image. As we have seen, the pixel values represent, in some scale, the intensity of the light in that position. To brighten or darken an image, all we need is to multiply every value by the same amount $\lambda &gt; 0$. If $\lambda &gt; 1$, the resulting image will be brighter than the original, and if $\lambda &lt; 1$ the resulting image will be darker than the original image. For $\lambda &gt; 1$, some values might exceed the allowable range (e.g, exceed $255$ for $8-$bit images). In that case, we need to clip the result (already implemented). The corresponding Python code is given below.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">intensity</span>(image, factor):
+   <span style="color:#66d9ef">return</span> clip(factor<span style="color:#f92672">*</span>image)
+</code></pre></div><p>The results of a $25$% increase in brightness and a $50$% decrease in brightness are given below.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python">path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;test.png&#34;</span>
+image <span style="color:#f92672">=</span> imageio<span style="color:#f92672">.</span>imread(path)
+img_brighter <span style="color:#f92672">=</span> intensity(image, <span style="color:#ae81ff">1.25</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;brighter.png&#34;</span>, img_brighter)
+img_darker <span style="color:#f92672">=</span> intensity(image, <span style="color:#ae81ff">0.5</span>)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;darker.png&#34;</span>, img_darker)
+</code></pre></div><div style= "text-align:center">
+<a href="/img/posts/image_proc/test.png" target="_blank"><img src="/img/posts/image_proc/test.png"  alt="Original" style="width:25%; margin:1%"r></a>
+<a href="/img/posts/image_proc/brighter.png" target="_blank"><img src="/img/posts/image_proc/brighter.png"  alt="Brighter" style="width:25%; margin:1%"></a>
+<a href="/img/posts/image_proc/darker.png" target="_blank"><img src="/img/posts/image_proc/darker.png"  alt="Darker" style="width:25%; margin:1%"></a>
+</div>
+<h2 id="negative-images">Negative images</h2>
+<hr>
+<p>Images represented in the RGB color model consist of three components, one for each primary color. When fed into an RGB monitor, these three images combine on the screen to produce a composite color image. The secondary colors of light are cyan (C), magenta (M), and yellow (Y). They are also known as the primary colors of pigments. For instance, when a surface coated with cyan pigment is illuminated with white light, no red light is reflected from the surface. In a nutshell, cyan is the absence of red, magenta is the absence of green, and yellow is the absence of blue. Because of that, we usually interpret the RGB model to be additive, whereas the CMY is subtractive (see the image below).</p>
+<div style="text-align:center"><img src="/img/posts/image_proc/algebra.jpg" style="width: 60%"></div>
+<blockquote>
+<p>&ldquo;A positive image is a normal image. A negative image is a total inversion, in which light areas appear dark and vice versa. A negative color image is additionally color-reversed, with red areas appearing cyan, greens appearing magenta, and blues appearing yellow, and vice versa.&rdquo;</p>
+<p><a href="https://en.wikipedia.org/wiki/Negative_(photography)">Wikipedia</a></p>
+</blockquote>
+<p>A similar concept is used in negative films if you happen to be old enough to remember what they are.</p>
+<div style="text-align:center"><img src="/img/posts/image_proc/negative.jpeg" style="width: 25%"></div>
+<p>Now, in terms of implementation, we have a very simple function (thanks to Numpy broadcasting ).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">negative</span>(image):
+  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">255</span> <span style="color:#f92672">-</span> image
+</code></pre></div><p>As a result:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python">path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;static/img/posts/image_proc/zagreb.jpg&#34;</span>
+image <span style="color:#f92672">=</span> imageio<span style="color:#f92672">.</span>imread(path)
+img <span style="color:#f92672">=</span> negative(image)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;static/img/posts/image_proc/&#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;negative&#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.png&#34;</span>, img)
+</code></pre></div><div style= "text-align:center">
+<a href="/img/posts/image_proc/zagreb.jpg" target="_blank"><img src="/img/posts/image_proc/zagreb.jpg"  alt="Original" style="width:45%; margin:1%"r></a>
+<a href="/img/posts/image_proc/negative.png" target="_blank"><img src="/img/posts/image_proc/negative.png"  alt="Negative" style="width:45%; margin:1%"></a>
+</div>
+<h2 id="conclusion">Conclusion</h2>
+<hr>
+<p>Congratulations! You have built your first image processing toolbox! Although we have a Pythonic way here and there, the concepts are there so you can implement them in any other language.</p>
+<p>Now, I hope, you know how to implement these tools yourself and can use them in your application. Be creative, combine and tweak these tools to your liking. I know you will find many use cases for it! For instance, I have been using some of these implementations for <em>data augmentation</em> purposes in Machine Learning, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.</p>
+<p>Good Luck!</p>
+<h2 id="recommended-reading">Recommended reading</h2>
+<ul>
+<li>
+<p><a href="https://amzn.to/3fUGrHQ">Digital Image Processing 4th Edition - Gonzalez &amp; Woods</a></p>
+</li>
+<li>
+<p><a href="https://amzn.to/3ukAIzg">Think Python - Allen B. Downey</a></p>
+</li>
+<li>
+<p><a href="https://amzn.to/2Orc40t">Introduction to Computation and Programming Using Python (With Application to Understanding Data) 2nd Edition - John V. Guttag </a></p>
+</li>
+<li>
+<p><a href="https://amzn.to/31Rx4AB">Python Image Processing Cookbook: Over 60 recipes to help you perform complex image processing and computer vision tasks with ease  - Sandipan Dey</a></p>
+</li>
+</ul>
+<p>By clicking and buying any of these from Amazon after visiting the links above, I might get a commission from their <a href="https://affiliate-program.amazon.com/">Affiliate program</a>, and you will be contributing to the growth of this blog :)</p>
+
+                        </article>
+                 </div>
+        </div>
+</div>
+
+
+</body>
+</html>

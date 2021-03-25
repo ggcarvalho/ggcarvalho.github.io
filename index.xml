@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gabriel Carvalho</title>
+    <link>https://ggcarvalho.dev/</link>
+    <description>Recent content on Gabriel Carvalho</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ggcarvalho.dev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introduction to image processing using Python</title>
+      <link>https://ggcarvalho.dev/posts/imageproc/</link>
+      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ggcarvalho.dev/posts/imageproc/</guid>
+      <description>Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks (this statement is particularly true if you are a Pythonist). However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will see how to implement basic image processing tools from scratch using Python.</description>
+    </item>
+    
+  </channel>
+</rss>
