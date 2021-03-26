@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html ng-app="ggcarvalho" ng-controller="MainController as main">
+  <head lang="en">
+      <meta charset="UTF-8">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <base href="https://ggcarvalho.github.io/">
+
+      <title>Gabriel Carvalho's homepage</title>
+
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- Bootstrap vendor -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+      <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+      <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.0/css/all.css" crossorigin="anonymous"> -->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/v4-shims.css">
+
+
+      <!-- Google font vendor -->
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+
+      <!-- <script src="js/vendor/modernizr&#45;2.8.3.min.js"></script> -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.tpl.min.js"></script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation" bs-navbar>
+      <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="color: #ffffff; margin-left: 15px; margin-right: 25px;">ggcarvalho.dev</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li data-match-route="/index_dev"><a href="./index_dev" style="color: #ffffff">home<span class="sr-only">(current)</span></a></li>
+            <li data-match-route="/blog_dev"><a href="./blog_dev" style="color: #ffffff">blog posts<span class="sr-only">(current)</span></a></li>
+            <li data-match-route="/$"><a href="https://ggcarvalho.github.io/resume.pdf" target="_blank" style="color: #ffffff">resume<span class="sr-only">(current)</span></a></li>
+      			<li data-match-route="/$"><a href="http://lattes.cnpq.br/3130568408244521" target="_blank" style="color: #ffffff">lattes cv<span class="sr-only">(current)</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class='col-md-2'>
+          <img src="./avatar.jpg" alt="portrait" width="159" height="216" id="profile-pic" style="vertical-align: middle; margin: 24px 24px 24px 0">
+        </div>
+        <div class='col-md-10'>
+          <div class="row">
+            <div class='col-md-7'>
+                <h1>Gabriel G. Carvalho<br> <small>Ph.D. Student | Researcher</small></h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class='col-md-7'>
+                <p class='text-justify'>
+                    <strong>Bio:</strong> I am currently a Ph.D. student in computer science and a researcher at Projeto CIn-Motorola.
+                    My background is in mathematics (B.Sc. and M.Sc.), with a focus on differential geometry and topology, and
+                    I hold a Ph.D. degree in physics/relativistic astrophysics from the University of Rome "La Sapienza", under the supervision of <a href="https://scholar.google.com/citations?user=LQhwaQkAAAAJ&hl=en" target="_blank">Prof. Remo Ruffini</a> and <a href="https://scholar.google.it/citations?user=m8twvVQAAAAJ&hl=it" target="_blank">D. Bini</a>.
+
+                    My current interests are computational photography, computer vision, machine learning, computational neuroscience, data science, differential geometry, topology, mathematical aspects of general relativity, and alternative theories of gravity.
+                </p>
+            </div>
+            <div class='col-md-4 col-md-offset-1'>
+              <div valss="vcard">
+                <table class="table table-sm">
+                  <tr>
+                    <th class='col-md-1'>
+                      <i class="glyphicon glyphicon-envelope"></i>
+                    </th>
+                    <td>
+                      <a href='mailto:gabriel@ggcarvalho.dev'>gabriel@ggcarvalho.dev</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class='col-md-1'>
+                      <i class="glyphicon glyphicon-map-marker"></i>
+                    </th>
+                    <td>
+                      <a href="https://www3.cin.ufpe.br/en/" target="_blank">
+                        Centro de Informática - UFPE
+                        <br/>Av. Jornalista Aníbal Fernandes, s/n
+                        Cidade Universitária (Campus Recife)
+                        <br/>CEP: 50.740-560 - Recife - PE
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="col-md-1">
+                      <i class="glyphicon glyphicon-globe"></i>
+                    </td>
+                    <td>
+                      <ul class='list-inline'>
+                        <li><a href="https://www.linkedin.com/in/ggcarvalho/" target="_blank" title="LinkedIn"><i class="fa fa-linkedin-square"></i></a></li>
+                        <li><a href="https://github.com/ggcarvalho" target="_blank" title="Github"><i class="fa fa-github-square"></i></a></li>
+                        <li><a href="https://www.researchgate.net/profile/Gabriel-Carvalho-30" target="_blank" style="font-size: 1.75em" title="ResearchGate"><i class="fab fa-researchgate"></i></a></li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="publications">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <h2>Publications</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+            <ul class="list-unstyled">
+              <li>
+                <h4>A Deep Learning Approach to Mobile Camera Image Signal Processing.</h4>
+                <small>
+                  Jose Ivson S. Silva,
+                  Gabriel G. Carvalho,
+                  Marcel Santana Santos,
+                  Diego J. C. Santiago,
+                  Lucas Pontes de Albuquerque,
+                  Jorge F. Puig Battle,
+                  Gabriel M. da Costa,
+                  and Tsang Ing Ren
+                  </br>
+                  WORKSHOP ON INDUSTRY APPLICATION - CONFERENCE ON GRAPHICS, PATTERNS AND IMAGES (SIBGRAPI), 33, 2020
+                  </br>
+                </small>
+                <ul class="list-inline">
+                  <li data-toggle="tooltip" data-placement="top" data-container="body" title="Homepage">
+                    <a href='https://sol.sbc.org.br/index.php/sibgrapi_estendido/article/view/13016' alt="project home" target="_blank"><i class="fa fa-home"></i></a>
+                  </li>
+                  <li data-toggle="tooltip" data-placement="top" data-container="body" title=".pdf">
+                    <a href='https://sol.sbc.org.br/index.php/sibgrapi_estendido/article/view/13016/12870' target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <h4>On the hypotheses of Penrose's singularity theorem under disformal transformations.</h4>
+                <small>
+                    Eduardo Bittencourt,
+                    Gabriel G. Carvalho,
+                    Iarley P. Lobo,
+                    and Leandro Santana
+                    </br>
+                    Eur.Phys.J.C 80 (2020) 3, 265
+                    </br>
+                </small>
+                <ul class="list-inline">
+                  <li data-toggle="tooltip" data-placement="top" data-container="body" title="Homepage">
+                    <a href='https://link.springer.com/article/10.1140/epjc/s10052-020-7830-0' alt="project home" target="_blank"><i class="fa fa-home"></i></a>
+                  </li>
+                  <li data-toggle="tooltip" data-placement="top" data-container="body" title=".pdf">
+                    <a href='https://arxiv.org/pdf/2003.08424.pdf' target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <h4>The geometry of null-like disformal transformations.</h4>
+                <small>
+                    I. P. Lobo
+                    and G. G. Carvalho
+                    </br>
+                    Int.J.Geom.Meth.Mod.Phys. 16 (2019) 11, 1950180
+                    </br>
+                </small>
+                <ul class="list-inline">
+                  <li data-toggle="tooltip" data-placement="top" data-container="body" title="Homepage">
+                    <a href='https://www.worldscientific.com/doi/abs/10.1142/S0219887819501809' alt="project home" target="_blank"><i class="fa fa-home"></i></a>
+                  </li>
+                  <li data-toggle="tooltip" data-placement="top" data-container="body" title=".pdf">
+                    <a href='https://arxiv.org/pdf/1707.01784.pdf' target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <h4>Scalar field self-force effects on a particle orbiting a Reissner-Nordström black hole.</h4>
+                <small>
+                    Donato Bini,
+                    Gabriel G. Carvalho,
+                    and Andrea Geralico
+                    </br>
+                    Phys.Rev.D 94 (2016) 12, 124028
+                    </br>
+                </small>
+                <ul class="list-inline">
+                  <li data-toggle="tooltip" data-placement="top" data-container="body" title="Homepage">
+                    <a href='https://journals.aps.org/prd/abstract/10.1103/PhysRevD.94.124028' alt="project home" target="_blank"><i class="fa fa-home"></i></a>
+                  </li>
+                  <li data-toggle="tooltip" data-placement="top" data-container="body" title=".pdf">
+                    <a href='https://arxiv.org/pdf/1610.02235.pdf' target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <h4>Extended disformal approach in the scenario of Rainbow Gravity.</h4>
+                <small>
+                    Gabriel G. Carvalho,
+                    Iarley P. Lobo,
+                    and Eduardo Bittencourt
+                    </br>
+                    Phys.Rev.D 93 (2016) 4, 044005
+                    </br>
+                </small>
+                <ul class="list-inline">
+                  <li data-toggle="tooltip" data-placement="top" data-container="body" title="Homepage">
+                    <a href='https://journals.aps.org/prd/abstract/10.1103/PhysRevD.93.044005' alt="project home" target="_blank"><i class="fa fa-home"></i></a>
+                  </li>
+                  <li data-toggle="tooltip" data-placement="top" data-container="body" title=".pdf">
+                    <a href='https://arxiv.org/pdf/1511.00495.pdf' target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <h4>On the disformal invariance of the Dirac equation.</h4>
+                <small>
+                    Eduardo Bittencourt,
+                    Iarley P. Lobo,
+                    and Gabriel G. Carvalho
+                    </br>
+                    Class.Quant.Grav. 32 (2015) 185016
+                    </br>
+                </small>
+                <ul class="list-inline">
+                  <li data-toggle="tooltip" data-placement="top" data-container="body" title="Homepage">
+                    <a href='https://iopscience.iop.org/article/10.1088/0264-9381/32/18/185016' alt="project home" target="_blank"><i class="fa fa-home"></i></a>
+                  </li>
+                  <li data-toggle="tooltip" data-placement="top" data-container="body" title=".pdf">
+                    <a href='https://arxiv.org/pdf/1505.03415.pdf' target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!-- Styles / CSS -->
+<style media="screen">
+  body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+  }
+  h1, h2, h3, h4 { font-weight: 200; }
+  small {
+    color: gray;
+    font-size: 14px;
+  }
+  i.fa {
+    font-size: 24px;
+    margin: 12px 12px 0 0;
+  }
+  .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th { vertical-align: middle; }
+  .text-justify {
+    margin-bottom: 32px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .list-unstyled li {
+    margin-bottom: 24px;
+    border-bottom: 2px solid #fff;
+  }
+  .list-unstyled li:last-child { border-bottom: 0; }
+  .list-inline li { border-bottom: none; }
+  .list-inline li h4 { margin-bottom: 12px; }
+  .navbar-nav li:hover {
+    background-color: black;
+  }
+  .publications {
+    padding-top: 24px;
+    background-color: #f2f2f2;
+  }
+</style>
