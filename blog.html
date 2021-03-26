@@ -37,13 +37,13 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-		        <a class="navbar-brand" style="color: #ffffff">ggcarvalho.github.io</a>
-            <!-- <a class="navbar-brand" style="color: #ffffff; margin-left: 15px; margin-right: 25px;">ggcarvalho.dev</a> -->
+		        <!-- <a class="navbar-brand" style="color: #ffffff">ggcarvalho.github.io</a> -->
+            <a class="navbar-brand" style="color: #ffffff; margin-left: 15px; margin-right: 25px;">ggcarvalho.dev</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li data-match-route="/bio"><a href="/bio" style="color: #ffffff">home<span class="sr-only">(current)</span></a></li>
-            <!-- <li data-match-route="/blog"><a href="./blog" style="color: #ffffff">blog posts<span class="sr-only">(current)</span></a></li> -->
+            <li data-match-route="/bio"><a href="#/bio" style="color: #ffffff">home<span class="sr-only">(current)</span></a></li>
+            <li data-match-route="/blog"><a href="./blog" style="color: #ffffff">blog posts<span class="sr-only">(current)</span></a></li>
             <li data-match-route="/$"><a href="https://ggcarvalho.github.io/resume.pdf" target="_blank" style="color: #ffffff">resume<span class="sr-only">(current)</span></a></li>
       			<li data-match-route="/$"><a href="http://lattes.cnpq.br/3130568408244521" target="_blank" style="color: #ffffff">lattes cv<span class="sr-only">(current)</span></a></li>
           </ul>
@@ -51,81 +51,32 @@
       </div>
     </nav>
 
-    <div class="container">
-      <div class="row">
-        <div class='col-md-2'>
-          <img src="https://raw.githubusercontent.com/ggcarvalho/ggcarvalho.github.io/master/avatar.jpg" alt="portrait" width="159" height="216" id="profile-pic" style="vertical-align: middle; margin: 24px 24px 24px 0">
-        </div>
-        <div class='col-md-10'>
-          <div class="row">
-            <div class='col-md-7'>
-                <h1>Gabriel G. Carvalho<br> <small>Ph.D. Student | Researcher</small></h1>
-            </div>
-          </div>
-          <div class="row">
-            <div class='col-md-7'>
-                <p class='text-justify'>
-                    <strong>Bio:</strong> I am currently a Ph.D. student in computer science and a researcher at Projeto CIn-Motorola.
-                    My background is in mathematics (B.Sc. and M.Sc.), with a focus on differential geometry and topology, and
-                    I hold a Ph.D. degree in physics/relativistic astrophysics from the University of Rome "La Sapienza", under the supervision of <a href="https://scholar.google.com/citations?user=LQhwaQkAAAAJ&hl=en" target="_blank">Prof. Remo Ruffini</a> and <a href="https://scholar.google.it/citations?user=m8twvVQAAAAJ&hl=it" target="_blank">D. Bini</a>.
-
-                    My current interests are computational photography, computer vision, machine learning, computational neuroscience, data science, differential geometry, topology, mathematical aspects of general relativity, and alternative theories of gravity.
-                </p>
-            </div>
-            <div class='col-md-4 col-md-offset-1'>
-              <div valss="vcard">
-                <table class="table table-sm">
-                  <tr>
-                    <th class='col-md-1'>
-                      <i class="glyphicon glyphicon-envelope"></i>
-                    </th>
-                    <td>
-                      <a href='mailto:gbrcarvalho@gmail.com'>gbrcarvalho@gmail.com</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class='col-md-1'>
-                      <i class="glyphicon glyphicon-map-marker"></i>
-                    </th>
-                    <td>
-                      <a href="https://www3.cin.ufpe.br/en/" target="_blank">
-                        Centro de Informática - UFPE
-                        <br/>Av. Jornalista Aníbal Fernandes, s/n
-                        Cidade Universitária (Campus Recife)
-                        <br/>CEP: 50.740-560 - Recife - PE
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="col-md-1">
-                      <i class="glyphicon glyphicon-globe"></i>
-                    </td>
-                    <td>
-                      <ul class='list-inline'>
-                        <li><a href="https://www.linkedin.com/in/ggcarvalho/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="https://github.com/ggcarvalho" target="_blank"><i class="fa fa-github"></i></a></li>
-                        <li class="researchagate"><a href="https://www.researchgate.net/profile/Gabriel-Carvalho-30" target="_blank"> <b>R<sup>G</sup></b> </a></li>
-                      </ul>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="publications">
+    <div class="blog">
       <div class="container">
         <div class="row">
           <div class="col-md-8 col-md-offset-2">
-            <h2>Blog Posts (Coming Soon)</h2>
+            <h1>Blog Posts</h1>
           </div>
         </div>
         <div class="row">
           <div class="col-md-8 col-md-offset-2">
             <ul class="list-unstyled">
+
+            <li>
+              <a href="">Image processing from scratch using Python</a>
+              <time datetime="2006-01-02" style="font-size: 15px">Fri. Mar. 26 2021</time>
+            </li>
+
+            <li>
+              <a href="">Make your Python recursions fast...really fast!</a>
+              <time datetime="2006-01-02" style="font-size: 15px">Fri. Mar. 26 2021</time>
+            </li>
+
+            <li>
+              <a href="">Speeding up your Python code with Numba</a>
+              <time datetime="2006-01-02" style="font-size: 15px">Fri. Mar. 26 2021</time>
+            </li>
+
             </ul>
           </div>
         </div>
@@ -167,8 +118,10 @@
   .navbar-nav li:hover {
     background-color: black;
   }
-  .publications {
-    padding-top: 24px;
-    background-color: #f2f2f2;
+
+  .blog {
+    padding-top: 0px;
+    background-color: #ffffff;
+    font-size: 27px;
   }
 </style>
