@@ -369,7 +369,9 @@ imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&
 <h2 id="cross-correlation-and-filters">Cross-correlation and filters</h2>
 <hr>
 <p>Arguably, the most popularized concept used in image processing is the one of a <em>convolution</em>. It has been used, successfully, in many Deep Learning architectures and popularized by the so-called <em>Convolutional Neural Networks</em>. Notwithstanding, what people call convolution in this context is actually formally called <em>cross-correlation</em> or <em>spatial correlation</em>. But what is it and how to implement it?</p>
-<p>Mathematically, the cross-correlation of a kernel $\omega$ of size $m \times n$ with an image $f(x,y)$ is given by $$ (\omega \star f)(x, y)  = \sum_{s=-a}^{a} \sum_{t=-b}^b \omega(s, t)f(x + s, y + t).$$ In english, one should &ldquo;slide&rdquo; the kernel $\omega$ through the image, evaluating the sum of the pixelwise product, and assign that value to the current pixel location (the center of the kernel, in our case). This general idea is depicted in the animation below.</p>
+<p>Mathematically, the cross-correlation of a kernel $\omega$ of size $m \times n$ with an image $f(x,y)$ of size $M \times N$ is given by $$ (\omega \ast f)(x, y)  = \sum_{s=-a}^{a} \sum_{t=-b}^b \omega(s, t)f(x + s, y + t).$$</p>
+<p>Note that the center coefficient of the kernel, $\omega(0,0)$ , aligns with the pixel at location $( x , y )$, visiting it exactly once. For a kernel of size $m \times n$ , we assume that $m = 2 a + 1$ and $n = 2 b + 1$, where $a$ and $b$ are nonnegative integers. This means that our focus is on kernels of odd size in both coordinate directions.</p>
+<p>In english, one should &ldquo;slide&rdquo; the kernel $\omega$ through the image, evaluating the sum of the pixelwise product, and assign that value to the current pixel location (the center of the kernel, in our case). This general idea is depicted in the animation below.</p>
 <div style="text-align:center"><img src="/img/posts/image_proc/conv.gif"></div>
 <p>If you don&rsquo;t know the difference between convolution and the correlation defined here, I encourage you to research it. However, there is a certain equivalence between these two operations.</p>
 <p>When dealing with convolution/cross-correlation, it is important to pay attention to the edges of the image. There are boundary conditions one could implement, such as zero paddings, or repeating the same values found in the border of the image. I encourage you to implement them by yourself. In this article, we are going to implement the periodic, or wrapped, boundary condition. Briefly, whenever the filter crosses one boundary, it comes through the opposite boundary, just like a Pacman game or a torus.</p>
@@ -608,7 +610,7 @@ imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&
 <h2 id="conclusion">Conclusion</h2>
 <hr>
 <p>Congratulations! You have built your first image processing toolbox! Now, I hope, you know to implement these tools yourself and use them in your application. Be creative, combine and tweak these tools to your liking!</p>
-<p>I have been using some of these implementations for <em>data augmentation</em> purposes, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.</p>
+<p>If you are interested in machine learning, these tools could be very interesting for you. For instance, I have been using some of these implementations for <em>data augmentation</em> purposes, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.</p>
 <h2 id="recommended-reading">Recommended reading</h2>
 <ul>
 <li>
