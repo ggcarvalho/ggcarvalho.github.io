@@ -1,0 +1,34 @@
+{{ define "main" }}
+<div class="container">
+    <h1 class="blog-title">
+        {{ .Title }}
+    </h1>
+<div class="wrapper">
+    {{ range .Paginator.Pages }}
+    <div class="card">
+        <div class="card-banner">
+            <p class="category-tag {{ .Params.tag}}">{{ .Params.name }}</p>
+            <img class="banner-img" src="{{ .Params.image}}" alt=''>
+        </div>
+        <div class="card-body">
+            <p class="blog-hashtag"> {{ .Params.hashtags }} </p>
+            <a class="post-title" href="{{ .RelPermalink }}">{{ .Title | default "untitled" }}</a>
+            <time class="card-date" datetime="2006-01-02">{{ .Date.Format "Monday, 2 January 2006" }}</time>
+            <br></br>
+            <p class="blog-description"> {{ .Description }} </p>
+
+            <!-- <div class="card-profile">
+            <img class="profile-img" src='/img/avatar.jpg' alt=''>
+            <div class="card-profile-info">
+                <h3 class="profile-name">Gabriel G. Carvalho</h3>
+                <p class="profile-followers">1.2k followers</p>
+            </div>
+            </div> -->
+        </div>
+    </div>
+    {{ end }}
+    {{ .Content }}
+</div>
+</div>
+
+{{ end }}

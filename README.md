@@ -1,3 +1,1 @@
-# ggcarvalho.github.io
-
-Personal website.
+# hugo_site
