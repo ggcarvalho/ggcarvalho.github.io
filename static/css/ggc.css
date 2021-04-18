@@ -84,3 +84,7 @@ background-color: black;
   clear: both;
   display: table;
 }
+
+.MathJax {
+    font-size: 50px !important;
+    }
