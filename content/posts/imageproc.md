@@ -7,7 +7,7 @@ image: "/img/posts/image_proc/code.jpeg"
 tag: "python"
 name: "python"
 hashtags: "#python #imageprocessing"
-draft: false
+draft: true
 ---
 
 Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks. However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will

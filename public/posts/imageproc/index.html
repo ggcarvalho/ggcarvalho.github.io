@@ -222,9 +222,9 @@ see how to implement basic image processing tools from scratch.</p>
 <h2 id="basic-concepts">Basic concepts</h2>
 <hr>
 <p>In a nutshell, digital cameras have a bidimensional array of sensors to record values proportional to the intensity of the light hitting that sensor in a given position (pixel). The digital image is then stored as a bidimensional array whose values (in a given scale) represent the intensity of light in that pixel position, as shown in the figure below.</p>
-<div style="text-align:center; padding-bottom: 2%; padding-top: 1%"><img src="/img/posts/image_proc/grays.png"></div>
+<div style="text-align:center; padding-bottom: 2%; padding-top: 1%"><img src="/img/posts/image_proc/grays.png" style="width: 60%"></div>
 <p>For RGB images this process is very similar, the only difference being that we need three of such bidimensional arrays stacked to compose the image. The actual manner we combine the sensor data (bidimensional) to obtain RGB images (with an extra dimension representing the color channel) is a subject of its own and we will not deal with this problem here.</p>
-<div style="text-align:center"><img src="/img/posts/image_proc/rgbrep.png" width="35%"></div>
+<div style="text-align:center"><img src="/img/posts/image_proc/rgbrep.png" style="width: 35%"></div>
 <p>The range of values allowed may vary. However, the two most common representations are $8-$bit integer images (discrete values in $[0, 255]$) and images whose pixels values are float numbers in $[0, 1]$.</p>
 <p>As we will see, any image processing tool is simply a manipulation of these pixel values, either changing the actual value or its position in the array.</p>
 <h2 id="grayscale-images">Grayscale images</h2>
@@ -295,9 +295,10 @@ imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&
 <h2 id="halftone-images">Halftone images</h2>
 <hr>
 <p>Halftone is a technique to approximate shades of gray using dot patterns. Here, we want to use $10$ shades of gray, thus each gray level will be represented by a $3\times 3$ pattern of black and white dots. To generate our halftone image, we need to rescale the pixel intensities to the discrete range $[0 , 9]$ and apply the mapping given in the figure below.</p>
-<div style="text-align:center"><img src="/img/posts/image_proc/halftone_map.png"></div>
-<p>The formula to rescale the pixel values to a given range is given by $$ \hat{I}(x,y) = (I(x,y)- \min(I(x,y))) *\frac{\text{newMax} - \text{newMin}}{\max(I(x,y)) - \min(I(x,y))} + \text{newMin}, $$ where $I(x, y)$ and $\hat{I}(x,y)$ are the original image and the
-image in the new range, respectively.</p>
+<div style="text-align:center"><img src="/img/posts/image_proc/halftone_map.png" style="width: 50%"></div>
+<p>The formula to rescale the pixel values to a given range is given by</p>
+<div style="text-align:center"><img src="/img/posts/image_proc/rescale.svg" style="width: 55%"></div>
+<p>where $I(x, y)$ and $\hat{I}(x,y)$ are the original image and the image in the new range, respectively.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#75715e"># Add this code after the grayscale converter</span>
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_image_range</span>(image):
@@ -375,7 +376,7 @@ imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&
 <div style="text-align:center"><img src="/img/posts/image_proc/conv.gif"></div>
 <p>If you don&rsquo;t know the difference between convolution and the correlation defined here, I encourage you to research it. However, there is a certain equivalence between these two operations.</p>
 <p>When dealing with convolution/cross-correlation, it is important to pay attention to the edges of the image. There are boundary conditions one could implement, such as zero paddings, or repeating the same values found in the border of the image. I encourage you to implement them by yourself. In this article, we are going to implement the periodic, or wrapped, boundary condition. Briefly, whenever the filter crosses one boundary, it comes through the opposite boundary, just like a Pacman game or a torus.</p>
-<div style="text-align:center"><img src="/img/posts/image_proc/torus.png"></div>
+<div style="text-align:center"><img src="/img/posts/image_proc/torus.png" style="width: 60%"></div>
 <p>Ok, no more math. The final code consists of a dictionary containing all of our kernels and the <code>apply_kernel</code> function, aka the cross-correlation. I&rsquo;ll let you think about why these filters actually work.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#75715e"># Add this after your halftone method</span>
 
@@ -588,13 +589,13 @@ imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&
 <h2 id="negative-images">Negative images</h2>
 <hr>
 <p>Images represented in the RGB color model consist of three component images, one for each primary color. When fed into an RGB monitor, these three images combine on the screen to produce a composite color image. The secondary colors of light are cyan, magenta, and yellow. They are also known as the primary colors of pigments. For instance, when a surface coated with cyan pigment is illuminated with white light, no red light is reflected from the surface. Cyan is the absence of red, magenta is the absence of green, and yellow is the absence of blue. One can interpret the RGB model to be additive, whereas the CMY is subtractive.</p>
-<div style="text-align:center"><img src="/img/posts/image_proc/algebra.jpg"></div>
+<div style="text-align:center"><img src="/img/posts/image_proc/algebra.jpg" style="width: 60%"></div>
 <blockquote>
 <p>&ldquo;A positive image is a normal image. A negative image is a total inversion, in which light areas appear dark and vice versa. A negative color image is additionally color-reversed, with red areas appearing cyan, greens appearing magenta, and blues appearing yellow, and vice versa.&rdquo;</p>
 <p><a href="https://en.wikipedia.org/wiki/Negative_(photography)">Wikipedia</a></p>
 </blockquote>
 <p>A similar concept is used in negative films if you happen to be old enough to remember what they are.</p>
-<div style="text-align:center"><img src="/img/posts/image_proc/negative.jpeg"></div>
+<div style="text-align:center"><img src="/img/posts/image_proc/negative.jpeg" style="width: 20%"></div>
 <p>In terms of implementation, we have a very simple function.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">negative</span>(image):
   <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">255</span> <span style="color:#f92672">-</span> image
