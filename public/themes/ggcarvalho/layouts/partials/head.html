@@ -1,0 +1,68 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>{{if .Params.Title }}{{ block "title" . }}{{ .Params.Title }}{{ with .Site.Title }} | {{ . }}{{ end }}{{ end }}{{ else }}{{ .Site.Title }}{{ end }}</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto+Mono|Comfortaa:300" rel="stylesheet">
+
+    <meta property="og:title" content="{{if .Params.Title }}{{ .Params.Title }}{{ with .Site.Title }} | {{ . }}{{ end }}{{ else }}{{ .Site.Title }}{{ end }}">
+    <meta name="twitter:title" content="{{if .Params.Title }}{{ .Params.Title }}{{ with .Site.Title }} | {{ . }}{{ end }}{{ else }}{{ .Site.Title }}{{ end }}" />
+    <meta property="og:url" content="{{ .Permalink }}">
+    {{ if .Description }}
+    <meta name="description" content="{{ .Description }}">
+    <meta property="og:description" content="{{ .Description }}">
+    <meta name="twitter:description" content="{{ .Description }}" />
+    {{ end }}
+    {{ if .IsPage }}
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="{{ .Date.Format "2006-01-02" }}">
+    {{ else }}
+    <meta property="og:type" content="website">
+    {{ end }}
+    <meta property="twitter:url" content="{{ .Permalink }}">
+    {{ if .Params.Image }}
+    <meta name="og:image" content="{{ .Params.Image | absURL }}" />
+    <meta name="twitter:image" content="{{ .Params.Image | absURL }}" />
+    {{ else }}
+    <meta property="og:image" content="/img/avatar">
+    <meta property="twitter:image" content="img/avatar">
+    {{ end }}
+    <!-- Bootstrap vendor -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/v4-shims.css">
+
+
+    <!-- Google font vendor -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- <script src="js/vendor/modernizr&#45;2.8.3.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.1.2/angular-strap.tpl.min.js"></script>
+    <link rel="stylesheet" href="/css/ggc.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+    <link rel="stylesheet" href="/css/cards.css">
+
+    <!-- LaTeX -->
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+        tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true},
+        jax: ["input/TeX","input/MathML","input/AsciiMath","output/CommonHTML"],
+        extensions: ["tex2jax.js","mml2jax.js","asciimath2jax.js","MathMenu.js","MathZoom.js","AssistiveMML.js", "[Contrib]/a11y/accessibility-menu.js"],
+        TeX: {
+        extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"],
+        equationNumbers: {
+        autoNumber: "AMS"
+        }
+        }
+        });
+     </script>
+</head>

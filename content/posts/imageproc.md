@@ -7,6 +7,7 @@ image: "/img/posts/image_proc/code.jpeg"
 tag: "python"
 name: "python"
 hashtags: "#python #imageprocessing"
+draft: false
 ---
 
 Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks. However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will
@@ -466,6 +467,10 @@ First, let us see the case of a $90^{\circ}$ rotation. In terms of matrices, we 
 
 Flips around a vertical or horizontal axis are very simple operations. A vertical flip is obtained by reversing the rows, whereas a horizontal flip is obtained by reversing the columns. Simple as that!
 
+<div style="text-align:center; margin: 5%" ><img src="/img/posts/image_proc/flip-horizontal-vertical.svg"></div>
+
+Our Python code for geometric transformation is:
+
 ```python
 def transpose(m):
     height, width, depth = get_shape(m)
@@ -505,7 +510,7 @@ def hor_flip(image):
     return flip
 ```
 
-The results are:
+FInally,
 
 ```python
 geometric_transforms = {"rot90"     : rot90,

@@ -1,0 +1,71 @@
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+}
+h1, h2, h3, h4 { font-weight: 200; }
+small {
+    color: gray;
+    font-size: 14px;
+}
+i.fa {
+    font-size: 24px;
+    margin: 12px 12px 0 0;
+}
+i.fab {
+    font-size: 24px;
+    margin: 12px 12px 0 0;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th { vertical-align: middle; }
+.text-justify {
+    margin-bottom: 32px;
+    font-size: 16px;
+    line-height: 24px;
+}
+.list-unstyled li {
+    margin-bottom: 24px;
+    border-bottom: 2px solid #fff;
+}
+.list-unstyled li:last-child { border-bottom: 0; }
+.list-inline li { border-bottom: none; }
+.list-inline li h4 { margin-bottom: 12px; }
+.navbar-nav li:hover {
+background-color: black;
+}
+.publications {
+    padding-top: 24px;
+    background-color: #f2f2f2;
+}
+
+/* Table of contents */
+.toc {
+    background: #f9f9f9;
+    display: table;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.toc li, .toc a {
+    color: #333;
+}
+
+.toc-toggle-label {
+    cursor: pointer;
+    color: #068;
+    display: inline;
+}
+
+.toc-toggle {
+    display: none;
+}
+
+.toc-toggle:not(checked)~nav {
+    display: none;
+}
+.toc-toggle:checked~nav {
+    display: inherit;
+}
+.toc-toggle-label .toc-toggle-label-hide {
+    display: none;
+}
