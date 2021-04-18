@@ -469,7 +469,7 @@ Flips around a vertical or horizontal axis are very simple operations. A vertica
 
 <div style="text-align:center; margin: 5%" ><img src="/img/posts/image_proc/flip-horizontal-vertical.svg"></div>
 
-Our Python code for geometric transformation is:
+Our Python code for geometric transformations is:
 
 ```python
 def transpose(m):

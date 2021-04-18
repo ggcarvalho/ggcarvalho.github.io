@@ -506,6 +506,8 @@ image <span style="color:#f92672">=</span> imageio<span style="color:#f92672">.<
 <p>First, let us see the case of a $90^{\circ}$ rotation. In terms of matrices, we can think of a $90^{\circ}$ rotation as the composition of two simple operations. First, we transpose the matrix, then we rearrange the columns in the reverse order (try it with a $2 \times 2$ matrix). For a $180^{\circ}$ rotation we can reverse the order of the rows and columns. Finally, for a $-90^{\circ} = 270^{\circ}$ rotation we can apply the $180^{\circ}$ and $90^{\circ}$ together, for example.</p>
 <h3 id="flips">Flips</h3>
 <p>Flips around a vertical or horizontal axis are very simple operations. A vertical flip is obtained by reversing the rows, whereas a horizontal flip is obtained by reversing the columns. Simple as that!</p>
+<div style="text-align:center; margin: 5%" ><img src="/img/posts/image_proc/flip-horizontal-vertical.svg"></div>
+<p>Our Python code for geometric transformation is:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">transpose</span>(m):
     height, width, depth <span style="color:#f92672">=</span> get_shape(m)
 
@@ -542,7 +544,7 @@ image <span style="color:#f92672">=</span> imageio<span style="color:#f92672">.<
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Flipping horizontally...&#34;</span>)
     flip <span style="color:#f92672">=</span> image[:, ::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
     <span style="color:#66d9ef">return</span> flip
-</code></pre></div><p>The results are:</p>
+</code></pre></div><p>FInally,</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python">geometric_transforms <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;rot90&#34;</span>     : rot90,
                         <span style="color:#e6db74">&#34;rot180&#34;</span>    : rot180,
                         <span style="color:#e6db74">&#34;rotm90&#34;</span>    : rotm90,
