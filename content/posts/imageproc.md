@@ -307,7 +307,11 @@ Remember, the image on the right-hand side is a black and white picture using th
 
 Arguably, the most popularized concept used in image processing is the one of a <em>convolution</em>. It has been used, successfully, in many Deep Learning architectures and popularized by the so-called <em>Convolutional Neural Networks</em>. Notwithstanding, what people call convolution in this context is actually formally called <em>cross-correlation</em> or <em>spatial correlation</em>. But what is it and how to implement it?
 
-Mathematically, the cross-correlation of a kernel $\omega$ of size $m \times n$ with an image $f(x,y)$ is given by $$ (\omega \star f)(x, y)  = \sum_{s=-a}^{a} \sum_{t=-b}^b \omega(s, t)f(x + s, y + t).$$ In english, one should "slide" the kernel $\omega$ through the image, evaluating the sum of the pixelwise product, and assign that value to the current pixel location (the center of the kernel, in our case). This general idea is depicted in the animation below.
+Mathematically, the cross-correlation of a kernel $\omega$ of size $m \times n$ with an image $f(x,y)$ of size $M \times N$ is given by $$ (\omega \ast f)(x, y)  = \sum_{s=-a}^{a} \sum_{t=-b}^b \omega(s, t)f(x + s, y + t).$$
+
+Note that the center coefficient of the kernel, $\omega(0,0)$ , aligns with the pixel at location $( x , y )$, visiting it exactly once. For a kernel of size $m \times n$ , we assume that $m = 2 a + 1$ and $n = 2 b + 1$, where $a$ and $b$ are nonnegative integers. This means that our focus is on kernels of odd size in both coordinate directions.
+
+In english, one should "slide" the kernel $\omega$ through the image, evaluating the sum of the pixelwise product, and assign that value to the current pixel location (the center of the kernel, in our case). This general idea is depicted in the animation below.
 
 <div style="text-align:center"><img src="/img/posts/image_proc/conv.gif"></div>
 
@@ -604,7 +608,7 @@ imageio.imwrite("static/img/posts/image_proc/" + "negative" + ".png", img)
 
 Congratulations! You have built your first image processing toolbox! Now, I hope, you know to implement these tools yourself and use them in your application. Be creative, combine and tweak these tools to your liking!
 
-I have been using some of these implementations for <em>data augmentation</em> purposes, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.
+If you are interested in machine learning, these tools could be very interesting for you. For instance, I have been using some of these implementations for <em>data augmentation</em> purposes, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.
 
 ## Recommended reading
 
