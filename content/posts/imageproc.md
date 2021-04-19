@@ -622,7 +622,7 @@ imageio.imwrite("static/img/posts/image_proc/" + "negative" + ".png", img)
 
 Congratulations! You have built your first image processing toolbox! Although we have a Pythonic way here and there, the concepts are there so you can implement them in any other language.
 
-Now, I hope, you know to implement these tools yourself and use them in your application. Be creative, combine and tweak these tools to your liking. I know you will find many use cases for it! For instance, I have been using some of these implementations for <em>data augmentation</em> purposes in Machine Learning, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.
+Now, I hope, you know how to implement these tools yourself and can use them in your application. Be creative, combine and tweak these tools to your liking. I know you will find many use cases for it! For instance, I have been using some of these implementations for <em>data augmentation</em> purposes in Machine Learning, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.
 
 Good Luck!
 
