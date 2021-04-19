@@ -21,25 +21,25 @@ Besides Python 3 you will need:
 
 Imageio: To read and write images. Installation:
 
-```bash
+```
 $ pip install imageio
 ```
 
 Numpy: Used to store arrays. Installation:
 
-```bash
+```
 $ pip install numpy
 ```
 
 Matplotlib: Used to plot the simplified RGB space. Installation:
 
-```bash
+```
 $ pip install matplotlib
 ```
 
 tqdm: Used to generate progress bars. Installation:
 
-```bash
+```
 $ pip install tqdm
 ```
 
@@ -225,7 +225,7 @@ Halftone is a technique to approximate shades of gray using dot patterns. Here, 
 The formula to rescale the pixel values to a given range is given by
 
 \begin{eqnarray*}
-\hat{I}(x,y) &=& \lambda * (I(x,y) - \min(I(x,y)))\newline
+\hat{I}(x,y) = &\lambda& * (I(x,y) - \min(I(x,y)))\newline
   &+& \text{newMin}
 \end{eqnarray*}
 with
@@ -233,7 +233,7 @@ $$\lambda = \frac{\text{newMax} - \text{newMin}}{ \max(I(x,y)) - \min(I(x,y)) },
 <!-- <div style="text-align:center"><img src="/img/posts/image_proc/rescale.svg" style="width: 65%; margin: 2%"></div>
  -->
 
-$I(x, y)$ is the original image, and $\hat{I}(x,y)$ is the image in the new range.
+$I(x, y)$ representing the original image, and $\hat{I}(x,y)$ representing the image in the new range.
 
  ```python
  # Add this code after the grayscale converter
@@ -319,7 +319,7 @@ Arguably, the most popularized concept used in image processing is the one of a 
 
 Mathematically, the cross-correlation of a kernel $\omega$ of size $m \times n$ with an image $f(x,y)$ of size $M \times N$ is given by
 
-$$(\omega \ast f)(x,y) = \sum_{s=-a}^a \sum_{t=-b}^b \omega(s,t)f(x+s, y+t).$$
+$$(\omega \ast f)(x,y) = {\sum_{s=-a}^{a}}{\sum_{t=-b}^{b}}\omega(s,t)f(x+s, y+t).$$
 
 <!-- <div style="text-align:center"><img src="/img/posts/image_proc/convolution.svg" style="width: 45%; margin: 2%"></div> -->
 
@@ -479,7 +479,7 @@ Let us now see some geometric transformations. These are transformations that ch
 
 ### Rotations
 
-First, let us see the case of a $90^{\circ}$ rotation. In terms of matrices, we can think of a $90^{\circ}$ rotation as the composition of two simple operations. First, we transpose the matrix, then we rearrange the columns in the reverse order (try it with a $2 \times 2$ matrix). For a $180^{\circ}$ rotation we can reverse the order of the rows and columns. Finally, for a $-90^{\circ} = 270^{\circ}$ rotation we can apply the $180^{\circ}$ and $90^{\circ}$ together, for example.
+First, let us see the case of a $90^{\circ}$ rotation. In terms of matrices, we can think of a $90^{\circ}$ rotation as the composition of two simple operations. First, we transpose the matrix, then we rearrange the columns in the reverse order (try it with a $2 \times 2$ matrix). For a $180^{\circ}$ rotation we can reverse the order of the rows and columns. Finally, for a $-90^{\circ} = 270^{\circ}$ rotation we can apply the $180^{\circ}$ and $90^{\circ}$ together.
 
 ### Flips
 
@@ -594,7 +594,7 @@ Images represented in the RGB color model consist of three component images, one
 
 A similar concept is used in negative films if you happen to be old enough to remember what they are.
 
-<div style="text-align:center"><img src="/img/posts/image_proc/negative.jpeg" style="width: 20%"></div>
+<div style="text-align:center"><img src="/img/posts/image_proc/negative.jpeg" style="width: 25%"></div>
 
 In terms of implementation, we have a very simple function.
 

@@ -235,12 +235,11 @@ geometric_transforms = {"rot90":rot90,
                         "vertical_flip":vert_flip,
                         "horizontal_flip":hor_flip}
 
-path = "static/img/posts/image_proc/arrows.jpg"
+path = "moon.JPG"
 image = imageio.imread(path)
-for key in geometric_transforms:
-    img = geometric_transforms[key](image).astype(np.uint8)
-    imageio.imwrite("static/img/posts/image_proc/" + key + ".png", img)
-
+for key in kernels:
+    img = apply_kernel(image, key).astype(np.uint8)
+    imageio.imwrite(key + ".png", img)
 
 def intensity(image, factor):
     return clip(factor*image)

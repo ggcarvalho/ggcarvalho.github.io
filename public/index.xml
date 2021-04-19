@@ -5,17 +5,6 @@
     <link>https://ggcarvalho.dev/</link>
     <description>Recent content on Gabriel Carvalho</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sun, 18 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ggcarvalho.dev/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Image processing from scratch using Python</title>
-      <link>https://ggcarvalho.dev/posts/imageproc/</link>
-      <pubDate>Sun, 18 Apr 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://ggcarvalho.dev/posts/imageproc/</guid>
-      <description>Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks. However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will see how to implement basic image processing tools from scratch.
-  Table of Contents show | hide     Requirements Toolbox Basic concepts Grayscale images Halftone images Cross-correlation and filters Geometric transformations  Rotations Flips   Intensity transformations Negative images Conclusion Recommended reading      Requirements Besides Python 3 you will need:</description>
-    </item>
-    
+    <language>en-us</language><atom:link href="https://ggcarvalho.dev/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
