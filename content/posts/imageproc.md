@@ -10,8 +10,8 @@ hashtags: "#python #imageprocessing"
 draft: false
 ---
 
-Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks. However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will
-see how to implement basic image processing tools from scratch.
+Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks (this statement is particularly true if you are a Pythonist). However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will
+see how to implement basic image processing tools from scratch using Python.
 
 {{< table_of_contents >}}
 
@@ -25,7 +25,7 @@ Imageio: To read and write images. Installation:
 $ pip install imageio
 ```
 
-Numpy: Used to store arrays. Installation:
+Numpy: Used to store and manipulate arrays. Installation:
 
 ```
 $ pip install numpy
@@ -78,7 +78,7 @@ Our basic image processing toolbox will consist of:
     </tr>
     <tr>
       <th scope="row">Laplacian</th>
-      <td>Returns the 8-neighbors laplacian applied to the image.</td>
+      <td>Returns the $8-$neighbors laplacian applied to the image.</td>
     </tr>
     <tr>
       <th scope="row">Emboss</th>
@@ -86,7 +86,7 @@ Our basic image processing toolbox will consist of:
     </tr>
     <tr>
       <th scope="row">Motion blur</th>
-      <td>Blurs the image as if it is moving.</td>
+      <td>Blurs the image as if the camera (or object) is moving.</td>
     </tr>
     <tr>
       <th scope="row">Edge detectors</th>
@@ -125,11 +125,11 @@ Our basic image processing toolbox will consist of:
 
 In a nutshell, digital cameras have a bidimensional array of sensors to record values proportional to the intensity of the light hitting that sensor in a given position (pixel). The digital image is then stored as a bidimensional array whose values (in a given scale) represent the intensity of light in that pixel position, as shown in the figure below.
 
-<div style="text-align:center"><img src="/img/posts/image_proc/grays.png" style="width: 60%; padding-bottom: 2%; padding-top: 1%"></div>
+<div style="text-align:center"><img src="/img/posts/image_proc/grays.png" style="width: 70%; padding-bottom: 2%; padding-top: 1%"></div>
 
-For RGB images this process is very similar, the only difference being that we need three of such bidimensional arrays stacked to compose the image. The actual manner we combine the sensor data (bidimensional) to obtain RGB images (with an extra dimension representing the color channel) is a subject of its own and we will not deal with this problem here.
+For RGB images this process is very similar, the only difference being that we need three of such bidimensional arrays stacked to compose the image. The actual manner we combine the sensor data (bidimensional) to obtain RGB images (with an extra dimension representing the color channels) is a subject of its own and we will not deal with this problem here.
 
-<div style="text-align:center"><img src="/img/posts/image_proc/rgbrep.png" style="width: 35%"></div>
+<div style="text-align:center"><img src="/img/posts/image_proc/rgbrep.png" style="width: 30%"></div>
 
 The range of values allowed may vary. However, the two most common representations are $8-$bit integer images (discrete values in $[0, 255]$) and images whose pixels values are float numbers in $[0, 1]$.
 
@@ -138,7 +138,7 @@ As we will see, any image processing tool is simply a manipulation of these pixe
 ## Grayscale images
 ---
 
-There are many ways to convert RGB images into grayscale images. For instance, in the RGB representation, if the intensity values of the three channels in a pixel are the same, then the result color is a shade of gray, as you can see in the figure below.
+There are many ways to convert RGB images into grayscale images. For instance, in the RGB representation, if the intensity values of the three channels in a pixel are the same, then the result color is a shade of gray. As you can see in the figure below, the diagonal of the <em>RGB space</em>, i.e. when $R=G=B$, is a grayscale line with black corresponding to $R=G=B=0$ and white corresponding to $R=G=B=1$ (or $255$).
 
 ```python
 import numpy as np
@@ -158,7 +158,7 @@ plt.show()
 ```
 <div style="text-align:center"><img src="/img/posts/image_proc/rgb_cube.png" width="55%"></div>
 
-One could therefore convert a colored image into a grayscale image by assigning the pixel value to have the average of the intensities in the red, green, and blue channels. In this article, however, we will use the <em>luminance</em> of a pixel to do this task. The luminance of a pixel is defined to be $$ Y \equiv 0.299r + 0.587g + 0.114b, $$
+One could therefore convert a colored image into a grayscale image by assigning the pixel value to have the average of the intensities in the red, green, and blue channels. In this article, however, we will use the <em>luminance</em> of a pixel to do this task. The luminance of a pixel is defined to be $$Y \equiv 0.299r + 0.587g + 0.114b, $$
 where $r$, $g$, and $b$ are the red, green, and blue pixel values of the image. Therefore, to convert our RGB image into grayscale, we need to assign the new pixel value to the corresponding luminance value of that pixel. Let us build our first image processing tool, the grayscale converter.
 
 ```python
@@ -209,8 +209,8 @@ imageio.imwrite("zagreb_grayscale.png", gray)
 ```
 
 <div style= "text-align:center">
-<a href="/img/posts/image_proc/zagreb.jpg" target="_blank"><img src="/img/posts/image_proc/zagreb.jpg" style="width:40%;padding-bottom: 2%; margin:4%"></a>
-<a href="/img/posts/image_proc/zagreb.png" target="_blank"><img src="/img/posts/image_proc/zagreb.png" style="width:40%; padding-bottom: 2%; margin:4%"></a>
+<a href="/img/posts/image_proc/zagreb.jpg" target="_blank"><img src="/img/posts/image_proc/zagreb.jpg" style="width:40%; margin:4%"></a>
+<a href="/img/posts/image_proc/zagreb_grayscale.png" target="_blank"><img src="/img/posts/image_proc/zagreb_grayscale.png" style="width:40%; margin:4%"></a>
 </div>
 
 Cool! We have built a grayscale image converter from scratch. Let's use it to generate a halftone image.
@@ -233,7 +233,7 @@ $$\lambda = \frac{\text{newMax} - \text{newMin}}{ \max(I(x,y)) - \min(I(x,y)) },
 <!-- <div style="text-align:center"><img src="/img/posts/image_proc/rescale.svg" style="width: 65%; margin: 2%"></div>
  -->
 
-$I(x, y)$ representing the original image, and $\hat{I}(x,y)$ representing the image in the new range.
+$I(x, y)$ representing the original image, and $\hat{I}(x,y)$ representing the image in the new range. These steps are summarized in the piece of code below.
 
  ```python
  # Add this code after the grayscale converter
@@ -296,7 +296,7 @@ def halftone(image):
     return halftoned
  ```
 
- The result:
+Time to test it!
 
  ```python
 path = "test.png"
@@ -310,7 +310,7 @@ imageio.imwrite("halftone.png", ht)
 <a href="/img/posts/image_proc/halftoned.png" target="_blank"><img src="/img/posts/image_proc/halftoned.png" style="width:40%; padding-bottom: 2%; margin:4%"></a>
 </div>
 
-Remember, the image on the right-hand side is a black and white picture using the dot pattern above. How amazing is that?
+Remember, the image on the right-hand side is a black and white (binary) picture using the dot pattern above. How amazing is that? This technique was broadly used to print photographs in newspapers to simulate shades o grays.
 
 ## Cross-correlation and filters
 ---
@@ -325,17 +325,17 @@ $$(\omega \ast f)(x,y) = {\sum_{s=-a}^{a}}{\sum_{t=-b}^{b}}\omega(s,t)f(x+s, y+t
 
 Note that the center coefficient of the kernel, $\omega(0,0)$ , aligns with the pixel at location $( x , y )$, visiting it exactly once. For a kernel of size $m \times n$ , we assume that $m = 2 a + 1$ and $n = 2 b + 1$, where $a$ and $b$ are nonnegative integers. This means that our focus is on kernels of odd size in both coordinate directions.
 
-In english, one should "slide" the kernel $\omega$ through the image, evaluating the sum of the pixelwise product, and assign that value to the current pixel location (the center of the kernel, in our case). This general idea is depicted in the animation below.
+In English, one should "slide" the kernel $\omega$ through the image, evaluating the sum of the pixelwise product between the kernel and the corresponding region of the image, and assign that value to the current pixel location (the center of the kernel, in our case). This general idea is depicted in the animation below.
 
 <div style="text-align:center"><img src="/img/posts/image_proc/conv.gif"></div>
 
-If you don't know the difference between convolution and the correlation defined here, I encourage you to research it. However, there is a certain equivalence between these two operations.
+If you don't know the differences between convolution and the correlation defined here, I encourage you to research it. However, there is a certain equivalence between these two operations.
 
-When dealing with convolution/cross-correlation, it is important to pay attention to the edges of the image. There are boundary conditions one could implement, such as zero paddings, or repeating the same values found in the border of the image. I encourage you to implement them by yourself. In this article, we are going to implement the periodic, or wrapped, boundary condition. Briefly, whenever the filter crosses one boundary, it comes through the opposite boundary, just like a Pacman game or a torus.
+When dealing with convolution/cross-correlation, it is important to pay attention to the edges of the image. There are boundary conditions one could implement, such as zero paddings, or repeating the same values found in the edges of the image. I encourage you to implement them by yourself. In this article, however, we are going to implement the periodic, or wrapped, boundary condition. Briefly, whenever the filter crosses one edge, it comes through the opposite boundary, just like a Pacman game or a torus.
 
 <div style="text-align:center"><img src="/img/posts/image_proc/torus.png" style="width: 60%"></div>
 
-Ok, no more math. The final code consists of a dictionary containing all of our kernels and the `apply_kernel` function, aka the cross-correlation. I'll let you think about why these filters actually work.
+Ok, no more math. The final code consists of a dictionary containing all of our kernels and the `apply_kernel` function, aka the cross-correlation. Look at the descriptions at the beginning of this article, the definition of cross-correlation, and the corresponding kernels. Can you figure out why they work?
 
 ```python
 # Add this after your halftone method
@@ -475,7 +475,7 @@ The results are given in the mosaic below (in a row-major manner).
 ## Geometric transformations
 ---
 
-Let us now see some geometric transformations. These are transformations that change the order of the pixels, not their actual values. Here we include multiples of $90^{\circ}$ rotations and flips. For a general rotation, we need to use some form of interpolation, and for the sake of simplicity, we will avoid them here. The main ingredient here is the <em>slice notation</em> used in Python, so if you are not familiar with it that is a great use case for it!
+Let us now see some geometric transformations. These are transformations that change the order of the pixels, not their actual values. Here we include multiples of $90^{\circ}$ rotations and flips along the vertical and horizontal axes. For more general rotations and flips we need to use some form of interpolation and, for the sake of simplicity, we will avoid them here. The main ingredient here is the <em>slice notation</em> used in Python, so if you are not familiar with it that is a great use case for it!
 
 ### Rotations
 
@@ -483,7 +483,7 @@ First, let us see the case of a $90^{\circ}$ rotation. In terms of matrices, we 
 
 ### Flips
 
-Flips around a vertical or horizontal axis are very simple operations. A vertical flip is obtained by reversing the rows, whereas a horizontal flip is obtained by reversing the columns. Simple as that!
+Flips along the vertical or horizontal axis are very simple operations. A vertical flip is obtained by reversing the rows, whereas a horizontal flip is obtained by reversing the columns. Simple as that!
 
 <div style="text-align:center" ><img src="/img/posts/image_proc/flip-horizontal-vertical.svg" style=" margin: 5%; width: 30%"></div>
 
@@ -528,7 +528,7 @@ def hor_flip(image):
     return flip
 ```
 
-FInally,
+Collecting everything in a dictionary and running, we have:
 
 ```python
 geometric_transforms = {"rot90"     : rot90,
@@ -559,7 +559,7 @@ for key in geometric_transforms:
 ## Intensity transformations
 ---
 
-Now, we are going to see how to brighten/darken an image. As we have seen, the pixel values represent, in some scale, the intensity of the light in that position. To brighten or darken an image, all we need is to multiply every value by the same amount $\lambda > 0$. If $\lambda > 1$, the resulting image will be brighter than the original, and if $\lambda < 1$ the resulting image will be darker than the original image. For $\lambda > 1$, some values might exceed the allowable range (e.g, exceed $255$ for $8-$bit images). In that case, we need to clip the result. The corresponding Python code is given below.
+Now, we are going to see how to brighten/darken an image. As we have seen, the pixel values represent, in some scale, the intensity of the light in that position. To brighten or darken an image, all we need is to multiply every value by the same amount $\lambda > 0$. If $\lambda > 1$, the resulting image will be brighter than the original, and if $\lambda < 1$ the resulting image will be darker than the original image. For $\lambda > 1$, some values might exceed the allowable range (e.g, exceed $255$ for $8-$bit images). In that case, we need to clip the result (already implemented). The corresponding Python code is given below.
 
  ```python
 def intensity(image, factor):
@@ -584,7 +584,7 @@ imageio.imwrite("darker.png", img_darker)
 ## Negative images
 ---
 
-Images represented in the RGB color model consist of three component images, one for each primary color. When fed into an RGB monitor, these three images combine on the screen to produce a composite color image. The secondary colors of light are cyan, magenta, and yellow. They are also known as the primary colors of pigments. For instance, when a surface coated with cyan pigment is illuminated with white light, no red light is reflected from the surface. Cyan is the absence of red, magenta is the absence of green, and yellow is the absence of blue. One can interpret the RGB model to be additive, whereas the CMY is subtractive.
+Images represented in the RGB color model consist of three components, one for each primary color. When fed into an RGB monitor, these three images combine on the screen to produce a composite color image. The secondary colors of light are cyan (C), magenta (M), and yellow (Y). They are also known as the primary colors of pigments. For instance, when a surface coated with cyan pigment is illuminated with white light, no red light is reflected from the surface. In a nutshell, cyan is the absence of red, magenta is the absence of green, and yellow is the absence of blue. Because of that, we usually interpret the RGB model to be additive, whereas the CMY is subtractive (see the image below).
 
 <div style="text-align:center"><img src="/img/posts/image_proc/algebra.jpg" style="width: 60%"></div>
 
@@ -596,7 +596,7 @@ A similar concept is used in negative films if you happen to be old enough to re
 
 <div style="text-align:center"><img src="/img/posts/image_proc/negative.jpeg" style="width: 25%"></div>
 
-In terms of implementation, we have a very simple function.
+Now, in terms of implementation, we have a very simple function (thanks to Numpy broadcasting ).
 
 ```python
 def negative(image):
@@ -620,9 +620,11 @@ imageio.imwrite("static/img/posts/image_proc/" + "negative" + ".png", img)
 ## Conclusion
 ---
 
-Congratulations! You have built your first image processing toolbox! Now, I hope, you know to implement these tools yourself and use them in your application. Be creative, combine and tweak these tools to your liking!
+Congratulations! You have built your first image processing toolbox! Although we have a Pythonic way here and there, the concepts are there so you can implement them in any other language.
 
-If you are interested in machine learning, these tools could be very interesting for you. For instance, I have been using some of these implementations for <em>data augmentation</em> purposes, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.
+Now, I hope, you know to implement these tools yourself and use them in your application. Be creative, combine and tweak these tools to your liking. I know you will find many use cases for it! For instance, I have been using some of these implementations for <em>data augmentation</em> purposes in Machine Learning, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.
+
+Good Luck!
 
 ## Recommended reading
 
