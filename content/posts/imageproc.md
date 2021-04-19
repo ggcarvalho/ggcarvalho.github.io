@@ -2,7 +2,7 @@
 title: "Image processing from scratch using Python"
 type: post
 description: "Writing a basic image processing toolbox from scratch."
-date: "2021-04-18"
+date: "2021-04-19"
 image: "/img/posts/image_proc/code.jpeg"
 tag: "python"
 name: "python"
