@@ -226,9 +226,9 @@ The formula to rescale the pixel values to a given range is given by
 
 \begin{eqnarray*}
 \hat{I}(x,y) &=& \lambda * (I(x,y) - \min(I(x,y)))\newline
-  &+& \text{newMin},
+  &+& \text{newMin}
 \end{eqnarray*}
-with,
+with
 $$\lambda = \frac{\text{newMax} - \text{newMin}}{ \max(I(x,y)) - \min(I(x,y)) },$$
 <!-- <div style="text-align:center"><img src="/img/posts/image_proc/rescale.svg" style="width: 65%; margin: 2%"></div>
  -->
