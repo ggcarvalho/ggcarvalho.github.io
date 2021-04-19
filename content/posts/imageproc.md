@@ -1,5 +1,5 @@
 ---
-title: "Image processing from scratch using Python"
+title: "Introduction to image processing using Python"
 type: post
 description: "Writing a basic image processing toolbox from scratch."
 date: "2021-04-19"
