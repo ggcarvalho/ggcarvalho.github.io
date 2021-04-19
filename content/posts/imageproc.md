@@ -7,7 +7,7 @@ image: "/img/posts/image_proc/code.jpeg"
 tag: "python"
 name: "python"
 hashtags: "#python #imageprocessing"
-draft: true
+draft: false
 ---
 
 Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks. However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will
@@ -125,7 +125,7 @@ Our basic image processing toolbox will consist of:
 
 In a nutshell, digital cameras have a bidimensional array of sensors to record values proportional to the intensity of the light hitting that sensor in a given position (pixel). The digital image is then stored as a bidimensional array whose values (in a given scale) represent the intensity of light in that pixel position, as shown in the figure below.
 
-<div style="text-align:center; padding-bottom: 2%; padding-top: 1%"><img src="/img/posts/image_proc/grays.png" style="width: 60%"></div>
+<div style="text-align:center"><img src="/img/posts/image_proc/grays.png" style="width: 60%; padding-bottom: 2%; padding-top: 1%"></div>
 
 For RGB images this process is very similar, the only difference being that we need three of such bidimensional arrays stacked to compose the image. The actual manner we combine the sensor data (bidimensional) to obtain RGB images (with an extra dimension representing the color channel) is a subject of its own and we will not deal with this problem here.
 
@@ -208,7 +208,7 @@ gray = convert_grayscale(image).astype(np.uint8)
 imageio.imwrite("zagreb_grayscale.png", gray)
 ```
 
-<div style= "text-align:center" class="row">
+<div style= "text-align:center">
 <a href="/img/posts/image_proc/zagreb.jpg" target="_blank"><img src="/img/posts/image_proc/zagreb.jpg" style="width:40%;padding-bottom: 2%; margin:4%"></a>
 <a href="/img/posts/image_proc/zagreb.png" target="_blank"><img src="/img/posts/image_proc/zagreb.png" style="width:40%; padding-bottom: 2%; margin:4%"></a>
 </div>
@@ -224,7 +224,7 @@ Halftone is a technique to approximate shades of gray using dot patterns. Here, 
 
 The formula to rescale the pixel values to a given range is given by
 
-<div style="text-align:center"><img src="/img/posts/image_proc/rescale.svg" style="width: 55%"></div>
+<div style="text-align:center"><img src="/img/posts/image_proc/rescale.svg" style="width: 55%; margin: 2%"></div>
 
 
 where $I(x, y)$ and $\hat{I}(x,y)$ are the original image and the image in the new range, respectively.
@@ -299,7 +299,7 @@ ht = halftone(image).astype(np.uint8)
 imageio.imwrite("halftone.png", ht)
  ```
 
-<div style= "text-align:center" class="row">
+<div style= "text-align:center">
 <a href="/img/posts/image_proc/test.png" target="_blank"><img src="/img/posts/image_proc/test.png" style="width:40%;padding-bottom: 2%; margin:4%"></a>
 <a href="/img/posts/image_proc/halftoned.png" target="_blank"><img src="/img/posts/image_proc/halftoned.png" style="width:40%; padding-bottom: 2%; margin:4%"></a>
 </div>
@@ -311,7 +311,9 @@ Remember, the image on the right-hand side is a black and white picture using th
 
 Arguably, the most popularized concept used in image processing is the one of a <em>convolution</em>. It has been used, successfully, in many Deep Learning architectures and popularized by the so-called <em>Convolutional Neural Networks</em>. Notwithstanding, what people call convolution in this context is actually formally called <em>cross-correlation</em> or <em>spatial correlation</em>. But what is it and how to implement it?
 
-Mathematically, the cross-correlation of a kernel $\omega$ of size $m \times n$ with an image $f(x,y)$ of size $M \times N$ is given by $$ (\omega \ast f)(x, y)  = \sum_{s=-a}^{a} \sum_{t=-b}^b \omega(s, t)f(x + s, y + t).$$
+Mathematically, the cross-correlation of a kernel $\omega$ of size $m \times n$ with an image $f(x,y)$ of size $M \times N$ is given by
+
+<div style="text-align:center"><img src="/img/posts/image_proc/convolution.svg" style="width: 35%; margin: 2%"></div>
 
 Note that the center coefficient of the kernel, $\omega(0,0)$ , aligns with the pixel at location $( x , y )$, visiting it exactly once. For a kernel of size $m \times n$ , we assume that $m = 2 a + 1$ and $n = 2 b + 1$, where $a$ and $b$ are nonnegative integers. This means that our focus is on kernels of odd size in both coordinate directions.
 
@@ -444,19 +446,19 @@ for key in kernels:
 
 The results are given in the mosaic below (in a row-major manner).
 
-<div style= "text-align:center" class="row">
+<div style= "text-align:center">
 <a href="/img/posts/image_proc/mean.png" target="_blank"><img src="/img/posts/image_proc/mean.png"  alt="Mean" style="width:25%; margin:1%"></a>
 <a href="/img/posts/image_proc/gaussian.png" target="_blank"><img src="/img/posts/image_proc/gaussian.png"  alt="Gaussian" style="width:25%; margin:1%"></a>
 <a href="/img/posts/image_proc/sharpen.png" target="_blank"><img src="/img/posts/image_proc/sharpen.png"  alt="Sharpen" style="width:25%; margin:1%"></a>
 </div>
 
-<div style= "text-align:center" class="row">
+<div style= "text-align:center">
 <a href="/img/posts/image_proc/laplacian.png" target="_blank"><img src="/img/posts/image_proc/laplacian.png"  alt="Laplacian" style="width:25%; margin:1%"r></a>
 <a href="/img/posts/image_proc/emboss.png" target="_blank"><img src="/img/posts/image_proc/emboss.png"  alt="Emboss" style="width:25%; margin:1%"></a>
 <a href="/img/posts/image_proc/motion.png" target="_blank"><img src="/img/posts/image_proc/motion.png"  alt="Motion blur" style="width:25%; margin:1%"></a>
 </div>
 
-<div style= "text-align:center" class="row">
+<div style= "text-align:center">
 <a href="/img/posts/image_proc/y_edge.png" target="_blank"><img src="/img/posts/image_proc/y_edge.png"  alt="Y edge" style="width:25%; margin:1%"></a>
 <a href="/img/posts/image_proc/x_edge.png" target="_blank"><img src="/img/posts/image_proc/x_edge.png"  alt="X edge" style="width:25%; margin:1%"></a>
 <a href="/img/posts/image_proc/identity.png" target="_blank"><img src="/img/posts/image_proc/identity.png"  alt="Identity" style="width:25%; margin:1%"></a>
@@ -475,7 +477,7 @@ First, let us see the case of a $90^{\circ}$ rotation. In terms of matrices, we 
 
 Flips around a vertical or horizontal axis are very simple operations. A vertical flip is obtained by reversing the rows, whereas a horizontal flip is obtained by reversing the columns. Simple as that!
 
-<div style="text-align:center; margin: 5%" ><img src="/img/posts/image_proc/flip-horizontal-vertical.svg"></div>
+<div style="text-align:center" ><img src="/img/posts/image_proc/flip-horizontal-vertical.svg" style=" margin: 5%; width: 30%"></div>
 
 Our Python code for geometric transformations is:
 
@@ -534,13 +536,13 @@ for key in geometric_transforms:
     imageio.imwrite(key + ".png", img)
 ```
 
-<div style= "text-align:center" class="row">
+<div style= "text-align:center">
 <a href="/img/posts/image_proc/arrows.jpg" target="_blank"><img src="/img/posts/image_proc/arrows.jpg"  alt="Original" style="width:25%; margin:1%"></a>
 <a href="/img/posts/image_proc/rot90.png" target="_blank"><img src="/img/posts/image_proc/rot90.png"  alt="90 degrees" style="width:12%; margin:1%"></a>
 <a href="/img/posts/image_proc/rot180.png" target="_blank"><img src="/img/posts/image_proc/rot180.png"  alt="180 degrees" style="width:25%; margin:1%"></a>
 </div>
 
-<div style= "text-align:center" class="row">
+<div style= "text-align:center">
 <a href="/img/posts/image_proc/rotm90.png" target="_blank"><img src="/img/posts/image_proc/rotm90.png"  alt="270 degrees" style="width:12%; margin:1%"r></a>
 <a href="/img/posts/image_proc/horizontal_flip.png" target="_blank"><img src="/img/posts/image_proc/horizontal_flip.png"  alt="Horizontal flip" style="width:25%; margin:1%"></a>
 <a href="/img/posts/image_proc/vertical_flip_flip.png" target="_blank"><img src="/img/posts/image_proc/vertical_flip.png"  alt="Vertical flip" style="width:25%; margin:1%"></a>
@@ -565,7 +567,7 @@ imageio.imwrite("brighter.png", img_brighter)
 img_darker = intensity(image, 0.5).astype(np.uint8)
 imageio.imwrite("darker.png", img_darker)
 ```
-<div style= "text-align:center" class="row">
+<div style= "text-align:center">
 <a href="/img/posts/image_proc/test.png" target="_blank"><img src="/img/posts/image_proc/test.png"  alt="Original" style="width:25%; margin:1%"r></a>
 <a href="/img/posts/image_proc/brighter.png" target="_blank"><img src="/img/posts/image_proc/brighter.png"  alt="Brighter" style="width:25%; margin:1%"></a>
 <a href="/img/posts/image_proc/darker.png" target="_blank"><img src="/img/posts/image_proc/darker.png"  alt="Darker" style="width:25%; margin:1%"></a>
@@ -602,7 +604,7 @@ img = negative(image).astype(np.uint8)
 imageio.imwrite("static/img/posts/image_proc/" + "negative" + ".png", img)
 ```
 
-<div style= "text-align:center" class="row">
+<div style= "text-align:center">
 <a href="/img/posts/image_proc/zagreb.jpg" target="_blank"><img src="/img/posts/image_proc/zagreb.jpg"  alt="Original" style="width:45%; margin:1%"r></a>
 <a href="/img/posts/image_proc/negative.png" target="_blank"><img src="/img/posts/image_proc/negative.png"  alt="Negative" style="width:45%; margin:1%"></a>
 </div>
