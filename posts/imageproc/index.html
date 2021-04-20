@@ -102,8 +102,7 @@
                                 <p>Posted in <time datetime="2021-04-19 00:00:00 &#43;0000 UTC"></time>Monday, 19 April 2021</time>.</p>
                                 <br>
                                 
-                                <p>Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks (this statement is particularly true if you are a Pythonist). However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will
-see how to implement basic image processing tools from scratch using Python.</p>
+                                <p>Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks (this statement is particularly true if you are a Pythonist). However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will see how to implement basic image processing tools from scratch using Python.</p>
 
 <aside class="toc">
     <dl>
@@ -256,17 +255,15 @@ where $r$, $g$, and $b$ are the red, green, and blue pixel values of the image. 
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_shape</span>(image):
     shape <span style="color:#f92672">=</span> image<span style="color:#f92672">.</span>shape
-    <span style="color:#66d9ef">if</span> len(shape)<span style="color:#f92672">==</span><span style="color:#ae81ff">3</span>:
+    <span style="color:#66d9ef">if</span> len(shape)<span style="color:#f92672">==</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">or</span> len(shape)<span style="color:#f92672">==</span><span style="color:#ae81ff">2</span>:
         <span style="color:#66d9ef">return</span> shape
-    <span style="color:#66d9ef">elif</span> len(shape)<span style="color:#f92672">==</span><span style="color:#ae81ff">2</span>:
-        <span style="color:#66d9ef">return</span> shape[<span style="color:#ae81ff">0</span>],shape[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">1</span>
     <span style="color:#66d9ef">else</span>:
         <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#34;Sorry, something is wrong!&#34;</span>)
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">is_grayscale</span>(image):
-    <span style="color:#66d9ef">if</span> get_shape(image)[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>:
+    <span style="color:#66d9ef">if</span> len(get_shape(image))<span style="color:#f92672">==</span><span style="color:#ae81ff">3</span>:
         <span style="color:#66d9ef">return</span> False
-    <span style="color:#66d9ef">elif</span> get_shape(image)[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
+    <span style="color:#66d9ef">elif</span> len(get_shape(image))<span style="color:#f92672">==</span><span style="color:#ae81ff">2</span>:
         <span style="color:#66d9ef">return</span> True
     <span style="color:#66d9ef">else</span>:
         <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#34;Sorry, something is wrong!&#34;</span>)
@@ -274,14 +271,14 @@ where $r$, $g$, and $b$ are the red, green, and blue pixel values of the image. 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_luminance</span>(image):
     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0.299</span><span style="color:#f92672">*</span>image[:, :, <span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.587</span><span style="color:#f92672">*</span>image[:, :, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.114</span><span style="color:#f92672">*</span>image[:, :, <span style="color:#ae81ff">2</span>]
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">zeros</span>(height, width, depth):
-    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>zeros((height, width, depth))
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">zeros</span>(height, width, depth<span style="color:#f92672">=</span>None):
+    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>zeros((height, width)) <span style="color:#66d9ef">if</span> depth <span style="color:#f92672">is</span> None <span style="color:#66d9ef">else</span> np<span style="color:#f92672">.</span>zeros((height, width, depth))
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convert_grayscale</span>(image):
     <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> is_grayscale(image):
         height, width, _ <span style="color:#f92672">=</span> get_shape(image)
-        gray_image       <span style="color:#f92672">=</span> zeros(height, width, <span style="color:#ae81ff">1</span>)
-        gray_image[:, :, <span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> get_luminance(image)
+        gray_image       <span style="color:#f92672">=</span> zeros(height, width)
+        gray_image <span style="color:#f92672">=</span> get_luminance(image)
         <span style="color:#66d9ef">return</span> gray_image
     <span style="color:#66d9ef">else</span>:
         <span style="color:#66d9ef">return</span> image
@@ -312,61 +309,61 @@ $$\lambda = \frac{\text{newMax} - \text{newMin}}{ \max(I(x,y)) - \min(I(x,y)) },
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#75715e"># Add this code after the grayscale converter</span>
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_image_range</span>(image):
-   <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>min(image), np<span style="color:#f92672">.</span>max(image)
+  <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>min(image), np<span style="color:#f92672">.</span>max(image)
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">adjust</span>(image, new_min, new_max):
-   image_min, image_max <span style="color:#f92672">=</span> get_image_range(image)
-   h, w, d  <span style="color:#f92672">=</span> get_shape(image)
-   adjusted <span style="color:#f92672">=</span> zeros(h, w, d)
-   adjusted <span style="color:#f92672">=</span> (image <span style="color:#f92672">-</span> image_min)<span style="color:#f92672">*</span>((new_max <span style="color:#f92672">-</span> new_min)<span style="color:#f92672">/</span>(image_max <span style="color:#f92672">-</span> image_min)) <span style="color:#f92672">+</span> new_min
-   <span style="color:#66d9ef">return</span> adjusted<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">adjust_gray</span>(image, new_min, new_max):
+  image_min, image_max <span style="color:#f92672">=</span> get_image_range(image)
+  h, w  <span style="color:#f92672">=</span> get_shape(image)
+  adjusted <span style="color:#f92672">=</span> zeros(h, w)
+  adjusted <span style="color:#f92672">=</span> (image <span style="color:#f92672">-</span> image_min)<span style="color:#f92672">*</span>((new_max <span style="color:#f92672">-</span> new_min)<span style="color:#f92672">/</span>(image_max <span style="color:#f92672">-</span> image_min)) <span style="color:#f92672">+</span> new_min
+  <span style="color:#66d9ef">return</span> adjusted<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gen_halftone_masks</span>():
-   m <span style="color:#f92672">=</span> zeros(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">10</span>)
+  m <span style="color:#f92672">=</span> zeros(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">10</span>)
 
-   m[:, :, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">0</span>]
-   m[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+  m[:, :, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">0</span>]
+  m[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 
-   m[:, :, <span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">1</span>]
-   m[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+  m[:, :, <span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">1</span>]
+  m[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 
-   m[:, :, <span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">2</span>]
-   m[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+  m[:, :, <span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">2</span>]
+  m[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 
-   m[:, :, <span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">3</span>]
-   m[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+  m[:, :, <span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">3</span>]
+  m[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 
-   m[:, :, <span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">4</span>]
-   m[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+  m[:, :, <span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">4</span>]
+  m[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 
-   m[:, :, <span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">5</span>]
-   m[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+  m[:, :, <span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">5</span>]
+  m[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 
-   m[:, :, <span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">6</span>]
-   m[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+  m[:, :, <span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">6</span>]
+  m[<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 
-   m[:, :, <span style="color:#ae81ff">8</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">7</span>]
-   m[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">8</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+  m[:, :, <span style="color:#ae81ff">8</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">7</span>]
+  m[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">8</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 
-   m[:, :, <span style="color:#ae81ff">9</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">8</span>]
-   m[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">9</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+  m[:, :, <span style="color:#ae81ff">9</span>] <span style="color:#f92672">=</span> m[:, :, <span style="color:#ae81ff">8</span>]
+  m[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">9</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 
-   <span style="color:#66d9ef">return</span> m
+  <span style="color:#66d9ef">return</span> m
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">halftone</span>(image):
-   gray      <span style="color:#f92672">=</span> convert_grayscale(image)
-   adjusted  <span style="color:#f92672">=</span> adjust(gray, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">9</span>)
-   m         <span style="color:#f92672">=</span> gen_halftone_masks()
+  gray      <span style="color:#f92672">=</span> convert_grayscale(image)
+  adjusted  <span style="color:#f92672">=</span> adjust_gray(gray, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">9</span>)
+  m         <span style="color:#f92672">=</span> gen_halftone_masks()
 
-   height, width, _ <span style="color:#f92672">=</span> get_shape(image)
-   halftoned        <span style="color:#f92672">=</span> zeros(<span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>height, <span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>width, <span style="color:#ae81ff">1</span>)
-   <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> tqdm(range(height), desc <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;halftone&#34;</span>):
-       <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(width):
-           index <span style="color:#f92672">=</span> adjusted[j, i]
-           halftoned[<span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>j:<span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>j, <span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>i:<span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>i] <span style="color:#f92672">=</span> m[:, :, index]
+  height, width <span style="color:#f92672">=</span> get_shape(image)
+  halftoned        <span style="color:#f92672">=</span> zeros(<span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>height, <span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>width)
+  <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> tqdm(range(height), desc <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;halftone&#34;</span>):
+      <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(width):
+          index <span style="color:#f92672">=</span> adjusted[j, i]
+          halftoned[<span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>j:<span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>j, <span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>i:<span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>i] <span style="color:#f92672">=</span> m[:, :, index]
 
-   halftoned <span style="color:#f92672">=</span> <span style="color:#ae81ff">255</span><span style="color:#f92672">*</span>halftoned
-   <span style="color:#66d9ef">return</span> halftoned
+  halftoned <span style="color:#f92672">=</span> <span style="color:#ae81ff">255</span><span style="color:#f92672">*</span>halftoned
+  <span style="color:#66d9ef">return</span> halftoned
 </code></pre></div><p>Time to test it!</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python">path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;test.png&#34;</span>
 image <span style="color:#f92672">=</span> imageio<span style="color:#f92672">.</span>imread(path)
@@ -386,14 +383,14 @@ imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&
 <p>Note that the center coefficient of the kernel, $\omega(0,0)$ , aligns with the pixel at location $( x , y )$, visiting it exactly once. For a kernel of size $m \times n$ , we assume that $m = 2 a + 1$ and $n = 2 b + 1$, where $a$ and $b$ are nonnegative integers. This means that our focus is on kernels of odd size in both coordinate directions.</p>
 <p>In English, one should &ldquo;slide&rdquo; the kernel $\omega$ through the image, evaluating the sum of the pixelwise product between the kernel and the corresponding region of the image, and assign that value to the current pixel location (the center of the kernel, in our case). This general idea is depicted in the animation below.</p>
 <div style="text-align:center"><img src="/img/posts/image_proc/conv.gif"></div>
-<p>If you don&rsquo;t know the differences between convolution and the correlation defined here, I encourage you to research it. However, there is a certain equivalence between these two operations.</p>
-<p>When dealing with convolution/cross-correlation, it is important to pay attention to the edges of the image. There are boundary conditions one could implement, such as zero paddings, or repeating the same values found in the edges of the image. I encourage you to implement them by yourself. In this article, however, we are going to implement the periodic, or wrapped, boundary condition. Briefly, whenever the filter crosses one edge, it comes through the opposite boundary, just like a Pacman game or a torus.</p>
+<p>I encourage you to research the differences between convolution and the correlation defined here. However, there is a certain equivalence between these two operations.</p>
+<p>When dealing with convolution/cross-correlation, it is important to pay attention to the edges of the image. There are boundary conditions one could implement, such as zero paddings, or repeating the same values found in the edges of the image. I also encourage you to implement them by yourself. In this article, however, we are going to implement the periodic, or wrapped, boundary condition. Briefly, whenever the filter crosses one edge, it comes through the opposite boundary, just like a Pacman game or a torus.</p>
 <div style="text-align:center"><img src="/img/posts/image_proc/torus.png" style="width: 60%"></div>
-<p>Ok, no more math. The final code consists of a dictionary containing all of our kernels and the <code>apply_kernel</code> function, aka the cross-correlation. Look at the descriptions at the beginning of this article, the definition of cross-correlation, and the corresponding kernels. Can you figure out why they work?</p>
+<p>Ok, no more math. The final code consists of a dictionary containing all of our kernels and the apply_kernel function, aka the cross-correlation. If the image has three channels, we apply the cross-correlation in each channel and combine the results. Take a look at the description box at the beginning of this article, the definition of cross-correlation, and the corresponding kernels. Can you figure out why they work?</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#75715e"># Add this after your halftone method</span>
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">clip</span>(a):
-  <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>clip(a, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">255</span>)
+    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>clip(a, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">255</span>)
 
 kernels <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;mean&#34;</span>      : np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>],
                                    [<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>],
@@ -442,7 +439,8 @@ kernels <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;m
     dim           <span style="color:#f92672">=</span> len(kernel_matrix)
     center        <span style="color:#f92672">=</span> (dim <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>
 
-    height, width, _ <span style="color:#f92672">=</span> get_shape(image)
+    shape <span style="color:#f92672">=</span> get_shape(image)
+    height, width <span style="color:#f92672">=</span> shape[<span style="color:#ae81ff">0</span>], shape[<span style="color:#ae81ff">1</span>]
 
     <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> is_grayscale(image):
         picture <span style="color:#f92672">=</span> zeros(height, width, <span style="color:#ae81ff">3</span>)
@@ -450,24 +448,24 @@ kernels <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;m
         <span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> tqdm(range(height), desc <span style="color:#f92672">=</span> kernel):
             <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(width):
 
-                red <span style="color:#f92672">=</span> zeros(dim, dim, <span style="color:#ae81ff">1</span>)
+                red <span style="color:#f92672">=</span> zeros(dim, dim)
                 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(dim):
                     <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(dim):
                         red[i , j] <span style="color:#f92672">=</span> image[ (y <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> j)<span style="color:#f92672">%</span>height, (x <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> i)<span style="color:#f92672">%</span>width, <span style="color:#ae81ff">0</span>]
 
-                green <span style="color:#f92672">=</span> zeros(dim, dim, <span style="color:#ae81ff">1</span>)
+                green <span style="color:#f92672">=</span> zeros(dim, dim)
                 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(dim):
                     <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(dim):
                         green[i , j] <span style="color:#f92672">=</span> image[ (y <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> j)<span style="color:#f92672">%</span>height, (x <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> i)<span style="color:#f92672">%</span>width, <span style="color:#ae81ff">1</span>]
 
-                blue <span style="color:#f92672">=</span> zeros(dim, dim, <span style="color:#ae81ff">1</span>)
+                blue <span style="color:#f92672">=</span> zeros(dim, dim)
                 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(dim):
                     <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(dim):
                         blue[i , j] <span style="color:#f92672">=</span> image[ (y <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> j)<span style="color:#f92672">%</span>height, (x <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> i)<span style="color:#f92672">%</span>width, <span style="color:#ae81ff">2</span>]
 
-                redc   <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(red[:, :, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>kernel_matrix)
-                greenc <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(green[:, :, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>kernel_matrix)
-                bluec  <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(blue[:, :, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>kernel_matrix)
+                redc   <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(red<span style="color:#f92672">*</span>kernel_matrix)
+                greenc <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(green<span style="color:#f92672">*</span>kernel_matrix)
+                bluec  <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(blue<span style="color:#f92672">*</span>kernel_matrix)
 
                 r, g, b <span style="color:#f92672">=</span> map(int,  [redc, greenc, bluec])
                 r, g, b <span style="color:#f92672">=</span> map(clip, [r, g, b])
@@ -477,16 +475,15 @@ kernels <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;m
                 picture[y, x, <span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> b
         <span style="color:#66d9ef">return</span> picture
     <span style="color:#66d9ef">else</span>:
-        picture <span style="color:#f92672">=</span> zeros(height, width, <span style="color:#ae81ff">1</span>)
+        picture <span style="color:#f92672">=</span> zeros(height, width)
         <span style="color:#66d9ef">for</span> y <span style="color:#f92672">in</span> tqdm(range(height), desc <span style="color:#f92672">=</span> kernel):
             <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> range(width):
 
-                aux <span style="color:#f92672">=</span> zeros(dim, dim, <span style="color:#ae81ff">1</span>)
+                aux <span style="color:#f92672">=</span> zeros(dim, dim)
                 <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(dim):
                     <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(dim):
                         aux[i , j] <span style="color:#f92672">=</span> image[ (y <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> j)<span style="color:#f92672">%</span>height, (x <span style="color:#f92672">-</span> center <span style="color:#f92672">+</span> i)<span style="color:#f92672">%</span>width]
-
-                gray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(aux[:, :, <span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>kernel_matrix)
+                gray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sum(aux<span style="color:#f92672">*</span>kernel_matrix)
 
                 pxl_intensity <span style="color:#f92672">=</span> round(gray)
                 pxl_intensity <span style="color:#f92672">=</span> clip(pxl_intensity)
@@ -559,7 +556,7 @@ image <span style="color:#f92672">=</span> imageio<span style="color:#f92672">.<
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Flipping horizontally...&#34;</span>)
     flip <span style="color:#f92672">=</span> image[:, ::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
     <span style="color:#66d9ef">return</span> flip
-</code></pre></div><p>Collecting everything in a dictionary and running, we have:</p>
+</code></pre></div><p>Collecting everything in a dictionary and running the code, we have:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python">geometric_transforms <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;rot90&#34;</span>     : rot90,
                         <span style="color:#e6db74">&#34;rot180&#34;</span>    : rot180,
                         <span style="color:#e6db74">&#34;rotm90&#34;</span>    : rotm90,
@@ -622,8 +619,8 @@ imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&
 </div>
 <h2 id="conclusion">Conclusion</h2>
 <hr>
-<p>Congratulations! You have built your first image processing toolbox! Although we have a Pythonic way here and there, the concepts are there so you can implement them in any other language.</p>
-<p>Now, I hope, you know how to implement these tools yourself and can use them in your application. Be creative, combine and tweak these tools to your liking. I know you will find many use cases for it! For instance, I have been using some of these implementations for <em>data augmentation</em> purposes in Machine Learning, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.</p>
+<p>Congratulations! You have built your first image processing toolbox! Although we have used a Pythonic way to implement things here and there, you can use the concepts outlined here to implement everything in any other language.</p>
+<p>Now that you know how to implement these tools yourself you can use them in your application. Be creative, combine and tweak these tools to your liking. I know you will find many use cases for it! For instance, I have been using some of these implementations for data augmentation purposes in Machine Learning, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.</p>
 <p>Good Luck!</p>
 <h2 id="recommended-reading">Recommended reading</h2>
 <ul>
