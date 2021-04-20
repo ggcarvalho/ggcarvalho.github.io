@@ -595,7 +595,7 @@ A similar concept is used in negative films if you happen to be old enough to re
 
 <div style="text-align:center"><img src="/img/posts/image_proc/negative.jpeg" style="width: 25%"></div>
 
-Now, in terms of implementation, we have a very simple function (thanks to Numpy broadcasting ).
+Now, in terms of implementation, we have a very simple function (thanks to Numpy broadcasting).
 
 ```python
 def negative(image):
