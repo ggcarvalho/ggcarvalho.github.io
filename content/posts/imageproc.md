@@ -10,8 +10,7 @@ hashtags: "#python #imageprocessing"
 draft: false
 ---
 
-Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks (this statement is particularly true if you are a Pythonist). However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will
-see how to implement basic image processing tools from scratch using Python.
+Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks (this statement is particularly true if you are a Pythonist). However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will see how to implement basic image processing tools from scratch using Python.
 
 {{< table_of_contents >}}
 
@@ -168,17 +167,15 @@ from tqdm import tqdm
 
 def get_shape(image):
     shape = image.shape
-    if len(shape)==3:
+    if len(shape)==3 or len(shape)==2:
         return shape
-    elif len(shape)==2:
-        return shape[0],shape[1], 1
     else:
         raise Exception("Sorry, something is wrong!")
 
 def is_grayscale(image):
-    if get_shape(image)[2] == 3:
+    if len(get_shape(image))==3:
         return False
-    elif get_shape(image)[2] == 1:
+    elif len(get_shape(image))==2:
         return True
     else:
         raise Exception("Sorry, something is wrong!")
@@ -186,14 +183,14 @@ def is_grayscale(image):
 def get_luminance(image):
     return 0.299*image[:, :, 0] + 0.587*image[:, :, 1] + 0.114*image[:, :, 2]
 
-def zeros(height, width, depth):
-    return np.zeros((height, width, depth))
+def zeros(height, width, depth=None):
+    return np.zeros((height, width)) if depth is None else np.zeros((height, width, depth))
 
 def convert_grayscale(image):
     if not is_grayscale(image):
         height, width, _ = get_shape(image)
-        gray_image       = zeros(height, width, 1)
-        gray_image[:, :, 0] = get_luminance(image)
+        gray_image       = zeros(height, width)
+        gray_image = get_luminance(image)
         return gray_image
     else:
         return image
@@ -236,64 +233,64 @@ $$\lambda = \frac{\text{newMax} - \text{newMin}}{ \max(I(x,y)) - \min(I(x,y)) },
 $I(x, y)$ representing the original image, and $\hat{I}(x,y)$ representing the image in the new range. These steps are summarized in the piece of code below.
 
  ```python
- # Add this code after the grayscale converter
+# Add this code after the grayscale converter
 
 def get_image_range(image):
-    return np.min(image), np.max(image)
+   return np.min(image), np.max(image)
 
-def adjust(image, new_min, new_max):
-    image_min, image_max = get_image_range(image)
-    h, w, d  = get_shape(image)
-    adjusted = zeros(h, w, d)
-    adjusted = (image - image_min)*((new_max - new_min)/(image_max - image_min)) + new_min
-    return adjusted.astype(np.uint8)
+def adjust_gray(image, new_min, new_max):
+   image_min, image_max = get_image_range(image)
+   h, w  = get_shape(image)
+   adjusted = zeros(h, w)
+   adjusted = (image - image_min)*((new_max - new_min)/(image_max - image_min)) + new_min
+   return adjusted.astype(np.uint8)
 
 def gen_halftone_masks():
-    m = zeros(3, 3, 10)
+   m = zeros(3, 3, 10)
 
-    m[:, :, 1] = m[:, :, 0]
-    m[0, 1, 1] = 1
+   m[:, :, 1] = m[:, :, 0]
+   m[0, 1, 1] = 1
 
-    m[:, :, 2] = m[:, :, 1]
-    m[2, 2, 2] = 1
+   m[:, :, 2] = m[:, :, 1]
+   m[2, 2, 2] = 1
 
-    m[:, :, 3] = m[:, :, 2]
-    m[0, 0, 3] = 1
+   m[:, :, 3] = m[:, :, 2]
+   m[0, 0, 3] = 1
 
-    m[:, :, 4] = m[:, :, 3]
-    m[2, 0, 4] = 1
+   m[:, :, 4] = m[:, :, 3]
+   m[2, 0, 4] = 1
 
-    m[:, :, 5] = m[:, :, 4]
-    m[0, 2, 5] = 1
+   m[:, :, 5] = m[:, :, 4]
+   m[0, 2, 5] = 1
 
-    m[:, :, 6] = m[:, :, 5]
-    m[1, 2, 6] = 1
+   m[:, :, 6] = m[:, :, 5]
+   m[1, 2, 6] = 1
 
-    m[:, :, 7] = m[:, :, 6]
-    m[2, 1, 7] = 1
+   m[:, :, 7] = m[:, :, 6]
+   m[2, 1, 7] = 1
 
-    m[:, :, 8] = m[:, :, 7]
-    m[1, 0, 8] = 1
+   m[:, :, 8] = m[:, :, 7]
+   m[1, 0, 8] = 1
 
-    m[:, :, 9] = m[:, :, 8]
-    m[1, 1, 9] = 1
+   m[:, :, 9] = m[:, :, 8]
+   m[1, 1, 9] = 1
 
-    return m
+   return m
 
 def halftone(image):
-    gray      = convert_grayscale(image)
-    adjusted  = adjust(gray, 0, 9)
-    m         = gen_halftone_masks()
+   gray      = convert_grayscale(image)
+   adjusted  = adjust_gray(gray, 0, 9)
+   m         = gen_halftone_masks()
 
-    height, width, _ = get_shape(image)
-    halftoned        = zeros(3*height, 3*width, 1)
-    for j in tqdm(range(height), desc = "halftone"):
-        for i in range(width):
-            index = adjusted[j, i]
-            halftoned[3*j:3+3*j, 3*i:3+3*i] = m[:, :, index]
+   height, width = get_shape(image)
+   halftoned        = zeros(3*height, 3*width)
+   for j in tqdm(range(height), desc = "halftone"):
+       for i in range(width):
+           index = adjusted[j, i]
+           halftoned[3*j:3+3*j, 3*i:3+3*i] = m[:, :, index]
 
-    halftoned = 255*halftoned
-    return halftoned
+   halftoned = 255*halftoned
+   return halftoned
  ```
 
 Time to test it!
@@ -329,19 +326,19 @@ In English, one should "slide" the kernel $\omega$ through the image, evaluating
 
 <div style="text-align:center"><img src="/img/posts/image_proc/conv.gif"></div>
 
-If you don't know the differences between convolution and the correlation defined here, I encourage you to research it. However, there is a certain equivalence between these two operations.
+I encourage you to research the differences between convolution and the correlation defined here. However, there is a certain equivalence between these two operations.
 
-When dealing with convolution/cross-correlation, it is important to pay attention to the edges of the image. There are boundary conditions one could implement, such as zero paddings, or repeating the same values found in the edges of the image. I encourage you to implement them by yourself. In this article, however, we are going to implement the periodic, or wrapped, boundary condition. Briefly, whenever the filter crosses one edge, it comes through the opposite boundary, just like a Pacman game or a torus.
+When dealing with convolution/cross-correlation, it is important to pay attention to the edges of the image. There are boundary conditions one could implement, such as zero paddings, or repeating the same values found in the edges of the image. I also encourage you to implement them by yourself. In this article, however, we are going to implement the periodic, or wrapped, boundary condition. Briefly, whenever the filter crosses one edge, it comes through the opposite boundary, just like a Pacman game or a torus.
 
 <div style="text-align:center"><img src="/img/posts/image_proc/torus.png" style="width: 60%"></div>
 
-Ok, no more math. The final code consists of a dictionary containing all of our kernels and the `apply_kernel` function, aka the cross-correlation. Look at the descriptions at the beginning of this article, the definition of cross-correlation, and the corresponding kernels. Can you figure out why they work?
+Ok, no more math. The final code consists of a dictionary containing all of our kernels and the apply_kernel function, aka the cross-correlation. If the image has three channels, we apply the cross-correlation in each channel and combine the results. Take a look at the description box at the beginning of this article, the definition of cross-correlation, and the corresponding kernels. Can you figure out why they work?
 
 ```python
 # Add this after your halftone method
 
 def clip(a):
-  return np.clip(a, 0, 255)
+    return np.clip(a, 0, 255)
 
 kernels = {"mean"      : np.array([[1/9, 1/9, 1/9],
                                    [1/9, 1/9, 1/9],
@@ -390,7 +387,8 @@ def apply_kernel(image, kernel):
     dim           = len(kernel_matrix)
     center        = (dim - 1)//2
 
-    height, width, _ = get_shape(image)
+    shape = get_shape(image)
+    height, width = shape[0], shape[1]
 
     if not is_grayscale(image):
         picture = zeros(height, width, 3)
@@ -398,24 +396,24 @@ def apply_kernel(image, kernel):
         for y in tqdm(range(height), desc = kernel):
             for x in range(width):
 
-                red = zeros(dim, dim, 1)
+                red = zeros(dim, dim)
                 for i in range(dim):
                     for j in range(dim):
                         red[i , j] = image[ (y - center + j)%height, (x - center + i)%width, 0]
 
-                green = zeros(dim, dim, 1)
+                green = zeros(dim, dim)
                 for i in range(dim):
                     for j in range(dim):
                         green[i , j] = image[ (y - center + j)%height, (x - center + i)%width, 1]
 
-                blue = zeros(dim, dim, 1)
+                blue = zeros(dim, dim)
                 for i in range(dim):
                     for j in range(dim):
                         blue[i , j] = image[ (y - center + j)%height, (x - center + i)%width, 2]
 
-                redc   = np.sum(red[:, :, 0]*kernel_matrix)
-                greenc = np.sum(green[:, :, 0]*kernel_matrix)
-                bluec  = np.sum(blue[:, :, 0]*kernel_matrix)
+                redc   = np.sum(red*kernel_matrix)
+                greenc = np.sum(green*kernel_matrix)
+                bluec  = np.sum(blue*kernel_matrix)
 
                 r, g, b = map(int,  [redc, greenc, bluec])
                 r, g, b = map(clip, [r, g, b])
@@ -425,16 +423,15 @@ def apply_kernel(image, kernel):
                 picture[y, x, 2] = b
         return picture
     else:
-        picture = zeros(height, width, 1)
+        picture = zeros(height, width)
         for y in tqdm(range(height), desc = kernel):
             for x in range(width):
 
-                aux = zeros(dim, dim, 1)
+                aux = zeros(dim, dim)
                 for i in range(dim):
                     for j in range(dim):
                         aux[i , j] = image[ (y - center + j)%height, (x - center + i)%width]
-
-                gray = np.sum(aux[:, :, 0]*kernel_matrix)
+                gray = np.sum(aux*kernel_matrix)
 
                 pxl_intensity = round(gray)
                 pxl_intensity = clip(pxl_intensity)
@@ -528,7 +525,7 @@ def hor_flip(image):
     return flip
 ```
 
-Collecting everything in a dictionary and running, we have:
+Collecting everything in a dictionary and running the code, we have:
 
 ```python
 geometric_transforms = {"rot90"     : rot90,
@@ -567,6 +564,7 @@ def intensity(image, factor):
  ```
 
 The results of a $25$% increase in brightness and a $50$% decrease in brightness are given below.
+
 ```python
 path = "test.png"
 image = imageio.imread(path)
@@ -575,6 +573,7 @@ imageio.imwrite("brighter.png", img_brighter)
 img_darker = intensity(image, 0.5).astype(np.uint8)
 imageio.imwrite("darker.png", img_darker)
 ```
+
 <div style= "text-align:center">
 <a href="/img/posts/image_proc/test.png" target="_blank"><img src="/img/posts/image_proc/test.png"  alt="Original" style="width:25%; margin:1%"r></a>
 <a href="/img/posts/image_proc/brighter.png" target="_blank"><img src="/img/posts/image_proc/brighter.png"  alt="Brighter" style="width:25%; margin:1%"></a>
@@ -620,9 +619,9 @@ imageio.imwrite("static/img/posts/image_proc/" + "negative" + ".png", img)
 ## Conclusion
 ---
 
-Congratulations! You have built your first image processing toolbox! Although we have a Pythonic way here and there, the concepts are there so you can implement them in any other language.
+Congratulations! You have built your first image processing toolbox! Although we have used a Pythonic way to implement things here and there, you can use the concepts outlined here to implement everything in any other language.
 
-Now, I hope, you know how to implement these tools yourself and can use them in your application. Be creative, combine and tweak these tools to your liking. I know you will find many use cases for it! For instance, I have been using some of these implementations for <em>data augmentation</em> purposes in Machine Learning, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.
+Now that you know how to implement these tools yourself you can use them in your application. Be creative, combine and tweak these tools to your liking. I know you will find many use cases for it! For instance, I have been using some of these implementations for data augmentation purposes in Machine Learning, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.
 
 Good Luck!
 
