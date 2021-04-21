@@ -18,7 +18,7 @@ func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	trials := 10000000
-	fmt.Printf("Calculating e with %d trial(s).\n\n", trials)
+	fmt.Printf("Estimating e with %d trial(s).\n\n", trials)
 
 	acc := 0.0
 	for i := 0; i < trials; i++ {
