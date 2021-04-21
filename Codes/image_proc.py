@@ -190,8 +190,51 @@ def apply_kernel(image, kernel):
                 picture[y, x] = int(pxl_intensity)
         return picture
 
-path = "testGray.png"
-image = imageio.imread(path)
-for key in kernels:
-    img = apply_kernel(image, key).astype(np.uint8)
-    imageio.imwrite(key + ".png", img)
+def transpose(m):
+    height, width, depth = get_shape(m)
+
+    transposed = zeros(width, height, depth)
+    for i in range(width):
+        for j in range(height):
+            transposed[i, j] = m[j, i]
+    return transposed
+
+def aux90(image):
+    return transpose(image)[:,::-1]
+
+def rot90(image):
+    print("Rotating the image 90 degrees clockwise...")
+    rot = aux90(image)
+    return transpose(image)[:,::-1]
+
+def rot180(image):
+    print("Rotating the image 180 degrees...")
+    rot = image[::-1, ::-1]
+    return rot
+
+def rotm90(image):
+    print("Rotating the image 90 degrees counterclockwise...")
+    rot = aux90(image[::-1, ::-1])
+    return rot
+
+def vert_flip(image):
+    print("Flipping vertically...")
+    flip = image[::-1]
+    return flip
+
+def hor_flip(image):
+    print("Flipping horizontally...")
+    flip = image[:, ::-1]
+    return flip
+
+geometric_transforms = {"rot90"     : rot90,
+                        "rot180"    : rot180,
+                        "rotm90"    : rotm90,
+                        "vert_flip" : vert_flip,
+                        "hor_flip"  : hor_flip}
+
+def intensity(image, factor):
+   return clip(factor*image)
+
+def negative(image):
+  return 255 - image

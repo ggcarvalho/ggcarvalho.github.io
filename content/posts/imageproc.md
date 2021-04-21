@@ -605,10 +605,10 @@ def negative(image):
 As a result:
 
 ```python
-path = "static/img/posts/image_proc/zagreb.jpg"
+path = "zagreb.jpg"
 image = imageio.imread(path)
 img = negative(image).astype(np.uint8)
-imageio.imwrite("static/img/posts/image_proc/" + "negative" + ".png", img)
+imageio.imwrite("negative.png", img)
 ```
 
 <div style= "text-align:center">
