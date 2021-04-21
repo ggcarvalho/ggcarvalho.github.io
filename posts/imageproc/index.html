@@ -609,10 +609,10 @@ imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">negative</span>(image):
   <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">255</span> <span style="color:#f92672">-</span> image
 </code></pre></div><p>As a result:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python">path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;static/img/posts/image_proc/zagreb.jpg&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822"><code class="language-python" data-lang="python">path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;zagreb.jpg&#34;</span>
 image <span style="color:#f92672">=</span> imageio<span style="color:#f92672">.</span>imread(path)
 img <span style="color:#f92672">=</span> negative(image)<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>uint8)
-imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;static/img/posts/image_proc/&#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;negative&#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.png&#34;</span>, img)
+imageio<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#34;zagreb_negative.png&#34;</span>, img)
 </code></pre></div><div style= "text-align:center">
 <a href="/img/posts/image_proc/zagreb.jpg" target="_blank"><img src="/img/posts/image_proc/zagreb.jpg"  alt="Original" style="width:45%; margin:1%"r></a>
 <a href="/img/posts/image_proc/negative.png" target="_blank"><img src="/img/posts/image_proc/negative.png"  alt="Negative" style="width:45%; margin:1%"></a>
