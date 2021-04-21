@@ -608,7 +608,7 @@ As a result:
 path = "zagreb.jpg"
 image = imageio.imread(path)
 img = negative(image).astype(np.uint8)
-imageio.imwrite("negative.png", img)
+imageio.imwrite("zagreb_negative.png", img)
 ```
 
 <div style= "text-align:center">
