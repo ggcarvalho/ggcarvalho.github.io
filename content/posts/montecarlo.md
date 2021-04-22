@@ -461,7 +461,7 @@ We are going to use this technique to solve a classic problem. If you are a calc
 
 It involves a trick using Fubini's theorem and change in from cartesian to polar coordinates. Surprisingly, the result of this integral is $\sqrt{\pi}$. Let's use Monte Carlo integration to evaluate $$\bar{S} = \int_{-20}^{20} e^{-x^2}dx.$$
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/function.png" style="width: 50%; margin: 2%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/function.png" style="width: 35%; margin: 2%"></div>
 
 We see that $f$ rapidly decreases when moving away from $x=0$, so the definite integral in $[-20,20]$ seems to be a good approximation.
 
