@@ -6,13 +6,13 @@ date: "2021-05-19"
 image: "/img/posts/montecarlo/roulette.jpg"
 tag: "go"
 name: "go"
-hashtags: "#go #golang #scientificcomputing #montecarlo #trade ##algotrade #quant #finance"
+hashtags: "#go #golang #scientificcomputing #montecarlo #trade #algotrade #quant #finance"
 draft: false
 ---
 
 Monte Carlo methods consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used in areas such as finance, project management, engineering, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable.
 
-In this article we will explore some examples (ranging from basic to advanced) and applications of Monte Carlo simulations using the Go programming language.
+In this article, we will explore some examples (ranging from basic to advanced) and applications of Monte Carlo simulations using the Go programming language.
 
 Put your adventure helmets on!
 
@@ -21,6 +21,7 @@ Put your adventure helmets on!
 {{< table_of_contents >}}
 
 ## First examples
+
 ---
 
 Let's start our journey with some basic, and even textbook, examples of Monte Carlo simulations. You're going to notice a pattern when implementing this method. Use it to create or try your own examples.
@@ -31,7 +32,7 @@ This is by far the most famous example of Monte Carlo simulations, considered to
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/circle.png" style="width: 40%"></div>
 
-If we were to darw random points in this square, some will fall within the circle and some won't. But the ratio between points inside the circular region and the total amount of points we draw will be closer and closer to the ratio between the area of the circle and the area of the square as we draw more of these random points.
+If we were to draw random points in this square, some will fall within the circle and some won't. But the ratio between points inside the circular region and the total amount of points we draw will be closer and closer to the ratio between the area of the circle and the area of the square as we draw more of these random points.
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/circle2.png" style="width: 40%"></div>
 
@@ -46,52 +47,53 @@ Now, let's turn this idea into a Go code.
 package main
 
 import (
-	"fmt"
-	"time"
-	"math"
-	"math/rand"
+    "fmt"
+    "time"
+    "math"
+    "math/rand"
 )
 
 func inside_circle(x float64, y float64) bool {
-	if x*x + y*y < 1 {
-		return true
-	}
-	return false
+    if x*x + y*y < 1 {
+        return true
+    }
+    return false
 }
 
 func abs(x float64) float64 {
-	if x < 0.0 {
-		return -x
-	}
-	return x
+    if x < 0.0 {
+        return -x
+    }
+    return x
 }
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	trials := 1000000
-	fmt.Printf("Estimating pi with %d trial(s).\n\n", trials)
+    trials := 1000000
+    fmt.Printf("Estimating pi with %d trial(s).\n\n", trials)
 
-	sucess := 0
-	for i := 0; i < trials; i++ {
-		px := 2.0*rand.Float64() - 1.0
-		py := 2.0*rand.Float64() - 1.0
+    sucess := 0
+    for i := 0; i < trials; i++ {
+        px := 2.0*rand.Float64() - 1.0
+        py := 2.0*rand.Float64() - 1.0
 
-		if inside_circle(px, py) {
-			sucess += 1
-		}
-	}
+        if inside_circle(px, py) {
+            sucess += 1
+        }
+    }
 
-	pi_approx := 4.0*(float64(sucess) / float64(trials))
-	pi := math.Pi
-	fmt.Printf("Estimated pi: %9f \n", pi_approx)
-	fmt.Printf("pi: %9f \n", pi)
+    pi_approx := 4.0*(float64(sucess) / float64(trials))
+    pi := math.Pi
+    fmt.Printf("Estimated pi: %9f \n", pi_approx)
+    fmt.Printf("pi: %9f \n", pi)
 
-	error_pct := 100*abs(pi_approx - pi) / pi
+    error_pct := 100*abs(pi_approx - pi) / pi
 
-	fmt.Printf("Error: %9f%%\n", error_pct)
+    fmt.Printf("Error: %9f%%\n", error_pct)
 }
 ```
+
 [Run this code in The Go Playground](https://play.golang.org/)
 
 ```bash
@@ -106,14 +108,13 @@ Error:  0.053965%
 
 We were able to approximate $\pi$ with an error of $0.053965$% ! Cool, let us see another example.
 
-
 ### Estimating Euler's number
 
 Not long ago, Lex Fridman published the following in a LinkedIn post:
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/lex.png" style="width: 60%"></div>
 
-This is very intriguing! I decided to write a simple Python program to test it myself. I wrote my code as a response to Lex's post, and people were surprised with it (this is the actual motivation to write this blog post).
+This is very intriguing! I decided to write a simple Python program to test it myself. I wrote my code as a response to Lex's post, and people were surprised by it (this is the actual motivation to write this blog post).
 This, once again, showed me the power of Monte Carlo simulations in scientific computing, where you can find precise numerical answers to your problems without relying on any theoretical background (they might not even exist!).
 
 I wrote an equivalent Go code to solve this problem. Here it is:
@@ -122,47 +123,47 @@ I wrote an equivalent Go code to solve this problem. Here it is:
 package main
 
 import (
-	"fmt"
-	"time"
-	"math"
-	"math/rand"
+    "fmt"
+    "time"
+    "math"
+    "math/rand"
 )
 
 func abs(x float64) float64 {
-	if x < 0.0 {
-		return -x
-	}
-	return x
+    if x < 0.0 {
+        return -x
+    }
+    return x
 }
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	trials := 10000000
-	fmt.Printf("Estimating e with %d trial(s).\n\n", trials)
+    trials := 10000000
+    fmt.Printf("Estimating e with %d trial(s).\n\n", trials)
 
-	acc := 0.0
-	for i := 0; i < trials; i++ {
-		sum := 0.0
-		num2sucess := 0
+    acc := 0.0
+    for i := 0; i < trials; i++ {
+        sum := 0.0
+        num2sucess := 0
 
-		for sum <= 1 {
-			n := rand.Float64()
-			sum += n
-			num2sucess += 1
-		}
-		acc += float64(num2sucess)
-	}
+        for sum <= 1 {
+            n := rand.Float64()
+            sum += n
+            num2sucess += 1
+        }
+        acc += float64(num2sucess)
+    }
 
-	expected := acc / float64(trials)
-	e := math.Exp(1)
+    expected := acc / float64(trials)
+    e := math.Exp(1)
 
-	fmt.Printf("Expected vale: %9f \n", expected)
-	fmt.Printf("e: %9f \n", e)
+    fmt.Printf("Expected vale: %9f \n", expected)
+    fmt.Printf("e: %9f \n", e)
 
-	error_pct := 100*abs(expected - e) / e
+    error_pct := 100*abs(expected - e) / e
 
-	fmt.Printf("Error: %9f%%\n", error_pct)
+    fmt.Printf("Error: %9f%%\n", error_pct)
 
 }
 ```
@@ -182,12 +183,11 @@ Error:  0.008681%
 An astonishing result!
 
 ### The birthday paradox
----
 
 This is a famous problem in statistics:
 >In a group of $23$ people, the probability of a shared birthday exceeds $50$%.
 
-That sounds weird at first, but if you're good enough with math you can easily prove this statement. However, we are not interested in formal proofs here. That is the whole point of these simulations. The idea is very simple: create a list with $n$ ($23$) random numbers between $1$ and $365$ representing the birth day of each person and if (at least) two of them coincide, you increment the `sucess` variable. Do it a certain number of times and calculate the probability.
+That sounds weird at first, but if you're good enough with math you can easily prove this statement. However, we are not interested in formal proofs here. That is the whole point of these simulations. The idea is very simple: create a list with $n$ ($23$) random numbers between $1$ and $365$ representing the birth day of each person and if (at least) two of them coincide, you increment the `success variable. Do it a certain number of times and calculate the probability.
 
 The corresponding Go code:
 
@@ -195,9 +195,9 @@ The corresponding Go code:
 package main
 
 import (
-	"fmt"
-	"time"
-	"math/rand"
+    "fmt"
+    "time"
+    "math/rand"
 )
 
 func unique(intSlice []int) []int {
@@ -213,35 +213,36 @@ func unique(intSlice []int) []int {
 }
 
 func gen_bday_list(n int) []int {
-	var bdays []int
-	for i := 0; i < n; i++ {
-		bday := rand.Intn(365) + 1
-		bdays = append(bdays, bday)
-	}
-	return bdays
+    var bdays []int
+    for i := 0; i < n; i++ {
+        bday := rand.Intn(365) + 1
+        bdays = append(bdays, bday)
+    }
+    return bdays
 }
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
-	trials := 1000000
-	sucess := 0
+    rand.Seed(time.Now().UTC().UnixNano())
+    trials := 1000000
+    sucess := 0
 
-	for i := 0; i < trials; i++ {
+    for i := 0; i < trials; i++ {
 
-		bdays := gen_bday_list(23)
-		uniques := unique(bdays)
+        bdays := gen_bday_list(23)
+        uniques := unique(bdays)
 
-		if !(len(bdays)==len(uniques)) {
-			sucess++
-		}
-	}
+        if !(len(bdays)==len(uniques)) {
+            sucess++
+        }
+    }
 
-	probability := float64(sucess) / float64(trials)
+    probability := float64(sucess) / float64(trials)
 
-	fmt.Printf("The probability of at least 2 persons in a group of 23 people share a birthday is %.2f%%\n", 100*probability)
+    fmt.Printf("The probability of at least 2 persons in a group of 23 people share a birthday is %.2f%%\n", 100*probability)
 
 }
 ```
+
 [Run this code in The Go Playground](https://play.golang.org/)
 
 ```bash
@@ -316,8 +317,8 @@ You can tweak this code to reproduce the following table from [Wikipedia](https:
 
 Of course, for $n \geq 365$ you don't need any calculations, it's a straightforward consequence of the <em>pigeonhole principle</em>.
 
-
 ## The (in)famous Monty Hall problem
+
 ---
 
 That is a problem that has been disturbing people for ages. Just like the birthday problem, you can solve it using basic probability theory, which we won't do. Let's state the problem and provide a Monte Carlo simulation to solve it.
@@ -329,99 +330,100 @@ The problem is:
 
 People often believe that they are in a $50-50$ situation and therefore the switch is not very relevant. But if you carefully solve this problem, you will find that there is a probability of $2/3$ to win the prize if you decide to switch doors.
 
-The following Go code simulates this game and estimates the probability of winning if the guest choses to switch doors. Note that we first set the game so that the doors are properly chosen (possibly not and optimal code), and then we simulate the game to estimate the desired probability.
+The following Go code simulates this game and estimates the probability of winning if the guest chooses to switch doors. Note that we first set the game so that the doors are properly chosen (possibly not an optimal code), and then we simulate the game to estimate the desired probability.
 
 ```go
 package main
 
 import (
-	"fmt"
-	"time"
-	"math/rand"
+    "fmt"
+    "time"
+    "math/rand"
 )
 
 func abs(x float64) float64 {
-	if x < 0.0 {
-		return -x
-	}
-	return x
+    if x < 0.0 {
+        return -x
+    }
+    return x
 }
 
 func set_monty_hall() (int, int) {
-	guest_door := rand.Intn(3) + 1
-	prize_door := rand.Intn(3) + 1
-	goat1 := true
-	goat2 := true
+    guest_door := rand.Intn(3) + 1
+    prize_door := rand.Intn(3) + 1
+    goat1 := true
+    goat2 := true
 
-	var montys_choice int
-	var new_door int
-	var goat1_door int
-	var goat2_door int
-	var switch_door bool
-	var show_goat bool
+    var montys_choice int
+    var new_door int
+    var goat1_door int
+    var goat2_door int
+    var switch_door bool
+    var show_goat bool
 
-	for goat1 {
-		goat1_door = rand.Intn(3) + 1
-		if goat1_door != prize_door {
-			goat1 = false
-		}
-	}
+    for goat1 {
+        goat1_door = rand.Intn(3) + 1
+        if goat1_door != prize_door {
+            goat1 = false
+        }
+    }
 
-	for goat2 {
-		goat2_door = rand.Intn(3) + 1
-		if (goat2_door != prize_door) && (goat2_door != goat1_door) {
-			goat2 = false
-		}
-	}
+    for goat2 {
+        goat2_door = rand.Intn(3) + 1
+        if (goat2_door != prize_door) && (goat2_door != goat1_door) {
+            goat2 = false
+        }
+    }
 
-	switch_door = true
-	show_goat = true
+    switch_door = true
+    show_goat = true
 
-	for show_goat {
-		montys_choice = rand.Intn(3) + 1
-		if (montys_choice != prize_door) && (montys_choice != guest_door) {
-			show_goat = false
-		}
-	}
+    for show_goat {
+        montys_choice = rand.Intn(3) + 1
+        if (montys_choice != prize_door) && (montys_choice != guest_door) {
+            show_goat = false
+        }
+    }
 
-	for switch_door {
-		new_door = rand.Intn(3) + 1
-		if (new_door != guest_door) && (new_door != montys_choice) {
-			switch_door = false
-		}
-	}
-	return new_door, prize_door
+    for switch_door {
+        new_door = rand.Intn(3) + 1
+        if (new_door != guest_door) && (new_door != montys_choice) {
+            switch_door = false
+        }
+    }
+    return new_door, prize_door
 }
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	trials := 10000000
-	fmt.Printf("Estimating the propability of winning by switching doors with %d trial(s).\n\n", trials)
+    trials := 10000000
+    fmt.Printf("Estimating the propability of winning by switching doors with %d trial(s).\n\n", trials)
 
-	sucess := 0
-	for i := 0; i < trials; i++ {
-		new_door, prize_door := set_monty_hall()
-		if new_door == prize_door {
-			sucess++
-		}
-	}
-	probability := float64(sucess) / float64(trials)
-	theoretical_value := 2.0 / 3.0
+    sucess := 0
+    for i := 0; i < trials; i++ {
+        new_door, prize_door := set_monty_hall()
+        if new_door == prize_door {
+            sucess++
+        }
+    }
+    probability := float64(sucess) / float64(trials)
+    theoretical_value := 2.0 / 3.0
 
-	error_pct := 100*abs(probability - theoretical_value) / theoretical_value
+    error_pct := 100*abs(probability - theoretical_value) / theoretical_value
 
-	fmt.Printf("Estimated probability: %9f \n", probability)
-	fmt.Printf("Theoretical value: %9f \n", theoretical_value)
-	fmt.Printf("Error: %9f%%\n", error_pct)
+    fmt.Printf("Estimated probability: %9f \n", probability)
+    fmt.Printf("Theoretical value: %9f \n", theoretical_value)
+    fmt.Printf("Error: %9f%%\n", error_pct)
 }
 ```
+
 [Run this code in The Go Playground](https://play.golang.org/)
 
 ```bash
 $ go run monty_hall.go
 
-Estimating the propability of winning by switching doors with 10000000 trial(s).
+Estimating the probability of winning by switching doors with 10000000 trial(s).
 
 Estimated probability:  0.666596
 Theoretical value:  0.666667
@@ -430,8 +432,8 @@ Error:  0.010540%
 
 Therefore, contrary to popular belief, it is more advantageous to the guest to switch doors confirming the theoretical result.
 
-
 ## Integration using Monte Carlo simulations
+
 ---
 
 We can use the same idea we used to estimate $\pi$ to find the area under the graph of continuous functions in a specified range, a.k.a the definite integral of $f$ in that range.
@@ -460,38 +462,39 @@ The corresponding Go code is:
 package main
 
 import (
-	"fmt"
-	"time"
-	"math"
-	"math/rand"
+    "fmt"
+    "time"
+    "math"
+    "math/rand"
 )
 
 func monte_carlo_integral(function func(float64) float64, a float64, b float64, n int) float64 {
-	s := 0.0
-	for i := 0; i < n; i++ {
-		u_i := rand.Float64()
-		x_i := a + (b - a)*u_i
-		s += function(x_i)
-	}
+    s := 0.0
+    for i := 0; i < n; i++ {
+        u_i := rand.Float64()
+        x_i := a + (b - a)*u_i
+        s += function(x_i)
+    }
 
-	s = ( (b - a) / float64(n) ) * s
-	return s
+    s = ( (b - a) / float64(n) ) * s
+    return s
 }
 
 func gaussian(x float64) float64 {
-	return math.Exp(-x*x)
+    return math.Exp(-x*x)
 }
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	trials := 1000000
-	fmt.Printf("Estimating the integral of f with %d point(s).\n\n", trials)
+    trials := 1000000
+    fmt.Printf("Estimating the integral of f with %d point(s).\n\n", trials)
 
-	integral := monte_carlo_integral(gaussian, -20.0, 20.0, trials)
-	fmt.Printf("Approx. integral: %9f \n", integral)
+    integral := monte_carlo_integral(gaussian, -20.0, 20.0, trials)
+    fmt.Printf("Approx. integral: %9f \n", integral)
 }
 ```
+
 [Run this code in The Go Playground](https://play.golang.org/)
 
 ```bash
@@ -505,6 +508,7 @@ Approx. integral:  1.772819
 In fact, $1.772819^2 \approx 3.143$.
 
 ## The Black-Scholes stochastic equation
+
 ---
 
 Ok, for the final section of this article I have something special that draws the attention of many people around the world.
@@ -523,7 +527,7 @@ d_1 &=& \frac{\log\frac{S_t}{K} + (T-t)\left(r + \frac{\sigma^2}{2}\right)}{\sig
 d_2 &=& \frac{\log\frac{S_t}{K} + (T-t)\left(r - \frac{\sigma^2}{2}\right)}{\sigma\sqrt{T-t}}.
 \end{eqnarray*}
 
-In the equations above $S_t$ is the price of the underlying asset at time $t$, $\sigma$ is the constant volatility (standard deviation of returns) of the underlying asset, $K$ is the strike price of the option, $T$ is the maturity date of the option, $r$ is the risk free short rate.
+In the equations above $S_t$ is the price of the underlying asset at time $t$, $\sigma$ is the constant volatility (standard deviation of returns) of the underlying asset, $K$ is the strike price of the option, $T$ is the maturity date of the option, $r$ is the risk-free short rate.
 
 The Black-Scholes-Merton stochastic differential equation is given by $$dS_t = rS_t dt + \sigma S_t dZ_t,$$
 where $Z(t)$ is the random component of the model (a brownian motion). We will look at the discretized version of the BSM model (Euler discretization), given by $$S_t = S_{t-\Delta t}  +  \exp\left(\left(r - \frac{\sigma^2}{2}\right)\Delta t + \sigma\sqrt{\Delta t}Z_t \right).$$
@@ -539,7 +543,7 @@ In this simulation we use the values $S_0 = 100$, $K = 105$, $T = 1.0$, $r = 0.0
 
 We follow the steps:
 
-1. Divide the time interval $[0,T]$ in equidistant subintervals of length $\Delta t$.
+1. Divide the time interval $[0, T]$ in equidistant subintervals of length $\Delta t$.
 2. Start iterating $i = 1, 2,..., I$.
     - For every time step $t  = \Delta t, 2\Delta t,..., T$, draw pseudorandom numbers $z_t(i)$.
     - Determine the time $T$ value of the index level $S_T(i)$ by applying the pseudo-
@@ -551,78 +555,78 @@ We follow the steps:
 3. Sum up the inner values, average, and discount them back with the riskless short
 rate according to the formula
 $$C_0 \approx e^{-rT} \frac{1}{I} \sum_I h_T(S_T(i)),$$
-called the Monte Carlo estimator for European call option.
+called the Monte Carlo estimator for the European call option.
 
-Here is the corresponding Go code:
+Without any further ado, here is the corresponding Go code:
 
 ```go
 package main
 
 import (
-	"fmt"
-	"time"
-	"math"
-	"math/rand"
+    "fmt"
+    "time"
+    "math"
+    "math/rand"
 )
 
 
-func relu(x float64) float64 {
-	if x >= 0.0 {
-		return x
-	}
-	return 0.0
+func rectifier(x float64) float64 {
+    if x >= 0.0 {
+        return x
+    }
+    return 0.0
 }
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
-	start := time.Now()
+    rand.Seed(time.Now().UTC().UnixNano())
+    start := time.Now()
 
-	// Parameters
-	S0 := 100.0 // initial value
-	K := 105.0 // strike price
-	T := 1.0 // maturity
-	r := 0.05 //risk free short rate
-	sigma := 0.2 //volatility
-	M := 50 // number of time steps
-	dt := T / float64(M) //length of time interval
-	I := 250000 // number of paths
+    // Parameters
+    S0 := 100.0 // initial value
+    K := 105.0 // strike price
+    T := 1.0 // maturity
+    r := 0.05 //risk free short rate
+    sigma := 0.2 //volatility
+    M := 50 // number of time steps
+    dt := T / float64(M) //length of time interval
+    I := 250000 // number of paths
 
-	var S [][]float64
+    var S [][]float64
 
-	// Simulating I paths with M time steps
-	for i := 1; i < I; i++ {
-		var path []float64
-		for t := 0; t <= M; t++ {
-			if t == 0 {
-				path = append(path, S0)
-			} else {
-				z := rand.NormFloat64()
-				St := path[t - 1]*math.Exp((r - 0.5*(sigma*sigma))*dt + sigma*math.Sqrt(dt)*z)
-				path = append(path, St)
-			}
-		}
-		S = append(S, path)
+    // Simulating I paths with M time steps
+    for i := 1; i < I; i++ {
+        var path []float64
+        for t := 0; t <= M; t++ {
+            if t == 0 {
+                path = append(path, S0)
+            } else {
+                z := rand.NormFloat64()
+                St := path[t - 1]*math.Exp((r - 0.5*(sigma*sigma))*dt + sigma*math.Sqrt(dt)*z)
+                path = append(path, St)
+            }
+        }
+        S = append(S, path)
+    }
 
-	}
+    // Calculating the Monte Carlo estimator
+    sum_val := 0.0
+    for _,p := range S {
+        sum_val += rectifier(p[len(p) - 1] - K)
+    }
+    C0 := math.Exp(-r*T)*sum_val / float64(I)
 
-	// Calculating the Monte Carlo estimator
-	sum_val := 0.0
-	for _,p := range S {
-		sum_val += relu(p[len(p) - 1] - K)
-	}
-	C0 := math.Exp(-r*T)*sum_val / float64(I)
-
-	duration := time.Since(start)
-	fmt.Printf("European Option Value %.3f\n", C0)
-	fmt.Println("Execution time: ", duration)
+    duration := time.Since(start)
+    fmt.Printf("European Option Value: %.3f\n", C0)
+    fmt.Println("Execution time: ", duration)
 }
 ```
+
 [Run this code in The Go Playground](https://play.golang.org/)
 
 ```bash
 $ go run black_scholes.go
 
-European Option Value 8.027
+European Option Value: 8.027
 Execution time:  430.464289ms
 ```
 
@@ -630,14 +634,14 @@ Let's compare the results with the same simulation in Python (taken from Yves Hi
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/yves.png" style="width: 50%; margin: 2%"></div>
 
-Nearly the same result in a fraction of the time! To be completely fair, when the author uses full Numpy vectorization the results are much better in terms of performance, altough we still have a clear winner.
+Nearly the same result in a fraction of the time! To be completely fair, when the author uses full Numpy vectorization the results are much better in terms of performance, although we still have a clear winner.
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/yves2.png" style="width: 50%; margin: 2%"></div>
-
 
 For the sake of completeness, let us plot some of these paths (as people usually do).
 
 ## Conclusion
+
 ---
 
 ## Recommended reading

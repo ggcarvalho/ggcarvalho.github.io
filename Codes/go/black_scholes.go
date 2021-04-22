@@ -8,7 +8,7 @@ import (
 )
 
 
-func relu(x float64) float64 {
+func rectifier(x float64) float64 {
 	if x >= 0.0 {
 		return x
 	}
@@ -49,11 +49,11 @@ func main() {
 	// Calculating the Monte Carlo estimator
 	sum_val := 0.0
 	for _,p := range S {
-		sum_val += relu(p[len(p) - 1] - K)
+		sum_val += rectifier(p[len(p) - 1] - K)
 	}
 	C0 := math.Exp(-r*T)*sum_val / float64(I)
 
 	duration := time.Since(start)
-	fmt.Printf("European Option Value %.3f\n", C0)
+	fmt.Printf("European Option Value: %.3f\n", C0)
 	fmt.Println("Execution time: ", duration)
 }
