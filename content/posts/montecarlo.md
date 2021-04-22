@@ -47,7 +47,7 @@ If we were to draw random points in this square, some will fall within the circl
 As you might know, the area of the circular region is $A_{\circ} = \pi\cdot r^2 = \pi$, since $r = 1$, and the area of the square is $A_{\square} = l^2 = 4$, since $l=2$. Thus, $$\pi = 4\cdot \frac{A_{\circ}}{A_{\square}}.$$
 
 As a result, we can estimate $\pi$ as
-$$\pi \approx 4\cdot \frac{\text{num. points inside the circle}}{\text{num. points}}.$$
+$$\pi \approx 4\cdot \frac{\text{$\\#$ points inside the circle}}{\text{$\\#$ points}}.$$
 Remember that, in our case, $(x, y)$ will fall inside the circular region if $x^2 + y^2 < 1$.
 
 Now, let's turn this idea into a Go code.
@@ -554,7 +554,7 @@ We follow the steps:
 
 1. Divide the time interval $[0, T]$ in equidistant subintervals of length $\Delta t$.
 2. Start iterating $i = 1, 2,..., I$.
-    - For every time step $t  = \Delta t, 2\Delta t,..., T$, draw pseudorandom numbers $z_t(i)$.
+    - For every time step $t  \in \\{\Delta t, 2\Delta t,..., T \\}$, draw pseudorandom numbers $z_t(i)$.
     - Determine the time $T$ value of the index level $S_T(i)$ by applying the pseudo-
     random numbers time step by time step to the discretized equation.
     - Determine the inner value $h_T$ of the European call option at $T$ as $h_T(S_T(i)) =
