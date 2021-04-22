@@ -10,11 +10,11 @@ hashtags: "#go #golang #scientificcomputing #montecarlo #trade #algotrade #quant
 draft: false
 ---
 
-In this article, we will explore some examples and applications of Monte Carlo simulations using the Go programming language. To keep this article interactive, after each Go code provided you will find a link to the <em>Go Playground</em>, where you can copy the code and run it there.
+In this article, we will explore some examples and applications of Monte Carlo simulations using the Go programming language. To keep this article interactive, after each Go code provided you will find a link to the <em>Go Playground</em>, where you can run it without installing Go on your machine.
 
 Put your adventure helmets on!
 
-<div style="text-align:left"><img src="/img/posts/montecarlo/gopher_adventurer.jpg" style="width: 25%"></div>
+<div style="text-align:left"><img src="/img/posts/montecarlo/gopher_adventurer.jpg" style="width: 20%"></div>
 
 {{< table_of_contents >}}
 
@@ -22,7 +22,7 @@ Put your adventure helmets on!
 
 ---
 
-Generally speaking, Monte Carlo methods consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used in areas such as physics, finance, engineering, project management, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable. It was invented by [John von Neumann](https://en.wikipedia.org/wiki/John_von_Neumann) and [Stanisław  Ulam](https://en.wikipedia.org/wiki/Stanislaw_Ulam) during World War II to improve decision making under uncertain conditions. It was named after a well-known casino town, called Monaco, since the element of chance is core to the modeling approach, similar to a game of roulette.
+Generally speaking, Monte Carlo methods consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used throughout in areas such as physics, finance, engineering, project management, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable. It was invented by [John von Neumann](https://en.wikipedia.org/wiki/John_von_Neumann) and [Stanisław  Ulam](https://en.wikipedia.org/wiki/Stanislaw_Ulam) during World War II to improve decision making under uncertain conditions. It was named after a well-known casino town, called Monaco, since the element of chance is core to the modeling approach, similar to a game of roulette.
 
 If you are new to the subject, you may find it useful to read this [IBM article](https://www.ibm.com/cloud/learn/monte-carlo-simulation) and get acquainted with the concept first.
 
@@ -36,7 +36,7 @@ Let's start our journey with some basic, and even textbook, examples of Monte Ca
 
 ### Estimating $\pi$
 
-This is by far the most famous example of Monte Carlo simulations, considered to be the "example $0$" of the subject. To calculate $\pi$ we need to pose the problem in probabilistic terms. We do so by considering a circle of diameter $d=1$ inscribed in a square of side $l=1$, both centered in the origin of a cartesian coordinate system. This situation is depicted below.
+This is by far the most famous example of Monte Carlo simulations, considered to be the "example $0$" of the subject. To estimate $\pi$ we need to pose the problem in probabilistic terms. We do so by considering a circle of radius $r=1$ inscribed in a square of side $l=2$, both centered in the origin of a cartesian coordinate system. This situation is depicted below.
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/circle.png" style="width: 40%"></div>
 
@@ -44,10 +44,11 @@ If we were to draw random points in this square, some will fall within the circl
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/circle2.png" style="width: 40%"></div>
 
-As you might know, the area of the circular region is $A_{\circ} = \pi\cdot r^2 = \frac{\pi}{4}$, since $r = 0.5$, and the area of the square is $A_{\square} = l^2 = 1$, since $l=1$. Thus, $$\pi = 4\cdot \frac{A_{\circ}}{A_{\square}}.$$
+As you might know, the area of the circular region is $A_{\circ} = \pi\cdot r^2 = \pi$, since $r = 1$, and the area of the square is $A_{\square} = l^2 = 4$, since $l=2$. Thus, $$\pi = 4\cdot \frac{A_{\circ}}{A_{\square}}.$$
 
 As a result, we can estimate $\pi$ as
 $$\pi \approx 4\cdot \frac{\text{num. points inside the circle}}{\text{num. points}}.$$
+Remember that, in our case, $(x, y)$ will fall inside the circular region if $x^2 + y^2 < 1$.
 
 Now, let's turn this idea into a Go code.
 
@@ -55,50 +56,50 @@ Now, let's turn this idea into a Go code.
 package main
 
 import (
-    "fmt"
-    "time"
-    "math"
-    "math/rand"
+	"fmt"
+	"time"
+	"math"
+	"math/rand"
 )
 
 func inside_circle(x float64, y float64) bool {
-    if x*x + y*y < 1 {
-        return true
-    }
-    return false
+	if x*x + y*y < 1 {
+		return true
+	}
+	return false
 }
 
 func abs(x float64) float64 {
-    if x < 0.0 {
-        return -x
-    }
-    return x
+	if x < 0.0 {
+		return -x
+	}
+	return x
 }
 
 func main() {
-    rand.Seed(time.Now().UTC().UnixNano())
+	rand.Seed(time.Now().UTC().UnixNano())
 
-    trials := 1000000
-    fmt.Printf("Estimating pi with %d trial(s).\n\n", trials)
+	trials := 1000000
+	fmt.Printf("Estimating pi with %d point(s).\n\n", trials)
 
-    sucess := 0
-    for i := 0; i < trials; i++ {
-        px := 2.0*rand.Float64() - 1.0
-        py := 2.0*rand.Float64() - 1.0
+	sucess := 0
+	for i := 0; i < trials; i++ {
+		px := 2.0*rand.Float64() - 1.0
+		py := 2.0*rand.Float64() - 1.0
 
-        if inside_circle(px, py) {
-            sucess += 1
-        }
-    }
+		if inside_circle(px, py) {
+			sucess += 1
+		}
+	}
 
-    pi_approx := 4.0*(float64(sucess) / float64(trials))
-    pi := math.Pi
-    fmt.Printf("Estimated pi: %9f \n", pi_approx)
-    fmt.Printf("pi: %9f \n", pi)
+	pi_approx := 4.0*(float64(sucess) / float64(trials))
+	pi := math.Pi
+	fmt.Printf("Estimated pi: %9f \n", pi_approx)
+	fmt.Printf("pi: %9f \n", pi)
 
-    error_pct := 100*abs(pi_approx - pi) / pi
+	error_pct := 100*abs(pi_approx - pi) / pi
 
-    fmt.Printf("Error: %9f%%\n", error_pct)
+	fmt.Printf("Error: %9f%%\n", error_pct)
 }
 ```
 
@@ -114,7 +115,7 @@ pi:  3.141593
 Error:  0.053965%
 ```
 
-We were able to approximate $\pi$ with an error of $0.053965$% ! Cool, let us see another example.
+We were able to approximate $\pi$ with an error of $0.053965$% ! Let's jump to the next exmaple.
 
 ### Estimating Euler's number
 
@@ -122,7 +123,7 @@ Not long ago, Lex Fridman published the following in a LinkedIn post:
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/lex.png" style="width: 60%"></div>
 
-This is very intriguing! I decided to write a simple Python program to test it myself. I wrote my code as a response to Lex's post, and people were surprised by it (this is the actual motivation to write this blog post).
+This is very intriguing! Since I have no idea how to prove this statement, I decided to write a simple Python program to test it myself. I wrote my code as a response to Lex's post, and people were surprised by it (this is the actual motivation to write this blog post).
 This, once again, showed me the power of Monte Carlo simulations in scientific computing, where you can find precise numerical answers to your problems without relying on any theoretical background (they might not even exist!).
 
 I wrote an equivalent Go code to solve this problem. Here it is:
@@ -195,7 +196,7 @@ An astonishing result!
 This is a famous problem in statistics:
 >In a group of $23$ people, the probability of a shared birthday exceeds $50$%.
 
-That sounds weird at first, but if you're good enough with math you can easily prove this statement. However, we are not interested in formal proofs here. That is the whole point of these simulations. The idea is very simple: create a list with $n$ ($23$) random numbers between $1$ and $365$ representing the birth day of each person and if (at least) two of them coincide, you increment the `success variable. Do it a certain number of times and calculate the probability.
+That sounds weird at first, but if you're good enough with math you can easily prove this statement. However, we are not interested in formal proofs here. That is the whole point of these simulations. The idea is very simple: create a list with $n$ ($23$, in our case) random numbers between $1$ and $365$ representing the birth day of each person and if (at least) two of them coincide, you increment the `success` variable. Do it a certain number of times and calculate the probability dividing the number of sucesses by the total number of simulations.
 
 The corresponding Go code:
 
@@ -323,20 +324,20 @@ You can tweak this code to reproduce the following table from [Wikipedia](https:
     </tr>
 </table>
 
-Of course, for $n \geq 365$ you don't need any calculations, it's a straightforward consequence of the <em>pigeonhole principle</em>.
+Of course, for $n \geq 365$ you don't need any calculations, it's a straightforward consequence of the [<em>pigeonhole principle</em>](https://en.wikipedia.org/wiki/Pigeonhole_principle).
 
 ## The (in)famous Monty Hall problem
 
 ---
 
-That is a problem that has been disturbing people for ages. Just like the birthday problem, you can solve it using basic probability theory, which we won't do. Let's state the problem and provide a Monte Carlo simulation to solve it.
+That is a problem that has been disturbing people for ages. Just like the birthday problem, you can solve it using basic math/probability theory, which we won't do. Let's state the problem and provide a Monte Carlo simulation to solve it.
 
 The problem is:
 >Suppose you're on a game show, and you're given the choice of three doors: Behind one door is a valuable prize; behind the others, goats. You pick a door, say No. $1$, and the host, who knows what's behind the doors, opens another door, say No. $3$, which has a goat. He then says to you, "Do you want to pick door No. $2$?" Is it to your advantage to switch your choice?
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/montyhall.png" style="width: 60%; margin: 2%"></div>
 
-People often believe that they are in a $50-50$ situation and therefore the switch is not very relevant. But if you carefully solve this problem, you will find that there is a probability of $2/3$ to win the prize if you decide to switch doors.
+People often believe that they are in a $50-50$ situation and therefore the switch is not very relevant. But if you carefully solve this problem, you will find that there is a probability of $2/3 \approx 66.7$% to win the prize if you decide to switch doors.
 
 The following Go code simulates this game and estimates the probability of winning if the guest chooses to switch doors. Note that we first set the game so that the doors are properly chosen (possibly not an optimal code), and then we simulate the game to estimate the desired probability.
 
@@ -444,7 +445,7 @@ Therefore, contrary to popular belief, it is more advantageous to the guest to s
 
 ---
 
-We can use the same idea we used to estimate $\pi$ to find the area under the graph of continuous functions in a specified range, a.k.a the definite integral of $f$ in that range.
+Now, let's see how we can use the Monte Carlo method to find the value of definite integrals of continuous functions in a specified range.
 
 Just as a reminder, if $f: [a,b] \rightarrow \mathbb{R}$ is a continuous function, then the quantity $$S = \int_a^b f(x)dx,$$
 represents the area of the region between the graph of $f$ and the $x-$axis.
@@ -453,7 +454,7 @@ represents the area of the region between the graph of $f$ and the $x-$axis.
 
 One important feature of this property is that this area has a sign, having negative values if the region is below the $x-$axis.
 
-We can use a strategy similar to the one we use to estimate $\pi$, being careful to consider the sign of the function we want to integrate. One way to do so is with the approximation $$S \approx \frac{b-a}{n}\sum_{i=1}^n f(a + (b-a)U_i),$$
+One way to aprroximate this area is  $$S \approx \frac{b-a}{n}\sum_{i=1}^n f(a + (b-a)U_i),$$
 where $U_i \sim \mathcal{U}(0,1)$. Feel free to try different probability distributions and compare the results.
 
 We are going to use this technique to solve a classic problem. If you are a calculus geek, you might know how difficult it is to calculate the integral $$S = \int_{-\infty}^{\infty} e^{-x^2}dx.$$
@@ -521,7 +522,7 @@ In fact, $1.772819^2 \approx 3.143$.
 
 Ok, for the final section of this article I have something special that draws the attention of many people around the world.
 
-The Black–Scholes, or Black–Scholes–Merton model, is a mathematical model for the dynamics of a financial market containing derivative investment instruments, giving a theoretical estimate of the price of <em>European-style options</em> and shows that the option has a unique price given the risk of the security and its expected return. This work granted Fischer Black and Myron Scholes their Nobel Prize in economics and has been widely used in fintechs around the world.
+The Black–Scholes, or Black–Scholes–Merton model, is a mathematical model for the dynamics of a financial market containing derivative investment instruments, giving a theoretical estimate of the price of <em>European-style options</em> and shows that the option has a unique price given the risk of the security and its expected return. This work granted Fischer Black and Myron Scholes their Nobel Prize in economics and has been widely used in algorithmic trading strategies around the world.
 
 Before we move on, I have a <strong>disclaimer</strong>: we will dive into some math!
 
@@ -547,7 +548,7 @@ enough) time interval. It also holds $0 < t \leq T$ with $T$ the final time hori
 
 In this simulation we use the values $S_0 = 100$, $K = 105$, $T = 1.0$, $r = 0.05$, $\sigma = 0.2$.
 
-### The Simulation
+#### The Simulation
 
 We follow the steps:
 
@@ -650,6 +651,8 @@ For the sake of completeness, let us plot some of these paths (as people usually
 ## Conclusion
 
 ---
+
+We have seen how one can use the Monte Carlo method find answers to certain problems. We alse have seen two major applications, the numerical integration and how to estimate an option price using the Black-Scholes-Merton model.
 
 ## Recommended reading
 
