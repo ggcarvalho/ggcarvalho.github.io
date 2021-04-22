@@ -332,7 +332,7 @@ When dealing with convolution/cross-correlation, it is important to pay attentio
 
 <div style="text-align:center"><img src="/img/posts/image_proc/torus.png" style="width: 60%"></div>
 
-Ok, no more math. The final code consists of a dictionary containing all of our kernels and the apply_kernel function, aka the cross-correlation. If the image has three channels, we apply the cross-correlation in each channel and combine the results. Take a look at the description box at the beginning of this article, the definition of cross-correlation, and the corresponding kernels. Can you figure out why they work?
+Ok, no more math. The final code consists of a dictionary containing all of our kernels and the apply_kernel function, a.k.a the cross-correlation. If the image has three channels, we apply the cross-correlation in each channel and combine the results. Take a look at the description box at the beginning of this article, the definition of cross-correlation, and the corresponding kernels. Can you figure out why they work?
 
 ```python
 # Add this after your halftone method
