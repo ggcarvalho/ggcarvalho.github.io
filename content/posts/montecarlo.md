@@ -10,9 +10,7 @@ hashtags: "#go #golang #scientificcomputing #montecarlo #trade #algotrade #quant
 draft: false
 ---
 
-Monte Carlo methods consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used in areas such as finance, project management, engineering, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable.
-
-In this article, we will explore some examples (ranging from basic to advanced) and applications of Monte Carlo simulations using the Go programming language.
+In this article, we will explore some examples and applications of Monte Carlo simulations using the Go programming language. To keep this article interactive, after each Go code provided you will find a link to the <em>Go Playground</em>, where you can copy the code and run it there.
 
 Put your adventure helmets on!
 
@@ -20,11 +18,21 @@ Put your adventure helmets on!
 
 {{< table_of_contents >}}
 
+## What is Monte Carlo simulation?
+
+---
+
+Generally speaking, Monte Carlo methods consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used in areas such as physics, finance, engineering, project management, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable. It was invented by [John von Neumann](https://en.wikipedia.org/wiki/John_von_Neumann) and [Stanisław  Ulam](https://en.wikipedia.org/wiki/Stanislaw_Ulam) during World War II to improve decision making under uncertain conditions. It was named after a well-known casino town, called Monaco, since the element of chance is core to the modeling approach, similar to a game of roulette.
+
+If you are new to the subject, you may find it useful to read this [IBM article](https://www.ibm.com/cloud/learn/monte-carlo-simulation) and get acquainted with the concept first.
+
+>"Unlike a normal forecasting model, Monte Carlo Simulation predicts a set of outcomes based on an estimated range of values versus a set of fixed input values. In other words, a Monte Carlo Simulation builds a model of possible results by leveraging a probability distribution, such as a uniform or normal distribution, for any variable that has inherent uncertainty. It, then, recalculates the results over and over, each time using a different set of random numbers between the minimum and maximum values. In a typical Monte Carlo experiment, this exercise can be repeated thousands of times to produce a large number of likely outcomes." [IBM](https://www.ibm.com/cloud/learn/monte-carlo-simulation)
+
 ## First examples
 
 ---
 
-Let's start our journey with some basic, and even textbook, examples of Monte Carlo simulations. You're going to notice a pattern when implementing this method. Use it to create or try your own examples.
+Let's start our journey with some basic, and even textbook, examples of Monte Carlo simulations. You're going to notice a pattern when implementing this method. Use it to create or try your examples.
 
 ### Estimating $\pi$
 
