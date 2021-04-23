@@ -675,6 +675,8 @@ simulation period.
 <a href="/img/posts/montecarlo/end_hist.png" target="_blank"><img src="/img/posts/montecarlo/end_hist.png"  alt="Sharpen" style="width:50%; margin:1%"></a>
 </div>
 
+We can see that the histogram above is in accordance with the depiction of every simulated path.
+
 Finally, let's take a look at the option’s end-of-period (maturity) inner values.
 
 <div style= "text-align:center">
