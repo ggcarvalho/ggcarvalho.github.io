@@ -22,11 +22,11 @@ Put your adventure helmets on!
 
 ---
 
-Generally speaking, Monte Carlo methods consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used throughout in areas such as physics, finance, engineering, project management, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable. It was invented by [John von Neumann](https://en.wikipedia.org/wiki/John_von_Neumann) and [Stanisław  Ulam](https://en.wikipedia.org/wiki/Stanislaw_Ulam) during World War II to improve decision making under uncertain conditions. It was named after a well-known casino town, called Monaco, since the element of chance is core to the modeling approach, similar to a game of roulette.
+Generally speaking, Monte Carlo methods consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used throughout in areas such as physics, finance, engineering, project management, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable. It was invented by <a href="https://en.wikipedia.org/wiki/John_von_Neumann" target="_blank">John von Neumann</a> and <a href="https://en.wikipedia.org/wiki/Stanislaw_Ulam" target="_blank">Stanisław  Ulam</a> during World War II to improve decision making under uncertain conditions. It was named after a well-known casino town, called Monaco, since the element of chance is core to the modeling approach, similar to a game of roulette.
 
-If you are new to the subject, you may find it useful to read this [IBM article](https://www.ibm.com/cloud/learn/monte-carlo-simulation) and get acquainted with the concept first.
+If you are new to the subject, you may find it useful to read this <a href="https://www.ibm.com/cloud/learn/monte-carlo-simulation" target="_blank">IBM article</a> and get acquainted with the concept first.
 
->"Unlike a normal forecasting model, Monte Carlo Simulation predicts a set of outcomes based on an estimated range of values versus a set of fixed input values. In other words, a Monte Carlo Simulation builds a model of possible results by leveraging a probability distribution, such as a uniform or normal distribution, for any variable that has inherent uncertainty. It, then, recalculates the results over and over, each time using a different set of random numbers between the minimum and maximum values. In a typical Monte Carlo experiment, this exercise can be repeated thousands of times to produce a large number of likely outcomes." [IBM](https://www.ibm.com/cloud/learn/monte-carlo-simulation)
+>"Unlike a normal forecasting model, Monte Carlo Simulation predicts a set of outcomes based on an estimated range of values versus a set of fixed input values. In other words, a Monte Carlo Simulation builds a model of possible results by leveraging a probability distribution, such as a uniform or normal distribution, for any variable that has inherent uncertainty. It, then, recalculates the results over and over, each time using a different set of random numbers between the minimum and maximum values. In a typical Monte Carlo experiment, this exercise can be repeated thousands of times to produce a large number of likely outcomes." <a href="https://www.ibm.com/cloud/learn/monte-carlo-simulation" target="_blank">IBM</a>
 
 ## First examples
 
@@ -38,7 +38,7 @@ Let's start our journey with some basic, and even textbook, examples of Monte Ca
 
 This is by far the most famous example of Monte Carlo simulations, considered to be the "zeroth example" of the subject. To estimate $\pi$ we need to pose the problem in probabilistic terms. We do so by considering a circle of radius $r=1$ inscribed in a square of side $l=2$, both centered in the origin of a cartesian coordinate system. This situation is depicted below.
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/circle.png" style="width: 40%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/circle.png" style="width: 42%"></div>
 
 If we were to draw random points in this square, some will fall within the circle and some won't. But the ratio between points inside the circular region and the total amount of points we draw will be closer and closer to the ratio between the area of the circle and the area of the square as we draw more of these random points.
 
@@ -105,7 +105,7 @@ func abs(x float64) float64 {
 }
 ```
 
-[Run this code in The Go Playground](https://play.golang.org/)
+<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
 
 ```bash
 $ go run pi.go
@@ -180,7 +180,7 @@ func abs(x float64) float64 {
 }
 ```
 
-[Run this code in The Go Playground](https://play.golang.org/)
+<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
 
 ```bash
 $ go run euler.go
@@ -257,7 +257,7 @@ func gen_bday_list(n int) []int {
 }
 ```
 
-[Run this code in The Go Playground](https://play.golang.org/)
+<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
 
 ```bash
 $ go run birthday.go
@@ -265,7 +265,7 @@ $ go run birthday.go
 The probability of at least 2 persons in a group of 23 people share a birthday is 50.73%
 ```
 
-You can tweak this code to reproduce the following table from [Wikipedia](https://en.wikipedia.org/wiki/Birthday_problem):
+You can tweak this code to reproduce the following table from <a href="https://en.wikipedia.org/wiki/Birthday_problem" target="_blank">Wikipedia</a>:
 
 <table class="table table-striped">
   <thead>
@@ -329,7 +329,7 @@ You can tweak this code to reproduce the following table from [Wikipedia](https:
     </tr>
 </table>
 
-Of course, for $n \geq 365$ you don't need any calculations, it's a straightforward consequence of the [<em>pigeonhole principle</em>](https://en.wikipedia.org/wiki/Pigeonhole_principle).
+Of course, for $n \geq 365$ you don't need any calculations, it's a straightforward consequence of the <a href="https://en.wikipedia.org/wiki/Pigeonhole_principle" target="_blank"><em>pigeonhole principle</em></a>.
 
 ## The (in)famous Monty Hall problem
 
@@ -434,7 +434,7 @@ func set_monty_hall() (int, int) {
 }
 ```
 
-[Run this code in The Go Playground](https://play.golang.org/)
+<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
 
 ```bash
 $ go run monty_hall.go
@@ -513,7 +513,7 @@ func gaussian(x float64) float64 {
 }
 ```
 
-[Run this code in The Go Playground](https://play.golang.org/)
+<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
 
 ```bash
 $ go run mc_integration.go
@@ -639,7 +639,7 @@ func rectifier(x float64) float64 {
 }
 ```
 
-[Run this code in The Go Playground](https://play.golang.org/)
+<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
 
 ```bash
 $ go run black_scholes.go
@@ -669,7 +669,7 @@ First, let's plot the simulated index levels (the paths taken during the simulat
 </div>
 
 Second, we want to see the frequency of the simulated index levels at the end of the
-simulation period. We expect, by inspectioning every path, that it will be normally distributed around a value closer to the initial index level.
+simulation period.
 
 <div style= "text-align:center">
 <a href="/img/posts/montecarlo/end_hist.png" target="_blank"><img src="/img/posts/montecarlo/end_hist.png"  alt="Sharpen" style="width:50%; margin:1%"></a>
@@ -687,7 +687,7 @@ As you can see, the majority of the simluated values are zero, indicating that t
 
 ---
 
-We have seen how one can use the Monte Carlo method find answers to certain problems. We alse have seen two major applications, the numerical integration and how to estimate an option price using the Black-Scholes-Merton model.
+We have seen how one can use the Monte Carlo method find answers to certain problems. We also have seen two major applications, the numerical integration and how to estimate an option price using the Black-Scholes-Merton model. By now, you should've realized that the Monte Carlo method gives you immense problem solving powers, even if you're not very familiar with the underlying theory or even if such a theory doesn't exist (for instance, see the <a href="https://rstudio-pubs-static.s3.amazonaws.com/241232_eebe419a0aaa4eb89398ee2a61ad3dc2.html" target="_blank">percolation problem</a>, where no mathematical solution for determining the percolation threshold $p^{\ast}$ has yet been derived).
 
 ## Recommended reading
 
@@ -705,4 +705,15 @@ We have seen how one can use the Monte Carlo method find answers to certain prob
 
 - [Python for Finance: Mastering Data-Driven Finance 2nd Edition - Yves Hilpisch](https://amzn.to/3vfANVv)
 
-By clicking and buying any of these from Amazon after visiting the links above, I might get a commission from their [Affiliate program](https://affiliate-program.amazon.com/), and you will be contributing to the growth of this blog :)
+<div style= "text-align:center; margin: 2%">
+<a href="https://www.amazon.com/Programming-Language-Addison-Wesley-Professional-Computing/dp/0134190440?dchild=1&keywords=go+programming&qid=1619031216&sr=8-1&linkCode=li2&tag=ggcarvalho-20&linkId=4eda68e7e635de0acfe6d799ac104eea&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0134190440&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=0134190440" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<a href="https://www.amazon.com/Go-Action-William-Kennedy/dp/1617291781?dchild=1&keywords=go+in+action&qid=1619031323&sr=8-1&linkCode=li2&tag=ggcarvalho-20&linkId=61bc88bddd4d83cf9005d0997fa4416e&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1617291781&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=1617291781" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<a href="https://www.amazon.com/Learning-Go-Idiomatic-Real-World-Programming-ebook/dp/B08XYGCM71?dchild=1&keywords=Learning+Go&qid=1616459752&sr=8-2&linkCode=li2&tag=ggcarvalho-20&linkId=043a1f18d943b96ccfa904665331974a&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B08XYGCM71&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=B08XYGCM71" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<a href="https://www.amazon.com/Essentials-Monte-Carlo-Simulation-Statistical/dp/1489986081?dchild=1&keywords=monte+carlo+simulation&qid=1619031483&sr=8-1&linkCode=li2&tag=ggcarvalho-20&linkId=cbeb4e0c855e7978f05b9961222e2c3c&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1489986081&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=1489986081" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<a href="https://www.amazon.com/Options-Futures-Other-Derivatives-Tenth/dp/9352866592?dchild=1&keywords=john+c+hull&qid=1619031541&sr=8-1&linkCode=li2&tag=ggcarvalho-20&linkId=cbd54d235a891040add4a1252ef53758&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=9352866592&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=9352866592" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<a href="https://www.amazon.com/Financial-Engineering-Stochastic-Modelling-Probability/dp/0387004513?dchild=1&keywords=monte+carlo+simulation&qid=1619031483&sr=8-7&linkCode=li2&tag=ggcarvalho-20&linkId=9aadabc08118c855b9ee8176857c90c5&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0387004513&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=0387004513" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<a href="https://www.amazon.com/Python-Finance-Mastering-Data-Driven/dp/1492024333?crid=39PRDWB4NE6UI&dchild=1&keywords=yves+hilpisch&qid=1619037117&sprefix=yves+h%2Caps%2C245&sr=8-4&linkCode=li2&tag=ggcarvalho-20&linkId=d79beb0dfb8a9e6d06acbb038e10642c&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1492024333&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=1492024333" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+</div>
+
+
+By clicking and buying any of these from Amazon after visiting the links above, I might get a commission from their <a href="https://affiliate-program.amazon.com/" target="_blank">Affiliate program</a>, and you will be contributing to the growth of this blog :)
