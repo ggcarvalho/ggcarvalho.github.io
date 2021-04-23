@@ -693,19 +693,19 @@ We have seen how one can use the Monte Carlo method find answers to certain prob
 
 ## Recommended reading
 
-- [Go Programming Language 1st Edition - Donovan & Kernighan](https://amzn.to/32zSNNN)
+- Go Programming Language 1st Edition - Donovan & Kernighan
 
-- [Go in Action 1st Edition  -  William Kennedy, Brian Ketelsen, Erik St. Martin](https://amzn.to/2P8ZFP8)
+- Go in Action 1st Edition  -  William Kennedy, Brian Ketelsen, Erik St. Martin
 
-- [Learning Go: An Idiomatic Approach to Real-World Go Programming 1st Edition - Jon Bodner](https://amzn.to/3aq87Ru)
+- Learning Go: An Idiomatic Approach to Real-World Go Programming 1st Edition - Jon Bodner
 
-- [Essentials of Monte Carlo Simulation: Statistical Methods for Building Simulation Models 2013th Edition  - Nick T. Thomopoulos](https://amzn.to/3n9gyWy)
+- Essentials of Monte Carlo Simulation: Statistical Methods for Building Simulation Models 2013th Edition  - Nick T. Thomopoulos
 
-- [Options, Futures, and Other Derivatives 10th Edition - John C Hull](https://amzn.to/3v6vbN2)
+- Options, Futures, and Other Derivatives 10th Edition - John C Hull
 
-- [Monte Carlo Methods in Financial Engineering (Stochastic Modelling and Applied Probability - Paul Glasserman](https://amzn.to/3sDOI5O)
+- Monte Carlo Methods in Financial Engineering (Stochastic Modelling and Applied Probability - Paul Glasserman
 
-- [Python for Finance: Mastering Data-Driven Finance 2nd Edition - Yves Hilpisch](https://amzn.to/3vfANVv)
+- Python for Finance: Mastering Data-Driven Finance 2nd Edition - Yves Hilpisch
 
 <div style= "text-align:center; margin: 2%">
 <a href="https://www.amazon.com/Programming-Language-Addison-Wesley-Professional-Computing/dp/0134190440?dchild=1&keywords=go+programming&qid=1619031216&sr=8-1&linkCode=li2&tag=ggcarvalho-20&linkId=4eda68e7e635de0acfe6d799ac104eea&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0134190440&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=0134190440" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
