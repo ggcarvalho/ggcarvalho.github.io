@@ -36,7 +36,7 @@ Let's start our journey with some basic, and even textbook, examples of Monte Ca
 
 ### Estimating $\pi$
 
-This is by far the most famous example of Monte Carlo simulations, considered to be the "example $0$" of the subject. To estimate $\pi$ we need to pose the problem in probabilistic terms. We do so by considering a circle of radius $r=1$ inscribed in a square of side $l=2$, both centered in the origin of a cartesian coordinate system. This situation is depicted below.
+This is by far the most famous example of Monte Carlo simulations, considered to be the "zeroth example" of the subject. To estimate $\pi$ we need to pose the problem in probabilistic terms. We do so by considering a circle of radius $r=1$ inscribed in a square of side $l=2$, both centered in the origin of a cartesian coordinate system. This situation is depicted below.
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/circle.png" style="width: 40%"></div>
 
@@ -61,20 +61,6 @@ import (
 	"math"
 	"math/rand"
 )
-
-func inside_circle(x float64, y float64) bool {
-	if x*x + y*y < 1 {
-		return true
-	}
-	return false
-}
-
-func abs(x float64) float64 {
-	if x < 0.0 {
-		return -x
-	}
-	return x
-}
 
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
@@ -101,6 +87,22 @@ func main() {
 
 	fmt.Printf("Error: %9f%%\n", error_pct)
 }
+
+// Condition to lie within the circular region
+func inside_circle(x float64, y float64) bool {
+	if x*x + y*y < 1 {
+		return true
+	}
+	return false
+}
+
+// absolute value of x
+func abs(x float64) float64 {
+	if x < 0.0 {
+		return -x
+	}
+	return x
+}
 ```
 
 [Run this code in The Go Playground](https://play.golang.org/)
@@ -110,9 +112,9 @@ $ go run pi.go
 
 Estimating pi with 1000000 point(s).
 
-Estimated pi:  3.143288
+Estimated pi:  3.143056
 pi:  3.141593
-Error:  0.053965%
+Error:  0.046580%
 ```
 
 We were able to approximate $\pi$ with an error of $0.053965$% ! Let's jump to the next exmaple.
@@ -132,48 +134,49 @@ I wrote an equivalent Go code to solve this problem. Here it is:
 package main
 
 import (
-    "fmt"
-    "time"
-    "math"
-    "math/rand"
+	"fmt"
+	"time"
+	"math"
+	"math/rand"
 )
 
-func abs(x float64) float64 {
-    if x < 0.0 {
-        return -x
-    }
-    return x
+func main() {
+	rand.Seed(time.Now().UTC().UnixNano())
+
+	trials := 10000000
+	fmt.Printf("Estimating e with %d trial(s).\n\n", trials)
+
+	acc := 0.0
+	for i := 0; i < trials; i++ {
+		sum := 0.0
+		num2sucess := 0
+
+		for sum <= 1 {
+			n := rand.Float64()
+			sum += n
+			num2sucess += 1
+		}
+		acc += float64(num2sucess)
+	}
+
+	expected := acc / float64(trials)
+	e := math.Exp(1)
+
+	fmt.Printf("Expected vale: %9f \n", expected)
+	fmt.Printf("e: %9f \n", e)
+
+	error_pct := 100*abs(expected - e) / e
+
+	fmt.Printf("Error: %9f%%\n", error_pct)
+
 }
 
-func main() {
-    rand.Seed(time.Now().UTC().UnixNano())
-
-    trials := 10000000
-    fmt.Printf("Estimating e with %d trial(s).\n\n", trials)
-
-    acc := 0.0
-    for i := 0; i < trials; i++ {
-        sum := 0.0
-        num2sucess := 0
-
-        for sum <= 1 {
-            n := rand.Float64()
-            sum += n
-            num2sucess += 1
-        }
-        acc += float64(num2sucess)
-    }
-
-    expected := acc / float64(trials)
-    e := math.Exp(1)
-
-    fmt.Printf("Expected vale: %9f \n", expected)
-    fmt.Printf("e: %9f \n", e)
-
-    error_pct := 100*abs(expected - e) / e
-
-    fmt.Printf("Error: %9f%%\n", error_pct)
-
+// absolute value of x
+func abs(x float64) float64 {
+	if x < 0.0 {
+		return -x
+	}
+	return x
 }
 ```
 
@@ -204,11 +207,33 @@ The corresponding Go code:
 package main
 
 import (
-    "fmt"
-    "time"
-    "math/rand"
+	"fmt"
+	"time"
+	"math/rand"
 )
 
+func main() {
+	rand.Seed(time.Now().UTC().UnixNano())
+	trials := 1000000
+	sucess := 0
+
+	for i := 0; i < trials; i++ {
+
+		bdays := gen_bday_list(23)
+		uniques := unique(bdays)
+
+		if !(len(bdays)==len(uniques)) {
+			sucess++
+		}
+	}
+
+	probability := float64(sucess) / float64(trials)
+
+	fmt.Printf("The probability of at least 2 persons in a group of 23 people share a birthday is %.2f%%\n", 100*probability)
+
+}
+
+// returns a slice with the unique elements of a given slice
 func unique(intSlice []int) []int {
     keys := make(map[int]bool)
     list := []int{}
@@ -221,34 +246,14 @@ func unique(intSlice []int) []int {
     return list
 }
 
+// generates the list of birth days
 func gen_bday_list(n int) []int {
-    var bdays []int
-    for i := 0; i < n; i++ {
-        bday := rand.Intn(365) + 1
-        bdays = append(bdays, bday)
-    }
-    return bdays
-}
-
-func main() {
-    rand.Seed(time.Now().UTC().UnixNano())
-    trials := 1000000
-    sucess := 0
-
-    for i := 0; i < trials; i++ {
-
-        bdays := gen_bday_list(23)
-        uniques := unique(bdays)
-
-        if !(len(bdays)==len(uniques)) {
-            sucess++
-        }
-    }
-
-    probability := float64(sucess) / float64(trials)
-
-    fmt.Printf("The probability of at least 2 persons in a group of 23 people share a birthday is %.2f%%\n", 100*probability)
-
+	var bdays []int
+	for i := 0; i < n; i++ {
+		bday := rand.Intn(365) + 1
+		bdays = append(bdays, bday)
+	}
+	return bdays
 }
 ```
 
@@ -345,85 +350,87 @@ The following Go code simulates this game and estimates the probability of winni
 package main
 
 import (
-    "fmt"
-    "time"
-    "math/rand"
+	"fmt"
+	"time"
+	"math/rand"
 )
 
-func abs(x float64) float64 {
-    if x < 0.0 {
-        return -x
-    }
-    return x
-}
-
-func set_monty_hall() (int, int) {
-    guest_door := rand.Intn(3) + 1
-    prize_door := rand.Intn(3) + 1
-    goat1 := true
-    goat2 := true
-
-    var montys_choice int
-    var new_door int
-    var goat1_door int
-    var goat2_door int
-    var switch_door bool
-    var show_goat bool
-
-    for goat1 {
-        goat1_door = rand.Intn(3) + 1
-        if goat1_door != prize_door {
-            goat1 = false
-        }
-    }
-
-    for goat2 {
-        goat2_door = rand.Intn(3) + 1
-        if (goat2_door != prize_door) && (goat2_door != goat1_door) {
-            goat2 = false
-        }
-    }
-
-    switch_door = true
-    show_goat = true
-
-    for show_goat {
-        montys_choice = rand.Intn(3) + 1
-        if (montys_choice != prize_door) && (montys_choice != guest_door) {
-            show_goat = false
-        }
-    }
-
-    for switch_door {
-        new_door = rand.Intn(3) + 1
-        if (new_door != guest_door) && (new_door != montys_choice) {
-            switch_door = false
-        }
-    }
-    return new_door, prize_door
-}
-
 func main() {
-    rand.Seed(time.Now().UTC().UnixNano())
+	rand.Seed(time.Now().UTC().UnixNano())
 
-    trials := 10000000
-    fmt.Printf("Estimating the propability of winning by switching doors with %d trial(s).\n\n", trials)
+	trials := 10000000
+	fmt.Printf("Estimating the propability of winning by switching doors with %d trial(s).\n\n", trials)
 
-    sucess := 0
-    for i := 0; i < trials; i++ {
-        new_door, prize_door := set_monty_hall()
-        if new_door == prize_door {
-            sucess++
-        }
-    }
-    probability := float64(sucess) / float64(trials)
-    theoretical_value := 2.0 / 3.0
+	sucess := 0
+	for i := 0; i < trials; i++ {
+		new_door, prize_door := set_monty_hall()
+		if new_door == prize_door {
+			sucess++
+		}
+	}
+	probability := float64(sucess) / float64(trials)
+	theoretical_value := 2.0 / 3.0
 
-    error_pct := 100*abs(probability - theoretical_value) / theoretical_value
+	error_pct := 100*abs(probability - theoretical_value) / theoretical_value
 
-    fmt.Printf("Estimated probability: %9f \n", probability)
-    fmt.Printf("Theoretical value: %9f \n", theoretical_value)
-    fmt.Printf("Error: %9f%%\n", error_pct)
+	fmt.Printf("Estimated probability: %9f \n", probability)
+	fmt.Printf("Theoretical value: %9f \n", theoretical_value)
+	fmt.Printf("Error: %9f%%\n", error_pct)
+}
+
+// absolute value of x
+func abs(x float64) float64 {
+	if x < 0.0 {
+		return -x
+	}
+	return x
+}
+
+// randomly sets the game
+func set_monty_hall() (int, int) {
+	guest_door := rand.Intn(3) + 1
+	prize_door := rand.Intn(3) + 1
+	goat1 := true
+	goat2 := true
+
+	var montys_choice int
+	var new_door int
+	var goat1_door int
+	var goat2_door int
+	var switch_door bool
+	var show_goat bool
+
+	for goat1 {
+		goat1_door = rand.Intn(3) + 1
+		if goat1_door != prize_door {
+			goat1 = false
+		}
+	}
+
+	for goat2 {
+		goat2_door = rand.Intn(3) + 1
+		if (goat2_door != prize_door) && (goat2_door != goat1_door) {
+			goat2 = false
+		}
+	}
+
+	switch_door = true
+	show_goat = true
+
+	for show_goat {
+		montys_choice = rand.Intn(3) + 1
+		if (montys_choice != prize_door) && (montys_choice != guest_door) {
+			show_goat = false
+		}
+	}
+
+	for switch_door {
+		new_door = rand.Intn(3) + 1
+		if (new_door != guest_door) && (new_door != montys_choice) {
+			switch_door = false
+		}
+	}
+	return new_door, prize_door
 }
 ```
 
@@ -471,36 +478,38 @@ The corresponding Go code is:
 package main
 
 import (
-    "fmt"
-    "time"
-    "math"
-    "math/rand"
+	"fmt"
+	"time"
+	"math"
+	"math/rand"
 )
 
-func monte_carlo_integral(function func(float64) float64, a float64, b float64, n int) float64 {
-    s := 0.0
-    for i := 0; i < n; i++ {
-        u_i := rand.Float64()
-        x_i := a + (b - a)*u_i
-        s += function(x_i)
-    }
-
-    s = ( (b - a) / float64(n) ) * s
-    return s
-}
-
-func gaussian(x float64) float64 {
-    return math.Exp(-x*x)
-}
-
 func main() {
-    rand.Seed(time.Now().UTC().UnixNano())
+	rand.Seed(time.Now().UTC().UnixNano())
 
-    trials := 1000000
-    fmt.Printf("Estimating the integral of f with %d point(s).\n\n", trials)
+	trials := 1000000
+	fmt.Printf("Estimating the integral of f with %d point(s).\n\n", trials)
 
-    integral := monte_carlo_integral(gaussian, -20.0, 20.0, trials)
-    fmt.Printf("Approx. integral: %9f \n", integral)
+	integral := monte_carlo_integral(gaussian, -20.0, 20.0, trials)
+	fmt.Printf("Approx. integral: %9f \n", integral)
+}
+
+// MC integrator
+func monte_carlo_integral(function func(float64) float64, a float64, b float64, n int) float64 {
+	s := 0.0
+	for i := 0; i < n; i++ {
+		u_i := rand.Float64()
+		x_i := a + (b - a)*u_i
+		s += function(x_i)
+	}
+
+	s = ( (b - a) / float64(n) ) * s
+	return s
+}
+
+// function to be integrated
+func gaussian(x float64) float64 {
+	return math.Exp(-x*x)
 }
 ```
 
@@ -516,7 +525,7 @@ Approx. integral:  1.772819
 
 In fact, $1.772819^2 \approx 3.143$.
 
-## The Black-Scholes stochastic equation
+## Option pricing using the Black-Scholes model
 
 ---
 
@@ -578,13 +587,6 @@ import (
     "math/rand"
 )
 
-func rectifier(x float64) float64 {
-    if x >= 0.0 {
-        return x
-    }
-    return 0.0
-}
-
 func main() {
     rand.Seed(time.Now().UTC().UnixNano())
     start := time.Now()
@@ -627,6 +629,14 @@ func main() {
     fmt.Printf("European Option Value: %.3f\n", C0)
     fmt.Println("Execution time: ", duration)
 }
+
+// calculates max(x, 0)
+func rectifier(x float64) float64 {
+    if x >= 0.0 {
+        return x
+    }
+    return 0.0
+}
 ```
 
 [Run this code in The Go Playground](https://play.golang.org/)
@@ -646,7 +656,32 @@ Nearly the same result in a fraction of the time! To be completely fair, when th
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/yves2.png" style="width: 50%; margin: 2%"></div>
 
-For the sake of completeness, let us plot some of these paths (as people usually do).
+For the sake of completeness, let's plot some stuff and have a graphical look at the underlying mechanics.
+
+First, let's plot the simulated index levels (the paths taken during the simulation). The figures below represent the first $10$, the first $100$, and all simulated index levels respectively.
+
+<div style= "text-align:center">
+<a href="/img/posts/montecarlo/10.png" target="_blank"><img src="/img/posts/montecarlo/10.png"  alt="Mean" style="width:40%; margin:1%"></a>
+<a href="/img/posts/montecarlo/100.png" target="_blank"><img src="/img/posts/montecarlo/100.png"  alt="Gaussian" style="width:40%; margin:1%"></a>
+</div>
+<div style= "text-align:center">
+<a href="/img/posts/montecarlo/all.png" target="_blank"><img src="/img/posts/montecarlo/all.png"  alt="Sharpen" style="width:40%; margin:1%"></a>
+</div>
+
+Second, we want to see the frequency of the simulated index levels at the end of the
+simulation period. We expect, by inspectioning every path, that it will be normally distributed around a value closer to the initial index level.
+
+<div style= "text-align:center">
+<a href="/img/posts/montecarlo/end_hist.png" target="_blank"><img src="/img/posts/montecarlo/end_hist.png"  alt="Sharpen" style="width:50%; margin:1%"></a>
+</div>
+
+Finally, let's take a look at the option’s end-of-period (maturity) inner values.
+
+<div style= "text-align:center">
+<a href="/img/posts/montecarlo/end_inner_hist.png" target="_blank"><img src="/img/posts/montecarlo/end_inner_hist.png"  alt="Sharpen" style="width:50%; margin:1%"></a>
+</div>
+
+As you can see, the majority of the simluated values are zero, indicating that the European call option expires worthless in many cases.
 
 ## Conclusion
 

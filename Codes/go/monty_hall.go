@@ -6,6 +6,30 @@ import (
 	"math/rand"
 )
 
+func main() {
+	rand.Seed(time.Now().UTC().UnixNano())
+
+	trials := 10000000
+	fmt.Printf("Estimating the propability of winning by switching doors with %d trial(s).\n\n", trials)
+
+	sucess := 0
+	for i := 0; i < trials; i++ {
+		new_door, prize_door := set_monty_hall()
+		if new_door == prize_door {
+			sucess++
+		}
+	}
+	probability := float64(sucess) / float64(trials)
+	theoretical_value := 2.0 / 3.0
+
+	error_pct := 100*abs(probability - theoretical_value) / theoretical_value
+
+	fmt.Printf("Estimated probability: %9f \n", probability)
+	fmt.Printf("Theoretical value: %9f \n", theoretical_value)
+	fmt.Printf("Error: %9f%%\n", error_pct)
+}
+
+// absolute value of x
 func abs(x float64) float64 {
 	if x < 0.0 {
 		return -x
@@ -13,6 +37,7 @@ func abs(x float64) float64 {
 	return x
 }
 
+// randomly sets the game
 func set_monty_hall() (int, int) {
 	guest_door := rand.Intn(3) + 1
 	prize_door := rand.Intn(3) + 1
@@ -57,27 +82,4 @@ func set_monty_hall() (int, int) {
 		}
 	}
 	return new_door, prize_door
-}
-
-func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
-
-	trials := 10000000
-	fmt.Printf("Estimating the propability of winning by switching doors with %d trial(s).\n\n", trials)
-
-	sucess := 0
-	for i := 0; i < trials; i++ {
-		new_door, prize_door := set_monty_hall()
-		if new_door == prize_door {
-			sucess++
-		}
-	}
-	probability := float64(sucess) / float64(trials)
-	theoretical_value := 2.0 / 3.0
-
-	error_pct := 100*abs(probability - theoretical_value) / theoretical_value
-
-	fmt.Printf("Estimated probability: %9f \n", probability)
-	fmt.Printf("Theoretical value: %9f \n", theoretical_value)
-	fmt.Printf("Error: %9f%%\n", error_pct)
 }

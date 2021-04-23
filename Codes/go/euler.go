@@ -2,17 +2,10 @@ package main
 
 import (
 	"fmt"
-	"time"
 	"math"
 	"math/rand"
+	"time"
 )
-
-func abs(x float64) float64 {
-	if x < 0.0 {
-		return -x
-	}
-	return x
-}
 
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
@@ -43,4 +36,12 @@ func main() {
 
 	fmt.Printf("Error: %9f%%\n", error_pct)
 
+}
+
+// absolute value of x
+func abs(x float64) float64 {
+	if x < 0.0 {
+		return -x
+	}
+	return x
 }

@@ -7,6 +7,17 @@ import (
 	"math/rand"
 )
 
+func main() {
+	rand.Seed(time.Now().UTC().UnixNano())
+
+	trials := 1000000
+	fmt.Printf("Estimating the integral of f with %d point(s).\n\n", trials)
+
+	integral := monte_carlo_integral(gaussian, -20.0, 20.0, trials)
+	fmt.Printf("Approx. integral: %9f \n", integral)
+}
+
+// MC integrator
 func monte_carlo_integral(function func(float64) float64, a float64, b float64, n int) float64 {
 	s := 0.0
 	for i := 0; i < n; i++ {
@@ -19,16 +30,7 @@ func monte_carlo_integral(function func(float64) float64, a float64, b float64, 
 	return s
 }
 
+// function to be integrated
 func gaussian(x float64) float64 {
 	return math.Exp(-x*x)
-}
-
-func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
-
-	trials := 1000000
-	fmt.Printf("Estimating the integral of f with %d point(s).\n\n", trials)
-
-	integral := monte_carlo_integral(gaussian, -20.0, 20.0, trials)
-	fmt.Printf("Approx. integral: %9f \n", integral)
 }
