@@ -359,7 +359,7 @@ func main() {
     rand.Seed(time.Now().UTC().UnixNano())
 
     trials := 10000000
-    fmt.Printf("Estimating the propability of winning by switching doors with %d trial(s).\n\n", trials)
+    fmt.Printf("Estimating the probability of winning by switching doors with %d trial(s).\n\n", trials)
 
     sucess := 0
     for i := 0; i < trials; i++ {
