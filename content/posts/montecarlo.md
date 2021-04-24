@@ -22,7 +22,7 @@ Put your adventure helmets on!
 
 ---
 
-Generally speaking, Monte Carlo methods consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used throughout in areas such as physics, finance, engineering, project management, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable. It was invented by <a href="https://en.wikipedia.org/wiki/John_von_Neumann" target="_blank">John von Neumann</a> and <a href="https://en.wikipedia.org/wiki/Stanislaw_Ulam" target="_blank">Stanisław  Ulam</a> during World War II to improve decision making under uncertain conditions. It was named after a well-known casino town, called Monaco, since the element of chance is core to the modeling approach, similar to a game of roulette.
+Generally speaking, Monte Carlo methods consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used throughout areas such as physics, finance, engineering, project management, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable. It was invented by <a href="https://en.wikipedia.org/wiki/John_von_Neumann" target="_blank">John von Neumann</a> and <a href="https://en.wikipedia.org/wiki/Stanislaw_Ulam" target="_blank">Stanisław  Ulam</a> during World War II to improve decision making under uncertain conditions. It was named after a well-known casino town, called Monaco since the element of chance is core to the modeling approach, similar to a game of roulette.
 
 If you are new to the subject, you may find it useful to read this <a href="https://www.ibm.com/cloud/learn/monte-carlo-simulation" target="_blank">IBM article</a> and get acquainted with the concept first.
 
@@ -56,52 +56,52 @@ Now, let's turn this idea into a Go code.
 package main
 
 import (
-	"fmt"
-	"time"
-	"math"
-	"math/rand"
+    "fmt"
+    "time"
+    "math"
+    "math/rand"
 )
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	trials := 1000000
-	fmt.Printf("Estimating pi with %d point(s).\n\n", trials)
+    trials := 1000000
+    fmt.Printf("Estimating pi with %d point(s).\n\n", trials)
 
-	sucess := 0
-	for i := 0; i < trials; i++ {
-		px := 2.0*rand.Float64() - 1.0
-		py := 2.0*rand.Float64() - 1.0
+    sucess := 0
+    for i := 0; i < trials; i++ {
+        px := 2.0*rand.Float64() - 1.0
+        py := 2.0*rand.Float64() - 1.0
 
-		if inside_circle(px, py) {
-			sucess += 1
-		}
-	}
+        if inside_circle(px, py) {
+            sucess += 1
+        }
+    }
 
-	pi_approx := 4.0*(float64(sucess) / float64(trials))
-	pi := math.Pi
-	fmt.Printf("Estimated pi: %9f \n", pi_approx)
-	fmt.Printf("pi: %9f \n", pi)
+    pi_approx := 4.0*(float64(sucess) / float64(trials))
+    pi := math.Pi
+    fmt.Printf("Estimated pi: %9f \n", pi_approx)
+    fmt.Printf("pi: %9f \n", pi)
 
-	error_pct := 100*abs(pi_approx - pi) / pi
+    error_pct := 100*abs(pi_approx - pi) / pi
 
-	fmt.Printf("Error: %9f%%\n", error_pct)
+    fmt.Printf("Error: %9f%%\n", error_pct)
 }
 
 // Condition to lie within the circular region
 func inside_circle(x float64, y float64) bool {
-	if x*x + y*y < 1 {
-		return true
-	}
-	return false
+    if x*x + y*y < 1 {
+        return true
+    }
+    return false
 }
 
 // absolute value of x
 func abs(x float64) float64 {
-	if x < 0.0 {
-		return -x
-	}
-	return x
+    if x < 0.0 {
+        return -x
+    }
+    return x
 }
 ```
 
@@ -117,7 +117,7 @@ pi:  3.141593
 Error:  0.046580%
 ```
 
-We were able to approximate $\pi$ with an error of $0.053965$% ! Let's jump to the next exmaple.
+We were able to approximate $\pi$ with an error of $0.053965$% ! Let's jump to the next example.
 
 ### Estimating Euler's number
 
@@ -134,49 +134,49 @@ I wrote an equivalent Go code to solve this problem. Here it is:
 package main
 
 import (
-	"fmt"
-	"time"
-	"math"
-	"math/rand"
+    "fmt"
+    "time"
+    "math"
+    "math/rand"
 )
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	trials := 10000000
-	fmt.Printf("Estimating e with %d trial(s).\n\n", trials)
+    trials := 10000000
+    fmt.Printf("Estimating e with %d trial(s).\n\n", trials)
 
-	acc := 0.0
-	for i := 0; i < trials; i++ {
-		sum := 0.0
-		num2sucess := 0
+    acc := 0.0
+    for i := 0; i < trials; i++ {
+        sum := 0.0
+        num2sucess := 0
 
-		for sum <= 1 {
-			n := rand.Float64()
-			sum += n
-			num2sucess += 1
-		}
-		acc += float64(num2sucess)
-	}
+        for sum <= 1 {
+            n := rand.Float64()
+            sum += n
+            num2sucess += 1
+        }
+        acc += float64(num2sucess)
+    }
 
-	expected := acc / float64(trials)
-	e := math.Exp(1)
+    expected := acc / float64(trials)
+    e := math.Exp(1)
 
-	fmt.Printf("Expected vale: %9f \n", expected)
-	fmt.Printf("e: %9f \n", e)
+    fmt.Printf("Expected vale: %9f \n", expected)
+    fmt.Printf("e: %9f \n", e)
 
-	error_pct := 100*abs(expected - e) / e
+    error_pct := 100*abs(expected - e) / e
 
-	fmt.Printf("Error: %9f%%\n", error_pct)
+    fmt.Printf("Error: %9f%%\n", error_pct)
 
 }
 
 // absolute value of x
 func abs(x float64) float64 {
-	if x < 0.0 {
-		return -x
-	}
-	return x
+    if x < 0.0 {
+        return -x
+    }
+    return x
 }
 ```
 
@@ -199,7 +199,7 @@ An astonishing result!
 This is a famous problem in statistics:
 >In a group of $23$ people, the probability of a shared birthday exceeds $50$%.
 
-That sounds weird at first, but if you're good enough with math you can easily prove this statement. However, we are not interested in formal proofs here. That is the whole point of these simulations. The idea is very simple: create a list with $n$ ($23$, in our case) random numbers between $1$ and $365$ representing the birth day of each person and if (at least) two of them coincide, you increment the `success` variable. Do it a certain number of times and calculate the probability dividing the number of sucesses by the total number of simulations.
+That sounds weird at first, but if you're good enough with math you can easily prove this statement. However, we are not interested in formal proofs here. That is the whole point of these simulations. The idea is very simple: create a list with $n$ ($23$, in our case) random numbers between $1$ and $365$ representing the birth day of each person and if (at least) two of them coincide, you increment the `success` variable. Do it a certain number of times and calculate the probability dividing the number of successes by the total number of simulations.
 
 The corresponding Go code:
 
@@ -207,29 +207,29 @@ The corresponding Go code:
 package main
 
 import (
-	"fmt"
-	"time"
-	"math/rand"
+    "fmt"
+    "time"
+    "math/rand"
 )
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
-	trials := 1000000
-	sucess := 0
+    rand.Seed(time.Now().UTC().UnixNano())
+    trials := 1000000
+    sucess := 0
 
-	for i := 0; i < trials; i++ {
+    for i := 0; i < trials; i++ {
 
-		bdays := gen_bday_list(23)
-		uniques := unique(bdays)
+        bdays := gen_bday_list(23)
+        uniques := unique(bdays)
 
-		if !(len(bdays)==len(uniques)) {
-			sucess++
-		}
-	}
+        if !(len(bdays)==len(uniques)) {
+            sucess++
+        }
+    }
 
-	probability := float64(sucess) / float64(trials)
+    probability := float64(sucess) / float64(trials)
 
-	fmt.Printf("The probability of at least 2 persons in a group of 23 people share a birthday is %.2f%%\n", 100*probability)
+    fmt.Printf("The probability of at least 2 persons in a group of 23 people share a birthday is %.2f%%\n", 100*probability)
 
 }
 
@@ -248,12 +248,12 @@ func unique(intSlice []int) []int {
 
 // generates the list of birth days
 func gen_bday_list(n int) []int {
-	var bdays []int
-	for i := 0; i < n; i++ {
-		bday := rand.Intn(365) + 1
-		bdays = append(bdays, bday)
-	}
-	return bdays
+    var bdays []int
+    for i := 0; i < n; i++ {
+        bday := rand.Intn(365) + 1
+        bdays = append(bdays, bday)
+    }
+    return bdays
 }
 ```
 
@@ -350,87 +350,87 @@ The following Go code simulates this game and estimates the probability of winni
 package main
 
 import (
-	"fmt"
-	"time"
-	"math/rand"
+    "fmt"
+    "time"
+    "math/rand"
 )
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	trials := 10000000
-	fmt.Printf("Estimating the propability of winning by switching doors with %d trial(s).\n\n", trials)
+    trials := 10000000
+    fmt.Printf("Estimating the propability of winning by switching doors with %d trial(s).\n\n", trials)
 
-	sucess := 0
-	for i := 0; i < trials; i++ {
-		new_door, prize_door := set_monty_hall()
-		if new_door == prize_door {
-			sucess++
-		}
-	}
-	probability := float64(sucess) / float64(trials)
-	theoretical_value := 2.0 / 3.0
+    sucess := 0
+    for i := 0; i < trials; i++ {
+        new_door, prize_door := set_monty_hall()
+        if new_door == prize_door {
+            sucess++
+        }
+    }
+    probability := float64(sucess) / float64(trials)
+    theoretical_value := 2.0 / 3.0
 
-	error_pct := 100*abs(probability - theoretical_value) / theoretical_value
+    error_pct := 100*abs(probability - theoretical_value) / theoretical_value
 
-	fmt.Printf("Estimated probability: %9f \n", probability)
-	fmt.Printf("Theoretical value: %9f \n", theoretical_value)
-	fmt.Printf("Error: %9f%%\n", error_pct)
+    fmt.Printf("Estimated probability: %9f \n", probability)
+    fmt.Printf("Theoretical value: %9f \n", theoretical_value)
+    fmt.Printf("Error: %9f%%\n", error_pct)
 }
 
 // absolute value of x
 func abs(x float64) float64 {
-	if x < 0.0 {
-		return -x
-	}
-	return x
+    if x < 0.0 {
+        return -x
+    }
+    return x
 }
 
 // randomly sets the game
 func set_monty_hall() (int, int) {
-	guest_door := rand.Intn(3) + 1
-	prize_door := rand.Intn(3) + 1
-	goat1 := true
-	goat2 := true
+    guest_door := rand.Intn(3) + 1
+    prize_door := rand.Intn(3) + 1
+    goat1 := true
+    goat2 := true
 
-	var montys_choice int
-	var new_door int
-	var goat1_door int
-	var goat2_door int
-	var switch_door bool
-	var show_goat bool
+    var montys_choice int
+    var new_door int
+    var goat1_door int
+    var goat2_door int
+    var switch_door bool
+    var show_goat bool
 
-	for goat1 {
-		goat1_door = rand.Intn(3) + 1
-		if goat1_door != prize_door {
-			goat1 = false
-		}
-	}
+    for goat1 {
+        goat1_door = rand.Intn(3) + 1
+        if goat1_door != prize_door {
+            goat1 = false
+        }
+    }
 
-	for goat2 {
-		goat2_door = rand.Intn(3) + 1
-		if (goat2_door != prize_door) && (goat2_door != goat1_door) {
-			goat2 = false
-		}
-	}
+    for goat2 {
+        goat2_door = rand.Intn(3) + 1
+        if (goat2_door != prize_door) && (goat2_door != goat1_door) {
+            goat2 = false
+        }
+    }
 
-	switch_door = true
-	show_goat = true
+    switch_door = true
+    show_goat = true
 
-	for show_goat {
-		montys_choice = rand.Intn(3) + 1
-		if (montys_choice != prize_door) && (montys_choice != guest_door) {
-			show_goat = false
-		}
-	}
+    for show_goat {
+        montys_choice = rand.Intn(3) + 1
+        if (montys_choice != prize_door) && (montys_choice != guest_door) {
+            show_goat = false
+        }
+    }
 
-	for switch_door {
-		new_door = rand.Intn(3) + 1
-		if (new_door != guest_door) && (new_door != montys_choice) {
-			switch_door = false
-		}
-	}
-	return new_door, prize_door
+    for switch_door {
+        new_door = rand.Intn(3) + 1
+        if (new_door != guest_door) && (new_door != montys_choice) {
+            switch_door = false
+        }
+    }
+    return new_door, prize_door
 }
 ```
 
@@ -461,8 +461,8 @@ represents the area of the region between the graph of $f$ and the $x-$axis.
 
 One important feature of this property is that this area has a sign, having negative values if the region is below the $x-$axis.
 
-One way to aprroximate this area is  $$S \approx \frac{b-a}{n}\sum_{i=1}^n f(a + (b-a)U_i),$$
-where $U_i \sim \mathcal{U}(0,1)$. Feel free to try different probability distributions and compare the results.
+There are some ways to approximate this area, such as Newton-Cotes rules, trapezoidal rule, and Simpson's rule. However, one clever way to numerically integrate continuous functions is using the formula  $$S \approx \frac{b-a}{n}\sum_{i=1}^n f(a + (b-a)U_i),$$
+where $U_i \sim \mathcal{U}(0,1)$, i.e. the $U_i$ are uniformly distributed in $[0,1]$ (feel free to try different probability distributions and compare the results). The main idea, then, is to draw random points, and increment the sum above until the total number of iterations is achieved.
 
 We are going to use this technique to solve a classic problem. If you are a calculus geek, you might know how difficult it is to calculate the integral $$S = \int_{-\infty}^{\infty} e^{-x^2}dx.$$
 
@@ -478,38 +478,38 @@ The corresponding Go code is:
 package main
 
 import (
-	"fmt"
-	"time"
-	"math"
-	"math/rand"
+    "fmt"
+    "time"
+    "math"
+    "math/rand"
 )
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	trials := 1000000
-	fmt.Printf("Estimating the integral of f with %d point(s).\n\n", trials)
+    trials := 1000000
+    fmt.Printf("Estimating the integral of f with %d point(s).\n\n", trials)
 
-	integral := monte_carlo_integral(gaussian, -20.0, 20.0, trials)
-	fmt.Printf("Approx. integral: %9f \n", integral)
+    integral := monte_carlo_integral(gaussian, -20.0, 20.0, trials)
+    fmt.Printf("Approx. integral: %9f \n", integral)
 }
 
 // MC integrator
 func monte_carlo_integral(function func(float64) float64, a float64, b float64, n int) float64 {
-	s := 0.0
-	for i := 0; i < n; i++ {
-		u_i := rand.Float64()
-		x_i := a + (b - a)*u_i
-		s += function(x_i)
-	}
+    s := 0.0
+    for i := 0; i < n; i++ {
+        u_i := rand.Float64()
+        x_i := a + (b - a)*u_i
+        s += function(x_i)
+    }
 
-	s = ( (b - a) / float64(n) ) * s
-	return s
+    s = ( (b - a) / float64(n) ) * s
+    return s
 }
 
 // function to be integrated
 func gaussian(x float64) float64 {
-	return math.Exp(-x*x)
+    return math.Exp(-x*x)
 }
 ```
 
@@ -523,41 +523,113 @@ Estimating the integral of f with 1000000 point(s).
 Approx. integral:  1.772819
 ```
 
-In fact, $1.772819^2 \approx 3.143$.
+In fact, $1.772819^2 \approx 3.143$. You should use the Go Playground to experiment with different functions (quadratic, cubic, polynomials, or even more complicated functions).
 
 ## Option pricing using the Black-Scholes model
 
 ---
 
-Ok, for the final section of this article I have something special that draws the attention of many people around the world.
+For the final section of this article, I have something special that draws the attention of many people around the world.
 
-The Black–Scholes, or Black–Scholes–Merton model, is a mathematical model for the dynamics of a financial market containing derivative investment instruments, giving a theoretical estimate of the price of <em>European-style options</em> and shows that the option has a unique price given the risk of the security and its expected return. This work granted Fischer Black and Myron Scholes their Nobel Prize in economics and has been widely used in algorithmic trading strategies around the world.
+The Black–Scholes, or Black–Scholes–Merton model, is a mathematical model for the dynamics of a financial market containing derivative investment instruments, giving a theoretical estimate of the price of <em>European-style options</em> and shows that the option has a unique price given the risk of the security and its expected return. This work granted <a href="https://en.wikipedia.org/wiki/Fischer_Black" target="_blank">Fischer Black</a> and <a href="https://en.wikipedia.org/wiki/Myron_Scholes" target="_blank">Myron Scholes</a> their Nobel Prize in economics and has been widely used in algorithmic trading strategies around the world.
 
-Before we move on, I have a <strong>disclaimer</strong>: we will dive into some math!
+Before we move on, I have a <strong>disclaimer</strong>: we will dive into some math (though not too deep)!
 
 ### The equation
 
-We start with the Black-Scholes-Merton option pricing formula:
+We start with the Black-Scholes-Merton formula ($1973$) for the pricing of European call options on an underlying (e.g stocks and indexes) without dividends:
 \begin{eqnarray*}
-C(S_t, K, t, T, r, \sigma) &=& S_t N(d_1) - e^{-r(T-t)}KN(d_2)\newline
-N(d) &=& \frac{1}{\sqrt{2\pi}}\int_{-\infty}^d e^{-\frac{1}{2}x^2}dx \newline
-d_1 &=& \frac{\log\frac{S_t}{K} + (T-t)\left(r + \frac{\sigma^2}{2}\right)}{\sigma\sqrt{T-t}}\newline
+C(S_t, K, t, T, r, \sigma) &=& S_t\cdot N(d_1) - e^{-r(T-t)}\cdot K \cdot N(d_2)\newline\newline
+N(d) &=& \frac{1}{\sqrt{2\pi}}\int_{-\infty}^d e^{-\frac{1}{2}x^2}dx \newline\newline
+d_1 &=& \frac{\log\frac{S_t}{K} + (T-t)\left(r + \frac{\sigma^2}{2}\right)}{\sigma\sqrt{T-t}}\newline\newline
 d_2 &=& \frac{\log\frac{S_t}{K} + (T-t)\left(r - \frac{\sigma^2}{2}\right)}{\sigma\sqrt{T-t}}.
 \end{eqnarray*}
 
-In the equations above $S_t$ is the price of the underlying asset at time $t$, $\sigma$ is the constant volatility (standard deviation of returns) of the underlying asset, $K$ is the strike price of the option, $T$ is the maturity date of the option, $r$ is the risk-free short rate.
+In the equations above $S_t$ is the price of the underlying at time $t$, $\sigma$ is the constant volatility (standard deviation of returns) of the underlying, $K$ is the strike price of the option, $T$ is the maturity date of the option, $r$ is the risk-free short rate.
 
-The Black-Scholes-Merton stochastic differential equation is given by $$dS_t = rS_t dt + \sigma S_t dZ_t,$$
-where $Z(t)$ is the random component of the model (a brownian motion). We will look at the discretized version of the BSM model (Euler discretization), given by $$S_t = S_{t-\Delta t}  +  \exp\left(\left(r - \frac{\sigma^2}{2}\right)\Delta t + \sigma\sqrt{\Delta t}Z_t \right).$$
+The Black-Scholes-Merton ($1973$) stochastic differential equation is given by $$dS_t = rS_t dt + \sigma S_t dZ_t,$$
+where $Z(t)$ is the random component of the model (a Brownian motion). In this model, the risky underlying follows, under risk neutrality, a geometric Brownian motion with a stochastic differential equation (SDE).
 
-We will optimize things by taking the logarithm of the discretized equetion, yielding: $$\log S_t = \log S_{t-\Delta t}  +  \left(r - \frac{\sigma^2}{2}\right)\Delta t + \sigma\sqrt{\Delta t}z_t .$$
+We will look at the discretized version of the BSM model (Euler discretization), given by $$S_t = S_{t-\Delta t}  +  \exp\left(\left(r - \frac{\sigma^2}{2}\right)\Delta t + \sigma\sqrt{\Delta t}z_t \right).$$
 
-The variable z is a standard normally distributed random variable, $0 < \Delta t < T$, a (small
+The variable $z$ is a standard normally distributed random variable, $0 < \Delta t < T$, a (small
 enough) time interval. It also holds $0 < t \leq T$ with $T$ the final time horizon.
 
-In this simulation we use the values $S_0 = 100$, $K = 105$, $T = 1.0$, $r = 0.05$, $\sigma = 0.2$.
+In this simulation we use the values $S_0 = 100$, $K = 105$, $T = 1.0$, $r = 0.05$, $\sigma = 0.2$. Let's see what is the expected option price using these parameters and assuming $t=0$, then we will run a Monte Carlo simulation to find the option price under the same conditions.
 
-#### The Simulation
+### Option pricing
+
+We are going to use the first set of equations, together with our Monte Carlo integrator, to calculate the option price under the conditions established. The corresponding Go code is:
+
+```go
+package main
+
+import (
+    "fmt"
+    "time"
+    "math"
+    "math/rand"
+)
+
+func main() {
+    rand.Seed(time.Now().UTC().UnixNano())
+
+    // Parameters
+    S0 := 100.0 // initial value
+    K := 105.0 // strike price
+    T := 1.0 // maturity
+    r := 0.05 //risk free short rate
+    sigma := 0.2 //volatility
+    points := 250000
+
+    start := time.Now()
+    option_price := bsm_call_value(S0, K, T, r, sigma, points)
+    duration := time.Since(start)
+
+    fmt.Printf("European Option Value: %.3f\n", option_price)
+    fmt.Println("Execution time: ", duration)
+}
+
+func bsm_call_value(S0 float64, K float64, T float64, r float64, sigma float64, n int) float64 {
+    d1 := math.Log( S0 / K) + T*(r + 0.5*sigma*sigma) / (sigma * math.Sqrt(T))
+    d2 := math.Log( S0 / K) + T*(r - 0.5*sigma*sigma) / (sigma * math.Sqrt(T))
+
+    value := S0*monte_carlo_integral(gaussian, -20.0, d1, n) - K*math.Exp(-r*T)*monte_carlo_integral(gaussian, -20.0, d2, n)
+
+    return value
+}
+
+// MC integrator
+func monte_carlo_integral(function func(float64) float64, a float64, b float64, n int) float64 {
+    s := 0.0
+    for i := 0; i < n; i++ {
+        u_i := rand.Float64()
+        x_i := a + (b - a)*u_i
+        s += function(x_i)
+    }
+
+    s = ( (b - a) / float64(n) ) * s
+    return s
+}
+
+// function to be integrated
+func gaussian(x float64) float64 {
+    return (1 / math.Sqrt(2*math.Pi))*math.Exp(-0.5*x*x)
+}
+```
+
+<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
+
+```bash
+$ go run option_pricing.go
+
+European Option Value: 7.964
+Execution time:  12.171679ms
+```
+
+This is our benchmark value for the Monte Carlo estimator to follow (you will get different values each time you run the code, although they are fairly close to each other).
+
+### The Simulation
 
 We follow the steps:
 
@@ -648,6 +720,8 @@ European Option Value: 8.027
 Execution time:  430.464289ms
 ```
 
+We got a very satisfactory result using the Monte Carlo estimator (remember that the value was $7.964$ using the BSM formula and our Monte Carlo integrator).
+
 Let's compare the results with the same simulation in Python (taken from Yves Hilpisch's "Python for Finance"):
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/yves.png" style="width: 50%; margin: 2%"></div>
@@ -656,16 +730,16 @@ Nearly the same result in a fraction of the time! To be completely fair, when th
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/yves2.png" style="width: 50%; margin: 2%"></div>
 
-For the sake of completeness, let's plot some stuff and have a graphical look at the underlying mechanics.
+### Graphical analysis
 
 First, let's plot the simulated index levels (the paths taken during the simulation). The figures below represent the first $10$, the first $100$, and all simulated index levels respectively.
 
 <div style= "text-align:center">
-<a href="/img/posts/montecarlo/10.png" target="_blank"><img src="/img/posts/montecarlo/10.png"  alt="Mean" style="width:40%; margin:1%"></a>
-<a href="/img/posts/montecarlo/100.png" target="_blank"><img src="/img/posts/montecarlo/100.png"  alt="Gaussian" style="width:40%; margin:1%"></a>
+<a href="/img/posts/montecarlo/10.png" target="_blank"><img src="/img/posts/montecarlo/10.png"  alt="Mean" style="width:45%; margin:1%"></a>
+<a href="/img/posts/montecarlo/100.png" target="_blank"><img src="/img/posts/montecarlo/100.png"  alt="Gaussian" style="width:45%; margin:1%"></a>
 </div>
 <div style= "text-align:center">
-<a href="/img/posts/montecarlo/all.png" target="_blank"><img src="/img/posts/montecarlo/all.png"  alt="Sharpen" style="width:40%; margin:1%"></a>
+<a href="/img/posts/montecarlo/all.png" target="_blank"><img src="/img/posts/montecarlo/all.png"  alt="Sharpen" style="width:45%; margin:1%"></a>
 </div>
 
 Second, we want to see the frequency of the simulated index levels at the end of the
@@ -683,13 +757,13 @@ Finally, let's take a look at the option’s end-of-period (maturity) inner valu
 <a href="/img/posts/montecarlo/end_inner_hist.png" target="_blank"><img src="/img/posts/montecarlo/end_inner_hist.png"  alt="Sharpen" style="width:50%; margin:1%"></a>
 </div>
 
-As you can see, the majority of the simluated values are zero, indicating that the European call option expires worthless in many cases.
+As you can see, the majority of the simulated values are zero, indicating that the European call option expires worthless in many cases.
 
 ## Conclusion
 
 ---
 
-We have seen how one can use the Monte Carlo method find answers to certain problems. We also have seen two major applications, the numerical integration and how to estimate an option price using the Black-Scholes-Merton model. By now, you should've realized that the Monte Carlo method gives you immense problem solving powers, even if you're not very familiar with the underlying theory or even if such a theory doesn't exist (for instance, see the <a href="https://rstudio-pubs-static.s3.amazonaws.com/241232_eebe419a0aaa4eb89398ee2a61ad3dc2.html" target="_blank">percolation problem</a>, where no mathematical solution for determining the percolation threshold $p^{\ast}$ has yet been derived).
+We have seen how one can use the Monte Carlo method to find answers to certain problems. We also have seen two major applications, the numerical integration and how to estimate an option price using the Black-Scholes-Merton model. By now, you should've realized that the Monte Carlo method gives you immense problem-solving powers, even if you're not very familiar with the underlying theory or even if such a theory doesn't exist (for instance, see the <a href="https://rstudio-pubs-static.s3.amazonaws.com/241232_eebe419a0aaa4eb89398ee2a61ad3dc2.html" target="_blank">percolation problem</a>, where no mathematical solution for determining the percolation threshold $p^{\ast}$ has yet been derived).
 
 ## Recommended reading
 
@@ -716,6 +790,5 @@ We have seen how one can use the Monte Carlo method find answers to certain prob
 <a href="https://www.amazon.com/Financial-Engineering-Stochastic-Modelling-Probability/dp/0387004513?dchild=1&keywords=monte+carlo+simulation&qid=1619031483&sr=8-7&linkCode=li2&tag=ggcarvalho-20&linkId=9aadabc08118c855b9ee8176857c90c5&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0387004513&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=0387004513" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 <a href="https://www.amazon.com/Python-Finance-Mastering-Data-Driven/dp/1492024333?crid=39PRDWB4NE6UI&dchild=1&keywords=yves+hilpisch&qid=1619037117&sprefix=yves+h%2Caps%2C245&sr=8-4&linkCode=li2&tag=ggcarvalho-20&linkId=d79beb0dfb8a9e6d06acbb038e10642c&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1492024333&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=1492024333" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 </div>
-
 
 By clicking and buying any of these from Amazon after visiting the links above, I might get a commission from their <a href="https://affiliate-program.amazon.com/" target="_blank">Affiliate program</a>, and you will be contributing to the growth of this blog :)
