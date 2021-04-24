@@ -38,11 +38,12 @@ Let's start our journey with some basic, and even textbook, examples of Monte Ca
 
 This is by far the most famous example of Monte Carlo simulations, considered to be the "zeroth example" of the subject. To estimate $\pi$ we need to pose the problem in probabilistic terms. We do so by considering a circle of radius $r=1$ inscribed in a square of side $l=2$, both centered in the origin of a cartesian coordinate system. This situation is depicted below.
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/circle.png" style="width: 42%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/circle1.png" style="width: 30%"></div>
 
 If we were to draw random points in this square, some will fall within the circle and some won't. But the ratio between points inside the circular region and the total amount of points we draw will be closer and closer to the ratio between the area of the circle and the area of the square as we draw more of these random points.
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/circle2.png" style="width: 40%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/circle_dots
+.png" style="width: 30%"></div>
 
 As you might know, the area of the circular region is $A_{\circ} = \pi\cdot r^2 = \pi$, since $r = 1$, and the area of the square is $A_{\square} = l^2 = 4$, since $l=2$. Thus, $$\pi = 4\cdot \frac{A_{\circ}}{A_{\square}}.$$
 
@@ -168,7 +169,6 @@ func main() {
     error_pct := 100*abs(expected - e) / e
 
     fmt.Printf("Error: %9f%%\n", error_pct)
-
 }
 
 // absolute value of x
