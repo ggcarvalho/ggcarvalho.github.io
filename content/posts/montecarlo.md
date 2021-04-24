@@ -763,7 +763,7 @@ As you can see, the majority of the simulated values are zero, indicating that t
 
 ---
 
-We have seen how one can use the Monte Carlo method to find answers to certain problems. We also have seen two major applications, the numerical integration and how to estimate an option price using the Black-Scholes-Merton model. By now, you should've realized that the Monte Carlo method gives you immense problem-solving powers, even if you're not very familiar with the underlying theory or even if such a theory doesn't exist (for instance, see the <a href="https://rstudio-pubs-static.s3.amazonaws.com/241232_eebe419a0aaa4eb89398ee2a61ad3dc2.html" target="_blank">percolation problem</a>, where no mathematical solution for determining the percolation threshold $p^{\ast}$ has yet been derived).
+We have seen how one can use the Monte Carlo method to find answers to certain problems. We also have seen two major applications, the numerical integration and how to estimate an option price using the Black-Scholes-Merton model. By now, you should've realized that the Monte Carlo method gives you immense problem-solving powers, even if you're not very familiar with the underlying theory or even if such a theory doesn't exist (for instance, see the <a href="https://rstudio-pubs-static.s3.amazonaws.com/241232_eebe419a0aaa4eb89398ee2a61ad3dc2.html" target="_blank">percolation problem</a>, where no mathematical solution for determining the percolation threshold $p^{\ast}$ has yet been derived) - and that's the joy of solving problems using Monte Carlo simulations!
 
 ## Recommended reading
 
