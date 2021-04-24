@@ -106,7 +106,7 @@ func abs(x float64) float64 {
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
+<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run pi.go
@@ -180,7 +180,7 @@ func abs(x float64) float64 {
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
+<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run euler.go
@@ -257,7 +257,7 @@ func gen_bday_list(n int) []int {
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
+<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run birthday.go
@@ -434,7 +434,7 @@ func set_monty_hall() (int, int) {
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
+<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run monty_hall.go
@@ -513,7 +513,7 @@ func gaussian(x float64) float64 {
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
+<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run mc_integration.go
@@ -618,7 +618,7 @@ func gaussian(x float64) float64 {
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
+<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run option_pricing.go
@@ -711,7 +711,7 @@ func rectifier(x float64) float64 {
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in The Go Playground</a>
+<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run black_scholes.go
