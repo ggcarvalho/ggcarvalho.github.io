@@ -12,16 +12,18 @@ import (
 )
 
 func main() {
-	
+
 	p := plot.New()
 	p.Title.Text = ""
 	p.X.Label.Text = "X"
 	p.Y.Label.Text = "Y"
 
 	upper := plotter.NewFunction(func(x float64) float64 { return math.Sqrt(1 - x*x) })
+	upper.Samples = 500
 	upper.Color = color.RGBA{B: 255, A: 255}
 
 	lower := plotter.NewFunction(func(x float64) float64 { return -math.Sqrt(1 - x*x) })
+	lower.Samples = 500
 	lower.Color = color.RGBA{B: 255, A: 255}
 
 	scatterData := randomPoints(250)
