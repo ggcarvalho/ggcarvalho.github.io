@@ -39,35 +39,23 @@ func abs(x float64) float64 {
 
 // randomly sets the game
 func set_monty_hall() (int, int) {
-	guest_door := rand.Intn(3)
-	prize_door := rand.Intn(3)
-	goat1 := true
-	goat2 := true
-
 	var montys_choice int
-	var new_door int
+	var prize_door int
 	var goat1_door int
 	var goat2_door int
-	var switch_door bool
-	var show_goat bool
+	var new_door int
 
-	for goat1 {
+	guest_door := rand.Intn(3)
+
+	doors_setup := true
+	for doors_setup {
+		prize_door = rand.Intn(3)
 		goat1_door = rand.Intn(3)
-		if goat1_door != prize_door {
-			goat1 = false
-		}
-	}
-
-	for goat2 {
 		goat2_door = rand.Intn(3)
-		if (goat2_door != prize_door) && (goat2_door != goat1_door) {
-			goat2 = false
-		}
+		if  (prize_door != goat1_door && prize_door != goat2_door && goat1_door != goat2_door) {doors_setup = false}
 	}
 
-	switch_door = true
-	show_goat = true
-
+	show_goat := true
 	for show_goat {
 		montys_choice = rand.Intn(3)
 		if (montys_choice != prize_door) && (montys_choice != guest_door) {
@@ -75,6 +63,7 @@ func set_monty_hall() (int, int) {
 		}
 	}
 
+	switch_door := true
 	for switch_door {
 		new_door = rand.Intn(3)
 		if (new_door != guest_door) && (new_door != montys_choice) {

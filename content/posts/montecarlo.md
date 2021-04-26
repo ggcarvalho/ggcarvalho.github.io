@@ -377,15 +377,15 @@ People often believe that they are in a $50-50$ situation and therefore the swit
 The following Go code simulates this game and estimates the probability of winning if the guest chooses to switch doors. Note that we first set the game so that the doors are properly chosen (possibly not an optimal code), and then we simulate the game to estimate the desired probability.
 
 ```go
-package main
+    package main
 
-import (
+    import (
     "fmt"
     "time"
     "math/rand"
-)
+    )
 
-func main() {
+    func main() {
     rand.Seed(time.Now().UTC().UnixNano())
 
     trials := 10000000
@@ -406,47 +406,35 @@ func main() {
     fmt.Printf("Estimated probability: %9f \n", probability)
     fmt.Printf("Theoretical value: %9f \n", theoretical_value)
     fmt.Printf("Error: %9f%%\n", error_pct)
-}
+    }
 
-// absolute value of x
-func abs(x float64) float64 {
+    // absolute value of x
+    func abs(x float64) float64 {
     if x < 0.0 {
         return -x
     }
     return x
-}
+    }
 
-// randomly sets the game
-func set_monty_hall() (int, int) {
-    guest_door := rand.Intn(3)
-    prize_door := rand.Intn(3)
-    goat1 := true
-    goat2 := true
-
+    // randomly sets the game
+    func set_monty_hall() (int, int) {
     var montys_choice int
-    var new_door int
+    var prize_door int
     var goat1_door int
     var goat2_door int
-    var switch_door bool
-    var show_goat bool
+    var new_door int
 
-    for goat1 {
+    guest_door := rand.Intn(3)
+
+    doors_setup := true
+    for doors_setup {
+        prize_door = rand.Intn(3)
         goat1_door = rand.Intn(3)
-        if goat1_door != prize_door {
-            goat1 = false
-        }
-    }
-
-    for goat2 {
         goat2_door = rand.Intn(3)
-        if (goat2_door != prize_door) && (goat2_door != goat1_door) {
-            goat2 = false
-        }
+        if  (prize_door != goat1_door && prize_door != goat2_door && goat1_door != goat2_door) {doors_setup = false}
     }
 
-    switch_door = true
-    show_goat = true
-
+    show_goat := true
     for show_goat {
         montys_choice = rand.Intn(3)
         if (montys_choice != prize_door) && (montys_choice != guest_door) {
@@ -454,6 +442,7 @@ func set_monty_hall() (int, int) {
         }
     }
 
+    switch_door := true
     for switch_door {
         new_door = rand.Intn(3)
         if (new_door != guest_door) && (new_door != montys_choice) {
@@ -471,9 +460,9 @@ $ go run monty_hall.go
 
 Estimating the probability of winning by switching doors with 10000000 game(s).
 
-Estimated probability:  0.666596
+Estimated probability:  0.666744
 Theoretical value:  0.666667
-Error:  0.010540%
+Error:  0.011525%
 ```
 
 Therefore, contrary to popular belief, it is more advantageous to the guest to switch doors confirming the theoretical result.
