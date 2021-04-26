@@ -118,8 +118,8 @@ Our basic image processing toolbox will consist of:
   </tbody>
 </table>
 
-
 ## Basic Concepts
+
 ---
 
 In a nutshell, digital cameras have a bidimensional array of sensors to record values proportional to the intensity of the light hitting that sensor in a given position (pixel). The digital image is then stored as a bidimensional array whose values (in a given scale) represent the intensity of light in that pixel position, as shown in the figure below.
@@ -135,6 +135,7 @@ The range of values allowed may vary. However, the two most common representatio
 As we will see, any image processing tool is simply a manipulation of these pixel values, either changing the actual value or its position in the array.
 
 ## Grayscale Images
+
 ---
 
 There are many ways to convert RGB images into grayscale images. For instance, in the RGB representation, if the intensity values of the three channels in a pixel are the same, then the result color is a shade of gray. As you can see in the figure below, the diagonal of the <em>RGB space</em>, i.e. when $R=G=B$, is a grayscale line with black corresponding to $R=G=B=0$ and white corresponding to $R=G=B=1$ (or $255$).
@@ -213,6 +214,7 @@ imageio.imwrite("zagreb_grayscale.png", gray)
 Cool! We have built a grayscale image converter from scratch. Let's use it to generate a halftone image.
 
 ## Halftone Images
+
 ---
 
 Halftone is a technique to approximate shades of gray using dot patterns. Here, we want to use $10$ shades of gray, thus each gray level will be represented by a $3\times 3$ pattern of black and white dots. To generate our halftone image, we need to rescale the pixel intensities to the discrete range $[0 , 9]$ and apply the mapping given in the figure below.
@@ -310,6 +312,7 @@ imageio.imwrite("halftone.png", ht)
 Remember, the image on the right-hand side is a black and white (binary) picture using the dot pattern above. How amazing is that? This technique was broadly used to print photographs in newspapers to simulate shades o grays.
 
 ## Cross-Correlation and Filters
+
 ---
 
 Arguably, the most popularized concept used in image processing is the one of a <em>convolution</em>. It has been used, successfully, in many Deep Learning architectures and popularized by the so-called <em>Convolutional Neural Networks</em>. Notwithstanding, what people call convolution in this context is actually formally called <em>cross-correlation</em> or <em>spatial correlation</em>. But what is it and how to implement it?
@@ -470,6 +473,7 @@ The results are given in the mosaic below (in a row-major manner).
 </div>
 
 ## Geometric Transformations
+
 ---
 
 Let us now see some geometric transformations. These are transformations that change the order of the pixels, not their actual values. Here we include multiples of $90^{\circ}$ rotations and flips along the vertical and horizontal axes. For more general rotations and flips we need to use some form of interpolation and, for the sake of simplicity, we will avoid them here. The main ingredient here is the <em>slice notation</em> used in Python, so if you are not familiar with it that is a great use case for it!
@@ -554,6 +558,7 @@ for key in geometric_transforms:
 </div>
 
 ## Intensity Transformations
+
 ---
 
 Now, we are going to see how to brighten/darken an image. As we have seen, the pixel values represent, in some scale, the intensity of the light in that position. To brighten or darken an image, all we need is to multiply every value by the same amount $\lambda > 0$. If $\lambda > 1$, the resulting image will be brighter than the original, and if $\lambda < 1$ the resulting image will be darker than the original image. For $\lambda > 1$, some values might exceed the allowable range (e.g, exceed $255$ for $8-$bit images). In that case, we need to clip the result (already implemented). The corresponding Python code is given below.
@@ -581,6 +586,7 @@ imageio.imwrite("darker.png", img_darker)
 </div>
 
 ## Negative Images
+
 ---
 
 Images represented in the RGB color model consist of three components, one for each primary color. When fed into an RGB monitor, these three images combine on the screen to produce a composite color image. The secondary colors of light are cyan (C), magenta (M), and yellow (Y). They are also known as the primary colors of pigments. For instance, when a surface coated with cyan pigment is illuminated with white light, no red light is reflected from the surface. In a nutshell, cyan is the absence of red, magenta is the absence of green, and yellow is the absence of blue. Because of that, we usually interpret the RGB model to be additive, whereas the CMY is subtractive (see the image below).
@@ -617,6 +623,7 @@ imageio.imwrite("zagreb_negative.png", img)
 </div>
 
 ## Conclusion
+
 ---
 
 Congratulations! You have built your first image processing toolbox! Although we have used a Pythonic way to implement things here and there, you can use the concepts outlined here to implement everything in any other language.
