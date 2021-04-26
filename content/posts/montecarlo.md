@@ -36,7 +36,7 @@ Generally speaking, Monte Carlo methods consist of a broad class of computationa
 
 Here is an excerpt from N.T. Thomopoulos' book, "Essentials of Monte Carlo Simulation: Statistical Methods
 for Building Simulation Models":
->To apply the Monte Carol method, the analyst constructs a mathematical model that
+>To apply the Monte Carlo method, the analyst constructs a mathematical model that
 simulates a real system. A large number of random sampling of the model is applied
 yielding a large number of random samples of output results from the model. [...]
 The method is based on running the model many times as in random sampling.
