@@ -8,6 +8,7 @@ tag: "python"
 name: "python"
 hashtags: "#python #imageprocessing"
 draft: false
+style: monokai
 ---
 
 Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks (this statement is particularly true if you are a Pythonist). However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will see how to implement basic image processing tools from scratch using Python.
@@ -634,5 +635,13 @@ Good Luck!
 - [Introduction to Computation and Programming Using Python (With Application to Understanding Data) 2nd Edition - John V. Guttag ](https://amzn.to/2Orc40t)
 
 - [Python Image Processing Cookbook: Over 60 recipes to help you perform complex image processing and computer vision tasks with ease  - Sandipan Dey](https://amzn.to/31Rx4AB)
+
+
+<div style= "text-align:center; margin: 2%">
+<a href="https://www.amazon.com/Digital-Image-Processing-Rafael-Gonzalez/dp/9353062985?dchild=1&keywords=digital+image+processing&qid=1619394295&sr=8-9&linkCode=li2&tag=ggcarvalho-20&linkId=82e572c411efc96186579d03668d5607&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=9353062985&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=9353062985" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<a href="https://www.amazon.com/Think-Python-Allen-B-Downey/dp/144933072X?dchild=1&keywords=Allen+B.+Downey&qid=1617739969&sr=8-1&linkCode=li2&tag=ggcarvalho-20&linkId=8fd6ec7a8a6636e1cb2d4372d523f9ae&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=144933072X&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=144933072X" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<a href="https://www.amazon.com/Introduction-Computation-Programming-Using-Python/dp/0262529629?dchild=1&keywords=John+V.+Guttag&qid=1617740038&sr=8-2&linkCode=li2&tag=ggcarvalho-20&linkId=e472392fcc2f25eee7c1b46e671dda80&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0262529629&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=0262529629" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<a href="https://www.amazon.com/Python-Image-Processing-Cookbook-processing/dp/1789537142?dchild=1&keywords=image+processing+python&qid=1617740180&sr=8-2&linkCode=li2&tag=ggcarvalho-20&linkId=69adfbd6246c57691515eeb10223faf6&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1789537142&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=1789537142" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+</div>
 
 By clicking and buying any of these from Amazon after visiting the links above, I might get a commission from their [Affiliate program](https://affiliate-program.amazon.com/), and you will be contributing to the growth of this blog :)

@@ -38,12 +38,11 @@ Let's start our journey with some basic, and even textbook, examples of Monte Ca
 
 This is by far the most famous example of Monte Carlo simulations, considered to be the "zeroth example" of the subject. To estimate $\pi$ we need to pose the problem in probabilistic terms. We do so by considering a circle of radius $r=1$ inscribed in a square of side $l=2$, both centered in the origin of a cartesian coordinate system. This situation is depicted below.
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/circle1.png" style="width: 30%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/circle_empty.png" style="width: 30%"></div>
 
 If we were to draw random points in this square, some will fall within the circle and some won't. But the ratio between points inside the circular region and the total amount of points we draw will be closer and closer to the ratio between the area of the circle and the area of the square as we draw more of these random points.
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/circle_dots
-.png" style="width: 30%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/circle_pop.png" style="width: 30%"></div>
 
 As you might know, the area of the circular region is $A_{\circ} = \pi\cdot r^2 = \pi$, since $r = 1$, and the area of the square is $A_{\square} = l^2 = 4$, since $l=2$. Thus, $$\pi = 4\cdot \frac{A_{\circ}}{A_{\square}}.$$
 
@@ -468,7 +467,7 @@ We are going to use this technique to solve a classic problem. If you are a calc
 
 It involves a trick using Fubini's theorem and change in from cartesian to polar coordinates. Surprisingly, the result of this integral is $\sqrt{\pi}$. Let's use Monte Carlo integration to evaluate $$\bar{S} = \int_{-20}^{20} e^{-x^2}dx.$$
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/function.png" style="width: 35%; margin: 2%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/gaussian.png" style="width: 35%; margin: 2%"></div>
 
 We see that $f$ rapidly decreases when moving away from $x=0$, so the definite integral in $[-20,20]$ seems to be a good approximation.
 
