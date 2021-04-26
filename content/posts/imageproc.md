@@ -8,7 +8,6 @@ tag: "python"
 name: "python"
 hashtags: "#python #imageprocessing"
 draft: false
-style: monokai
 ---
 
 Basic image processing tools may serve you in many situations as a developer, and there are several libraries to help you with image processing tasks (this statement is particularly true if you are a Pythonist). However, knowing how to implement basic procedures is not only a good programming exercise but will give you the ability to tweak things to your liking. In this article, we will see how to implement basic image processing tools from scratch using Python.
