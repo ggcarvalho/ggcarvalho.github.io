@@ -16,15 +16,15 @@ func main() {
 	p.Y.Label.Text = "Y"
 
 	gauss := plotter.NewFunction(func(x float64) float64 { return math.Exp(-x*x) })
-	gauss.Samples = 100
+	gauss.Samples = 1000
 	gauss.Color = color.RGBA{B: 255, A: 255}
 
 	p.Add(gauss)
 
-	p.X.Min = -3
-	p.X.Max = 3
+	p.X.Min = -20
+	p.X.Max = 20
 	p.Y.Min = 0
-	p.Y.Max = 1.5
+	p.Y.Max = 1.25
 
 	// Save the plot to a PNG file.
 	if err := p.Save(5*vg.Inch, 5*vg.Inch, "gaussian.png"); err != nil {

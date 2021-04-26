@@ -18,17 +18,48 @@ Put your adventure helmets on!
 
 {{< table_of_contents >}}
 
-## What is Monte Carlo simulation?
+## Requirements
+
+There is no need to install anything on your computer, you can use the Go Playground. However, if you wish to run the programs on your computer you should <a href="https://golang.org/" target="_blank">download and install Go</a> (I use Go $1.16.3$). If you want to learn the Go Programming Language, check the "Recommended Reading" section at the end of this article, as well as
+
+- <a href="https://gobyexample.com/" target="_blank">Go by Example</a>
+
+- <a href="https://tour.golang.org/welcome/1" target="_blank">A Tour of Go</a>
+
+If you see the message <strong>timeout running program</strong> when using the Go Playground, try decreasing the number of iterations.
+
+## What is Monte Carlo Simulation?
 
 ---
 
-Generally speaking, Monte Carlo methods consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used throughout areas such as physics, finance, engineering, project management, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable. It was invented by <a href="https://en.wikipedia.org/wiki/John_von_Neumann" target="_blank">John von Neumann</a> and <a href="https://en.wikipedia.org/wiki/Stanislaw_Ulam" target="_blank">Stanisław  Ulam</a> during World War II to improve decision making under uncertain conditions. It was named after a well-known casino town, called Monaco since the element of chance is core to the modeling approach, similar to a game of roulette.
+Generally speaking, Monte Carlo methods consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used throughout areas such as physics, finance, engineering, project management, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable.
 
-If you are new to the subject, you may find it useful to read this <a href="https://www.ibm.com/cloud/learn/monte-carlo-simulation" target="_blank">IBM article</a> and get acquainted with the concept first.
+Here is an excerpt from N.T. Thomopoulos' book, "Essentials of Monte Carlo Simulation: Statistical Methods
+for Building Simulation Models":
+>To apply the Monte Carol method, the analyst constructs a mathematical model that
+simulates a real system. A large number of random sampling of the model is applied
+yielding a large number of random samples of output results from the model. [...]
+The method is based on running the model many times as in random sampling.
+For each sample, random variates are generated on each input variable; computations are run through the model yielding random outcomes on each output
+variable. Since each input is random, the outcomes are random. In the same way,
+they generated thousands of such samples and achieved thousands of outcomes for
+each output variable.
 
->"Unlike a normal forecasting model, Monte Carlo Simulation predicts a set of outcomes based on an estimated range of values versus a set of fixed input values. In other words, a Monte Carlo Simulation builds a model of possible results by leveraging a probability distribution, such as a uniform or normal distribution, for any variable that has inherent uncertainty. It, then, recalculates the results over and over, each time using a different set of random numbers between the minimum and maximum values. In a typical Monte Carlo experiment, this exercise can be repeated thousands of times to produce a large number of likely outcomes." <a href="https://www.ibm.com/cloud/learn/monte-carlo-simulation" target="_blank">IBM</a>
+It was invented by <a href="https://en.wikipedia.org/wiki/John_von_Neumann" target="_blank">John von Neumann</a>, <a href="https://en.wikipedia.org/wiki/Stanislaw_Ulam" target="_blank">Stanisław Ulam</a>, and <a href="https://en.wikipedia.org/wiki/Nicholas_Metropolis" target="_blank">Nicholas Metropolis</a>, who were employed on a secret assignment in the Los Alamos National Laboratory, while working on a nuclear weapon project called the Manhattan Project. It was named after a well-known casino town, called Monaco since chance and randomness are core to the modeling approach, similar to a game of roulette.
 
-## First examples
+Here is an excerpt from Paul Glasserman's "Monte Carlo Methods in Financial Engineering (Stochastic Modelling and Applied Probability)" summarizing the principles of the Monte Carlo method:
+>Monte Carlo methods are based on the analogy between probability and volume. The mathematics of measure formalizes the intuitive notion of probability, associating an event with a set of outcomes and defining the probability of
+the event to be its volume or measure relative to that of a universe of possible
+outcomes. Monte Carlo uses this identity in reverse, calculating the volume
+of a set by interpreting the volume as a probability. In the simplest case, this
+means sampling randomly from a universe of possible outcomes and taking
+the fraction of random draws that fall in a given set as an estimate of the set’s
+volume. The law of large numbers ensures that this estimate converges to the
+correct value as the number of draws increases. The central limit theorem
+provides information about the likely magnitude of the error in the estimate
+after a finite number of draws.
+
+## First Examples
 
 ---
 
@@ -119,7 +150,7 @@ Error:  0.046580%
 
 We were able to approximate $\pi$ with an error of $0.053965$% ! Let's jump to the next example.
 
-### Estimating Euler's number
+### Estimating Euler's Number
 
 Not long ago, Lex Fridman published the following in a LinkedIn post:
 
@@ -193,7 +224,7 @@ Error:  0.008681%
 
 An astonishing result!
 
-### The birthday paradox
+### The Birthday Paradox
 
 This is a famous problem in statistics:
 >In a group of $23$ people, the probability of a shared birthday exceeds $50$%.
@@ -330,7 +361,7 @@ You can tweak this code to reproduce the following table from <a href="https://e
 
 Of course, for $n \geq 365$ you don't need any calculations, it's a straightforward consequence of the <a href="https://en.wikipedia.org/wiki/Pigeonhole_principle" target="_blank"><em>pigeonhole principle</em></a>.
 
-## The (in)famous Monty Hall problem
+## The (In)Famous Monty Hall Problem
 
 ---
 
@@ -447,7 +478,7 @@ Error:  0.010540%
 
 Therefore, contrary to popular belief, it is more advantageous to the guest to switch doors confirming the theoretical result.
 
-## Integration using Monte Carlo simulations
+## Integration Using Monte Carlo Simulations
 
 ---
 
@@ -463,11 +494,17 @@ One important feature of this property is that this area has a sign, having nega
 There are some ways to approximate this area, such as Newton-Cotes rules, trapezoidal rule, and Simpson's rule. However, one clever way to numerically integrate continuous functions is using the formula  $$S \approx \frac{b-a}{n}\sum_{i=1}^n f(a + (b-a)U_i),$$
 where $U_i \sim \mathcal{U}(0,1)$, i.e. the $U_i$ are uniformly distributed in $[0,1]$ (feel free to try different probability distributions and compare the results). The main idea, then, is to draw random points, and increment the sum above until the total number of iterations is achieved.
 
+From Paul Glasserman's book:
+>[...] for a Monte Carlo estimate based on $n$ draws from the domain $[0, 1]^d$. In particular, the $O(n^{−1/2})$ convergence rate holds for all $d$. In contrast, the error in a product trapezoidal rule in d dimensions is $O(n^{−2/d} )$ for twice continuously differentiable integrands; this degradation in convergence
+rate with increasing dimension is characteristic of all deterministic integration
+methods. Thus, Monte Carlo methods are attractive in evaluating integrals in
+high dimensions.
+
 We are going to use this technique to solve a classic problem. If you are a calculus geek, you might know how difficult it is to calculate the integral $$S = \int_{-\infty}^{\infty} e^{-x^2}dx.$$
 
 It involves a trick using Fubini's theorem and change in from cartesian to polar coordinates. Surprisingly, the result of this integral is $\sqrt{\pi}$. Let's use Monte Carlo integration to evaluate $$\bar{S} = \int_{-20}^{20} e^{-x^2}dx.$$
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/gaussian.png" style="width: 35%; margin: 2%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/gaussian_func.png" style="width: 35%; margin: 2%"></div>
 
 We see that $f$ rapidly decreases when moving away from $x=0$, so the definite integral in $[-20,20]$ seems to be a good approximation.
 
@@ -524,7 +561,7 @@ Approx. integral:  1.772819
 
 In fact, $1.772819^2 \approx 3.143$. You should use the Go Playground to experiment with different functions (quadratic, cubic, polynomials, or even more complicated functions).
 
-## Option pricing using the Black-Scholes model
+## Option Pricing Using the Black-Scholes Model
 
 ---
 
@@ -534,7 +571,7 @@ The Black–Scholes, or Black–Scholes–Merton model, is a mathematical model 
 
 Before we move on, I have a <strong>disclaimer</strong>: we will dive into some math (though not too deep)!
 
-### The equation
+### The Equation
 
 We start with the Black-Scholes-Merton formula ($1973$) for the pricing of European call options on an underlying (e.g stocks and indexes) without dividends:
 \begin{eqnarray*}
@@ -556,7 +593,7 @@ enough) time interval. It also holds $0 < t \leq T$ with $T$ the final time hori
 
 In this simulation we use the values $S_0 = 100$, $K = 105$, $T = 1.0$, $r = 0.05$, $\sigma = 0.2$. Let's see what is the expected option price using these parameters and assuming $t=0$, then we will run a Monte Carlo simulation to find the option price under the same conditions.
 
-### Option pricing
+### Option Pricing
 
 We are going to use the first set of equations, together with our Monte Carlo integrator, to calculate the option price under the conditions established. The corresponding Go code is:
 
@@ -729,7 +766,7 @@ Nearly the same result in a fraction of the time! To be completely fair, when th
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/yves2.png" style="width: 50%; margin: 2%"></div>
 
-### Graphical analysis
+### Graphical Analysis
 
 First, let's plot the simulated index levels (the paths taken during the simulation). The figures below represent the first $10$, the first $100$, and all simulated index levels respectively.
 
@@ -765,7 +802,7 @@ As you can see, the majority of the simulated values are zero, indicating that t
 
 We have seen how one can use the Monte Carlo method to find answers to certain problems. We also have seen two major applications, the numerical integration and how to estimate an option price using the Black-Scholes-Merton model. By now, you should've realized that the Monte Carlo method gives you immense problem-solving powers, even if you're not very familiar with the underlying theory or even if such a theory doesn't exist (for instance, see the <a href="https://rstudio-pubs-static.s3.amazonaws.com/241232_eebe419a0aaa4eb89398ee2a61ad3dc2.html" target="_blank">percolation problem</a>, where no mathematical solution for determining the percolation threshold $p^{\ast}$ has yet been derived) - and that's the joy of solving problems using Monte Carlo simulations!
 
-## Recommended reading
+## Recommended Reading
 
 - [Go Programming Language 1st Edition - Donovan & Kernighan](https://amzn.to/32zSNNN)
 
