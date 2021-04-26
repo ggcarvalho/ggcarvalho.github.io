@@ -12,8 +12,8 @@ import (
 func main() {
 	p := plot.New()
 	p.Title.Text = ""
-	p.X.Label.Text = "X"
-	p.Y.Label.Text = "Y"
+	p.X.Label.Text = "x"
+	p.Y.Label.Text = "y"
 
 	gauss := plotter.NewFunction(func(x float64) float64 { return math.Exp(-x*x) })
 	gauss.Samples = 1000

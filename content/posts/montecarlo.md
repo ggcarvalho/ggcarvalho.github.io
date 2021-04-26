@@ -20,13 +20,11 @@ Put your adventure helmets on!
 
 ## Requirements
 
-There is no need to install anything on your computer, you can use the Go Playground. However, if you wish to run the programs on your computer you should <a href="https://golang.org/" target="_blank">download and install Go</a> (I use Go $1.16.3$). If you want to learn the Go Programming Language, check the "Recommended Reading" section at the end of this article, as well as
+There is no need to install anything on your computer, you can use the Go Playground. However, if you wish to run the programs locally on your computer, you should <a href="https://golang.org/" target="_blank">download and install Go</a> (I use Go $1.16.3$). If you want to learn the Go Programming Language, check the "Recommended Reading" section at the end of this article, as well as
 
 - <a href="https://gobyexample.com/" target="_blank">Go by Example</a>
 
 - <a href="https://tour.golang.org/welcome/1" target="_blank">A Tour of Go</a>
-
-If you see the <strong>timeout running program</strong> message when using the Go Playground, try decreasing the number of iterations.
 
 ## What is Monte Carlo Simulation?
 
@@ -69,13 +67,13 @@ Let's start our journey with some basic, and even textbook, examples of Monte Ca
 
 This is by far the most famous example of Monte Carlo simulations, considered to be the "zeroth example" of the subject. To estimate $\pi$ we need to pose the problem in probabilistic terms. We do so by considering a circle of radius $r=1$ inscribed in a square of side $l=2$, both centered in the origin of a cartesian coordinate system. This situation is depicted below.
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/circle_empty.png" style="width: 30%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/circle.png" style="width: 30%"></div>
 
 If we were to draw random points in this square, some will fall within the circle and some won't. But the ratio between points inside the circular region and the total amount of points we draw will be closer and closer to the ratio between the area of the circle and the area of the square as we draw more of these random points.
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/circle_pop.png" style="width: 30%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/circle_dots.png" style="width: 30%"></div>
 
-As you might know, the area of the circular region is $A_{\circ} = \pi\cdot r^2 = \pi$, since $r = 1$, and the area of the square is $A_{\square} = l^2 = 4$, since $l=2$. Thus, $$\pi = 4\cdot \frac{A_{\circ}}{A_{\square}}.$$
+As you might know, the area of the circular region is $A_{\circ} = \pi\cdot r^2$ and the area of the square is $A_{\square} = (2r)^2 = 4r^2$. Thus, $$\pi = 4\cdot \frac{A_{\circ}}{A_{\square}}.$$
 
 As a result, we can estimate $\pi$ as
 $$\pi \approx 4\cdot \frac{\text{$\\#$ points inside the circle}}{\text{$\\#$ points}}.$$
@@ -87,56 +85,58 @@ Now, let's turn this idea into a Go code.
 package main
 
 import (
-    "fmt"
-    "time"
-    "math"
-    "math/rand"
+	"fmt"
+	"math"
+	"math/rand"
+	"time"
 )
 
 func main() {
-    rand.Seed(time.Now().UTC().UnixNano())
+	rand.Seed(time.Now().UTC().UnixNano())
 
-    trials := 1000000
-    fmt.Printf("Estimating pi with %d point(s).\n\n", trials)
+	trials := 1000000
+	fmt.Printf("Estimating pi with %d point(s).\n\n", trials)
 
-    sucess := 0
-    for i := 0; i < trials; i++ {
-        px := 2.0*rand.Float64() - 1.0
-        py := 2.0*rand.Float64() - 1.0
+	sucess := 0
+	for i := 0; i < trials; i++ {
+		p := gen_random_point()
+		if inside_circle(p[0], p[1]) {sucess++}
+	}
 
-        if inside_circle(px, py) {
-            sucess += 1
-        }
-    }
+	pi_approx := 4.0*(float64(sucess) / float64(trials))
+	pi := math.Pi
+	error_pct := 100.0*abs(pi_approx - pi) / pi
 
-    pi_approx := 4.0*(float64(sucess) / float64(trials))
-    pi := math.Pi
-    fmt.Printf("Estimated pi: %9f \n", pi_approx)
-    fmt.Printf("pi: %9f \n", pi)
+	fmt.Printf("Estimated pi: %9f \n", pi_approx)
+	fmt.Printf("pi: %9f \n", pi)
+	fmt.Printf("Error: %9f%%\n", error_pct)
+}
 
-    error_pct := 100*abs(pi_approx - pi) / pi
-
-    fmt.Printf("Error: %9f%%\n", error_pct)
+// generate random point p = (px, py)
+func gen_random_point() [2]float64 {
+	px := 2.0*rand.Float64() - 1.0
+	py := 2.0*rand.Float64() - 1.0
+	return [2]float64{px, py}
 }
 
 // Condition to lie within the circular region
 func inside_circle(x float64, y float64) bool {
-    if x*x + y*y < 1 {
-        return true
-    }
-    return false
+	if x*x + y*y < 1 {
+		return true
+	}
+	return false
 }
 
 // absolute value of x
 func abs(x float64) float64 {
-    if x < 0.0 {
-        return -x
-    }
-    return x
+	if x < 0.0 {
+		return -x
+	}
+	return x
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/Fkct_grlXah" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run pi.go
@@ -165,61 +165,59 @@ I wrote an equivalent Go code to solve this problem. Here it is:
 package main
 
 import (
-    "fmt"
-    "time"
-    "math"
-    "math/rand"
+	"fmt"
+	"math"
+	"math/rand"
+	"time"
 )
 
 func main() {
-    rand.Seed(time.Now().UTC().UnixNano())
+	rand.Seed(time.Now().UTC().UnixNano())
 
-    trials := 10000000
-    fmt.Printf("Estimating e with %d trial(s).\n\n", trials)
+	trials := 10000000
+	fmt.Printf("Estimating e with %d trial(s).\n\n", trials)
 
-    acc := 0.0
-    for i := 0; i < trials; i++ {
-        sum := 0.0
-        num2sucess := 0
+	acc := 0.0
+	for i := 0; i < trials; i++ {
+		sum := 0.0
+		num2sucess := 0
 
-        for sum <= 1 {
-            n := rand.Float64()
-            sum += n
-            num2sucess += 1
-        }
-        acc += float64(num2sucess)
-    }
+		for sum <= 1 {
+			n := rand.Float64()
+			sum += n
+			num2sucess++
+		}
+		acc += float64(num2sucess)
+	}
 
-    expected := acc / float64(trials)
-    e := math.Exp(1)
+	expected := acc / float64(trials)
+	e := math.Exp(1)
+	error_pct := 100.0*abs(expected - e) / e
 
-    fmt.Printf("Expected vale: %9f \n", expected)
-    fmt.Printf("e: %9f \n", e)
-
-    error_pct := 100*abs(expected - e) / e
-
-    fmt.Printf("Error: %9f%%\n", error_pct)
+	fmt.Printf("Expected vale: %9f \n", expected)
+	fmt.Printf("e: %9f \n", e)
+	fmt.Printf("Error: %9f%%\n", error_pct)
 }
 
 // absolute value of x
 func abs(x float64) float64 {
-    if x < 0.0 {
-        return -x
-    }
-    return x
+	if x < 0.0 {
+		return -x
+	}
+	return x
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/OPc5JhrQWZB" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run euler.go
 
 Estimating e with 10000000 trial(s).
 
-Expected vale:  2.718518
+Expected vale:  2.718357
 e:  2.718282
-Error:  0.008681%
+Error:  0.002751%
 ```
 
 An astonishing result!
@@ -237,37 +235,36 @@ The corresponding Go code:
 package main
 
 import (
-    "fmt"
-    "time"
-    "math/rand"
+	"fmt"
+	"math/rand"
+	"time"
 )
 
 func main() {
-    rand.Seed(time.Now().UTC().UnixNano())
-    trials := 1000000
-    sucess := 0
+	rand.Seed(time.Now().UTC().UnixNano())
 
-    for i := 0; i < trials; i++ {
+	num_people := 23
+	trials := 1000000
+	sucess := 0
 
-        bdays := gen_bday_list(23)
-        uniques := unique(bdays)
+	for i := 0; i < trials; i++ {
+		bdays := gen_bday_list(num_people)
+		uniques := unique(bdays)
 
-        if !(len(bdays)==len(uniques)) {
-            sucess++
-        }
-    }
+		if !(len(bdays)==len(uniques)) {
+			sucess++
+		}
+	}
 
-    probability := float64(sucess) / float64(trials)
-
-    fmt.Printf("The probability of at least 2 persons in a group of 23 people share a birthday is %.2f%%\n", 100*probability)
-
+	probability := float64(sucess) / float64(trials)
+	fmt.Printf("The probability of at least 2 persons in a group of %d people share a birthday is %.2f%%\n", num_people, 100.0*probability)
 }
 
 // returns a slice with the unique elements of a given slice
-func unique(intSlice []int) []int {
+func unique(s []int) []int {
     keys := make(map[int]bool)
     list := []int{}
-    for _, entry := range intSlice {
+    for _, entry := range s {
         if _, value := keys[entry]; !value {
             keys[entry] = true
             list = append(list, entry)
@@ -278,16 +275,16 @@ func unique(intSlice []int) []int {
 
 // generates the list of birth days
 func gen_bday_list(n int) []int {
-    var bdays []int
-    for i := 0; i < n; i++ {
-        bday := rand.Intn(365) + 1
-        bdays = append(bdays, bday)
-    }
-    return bdays
+	var bdays []int
+	for i := 0; i < n; i++ {
+		bday := rand.Intn(365)
+		bdays = append(bdays, bday)
+	}
+	return bdays
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/3r2rHcx4_AR" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run birthday.go
@@ -380,89 +377,89 @@ The following Go code simulates this game and estimates the probability of winni
 package main
 
 import (
-    "fmt"
-    "time"
-    "math/rand"
+	"fmt"
+	"time"
+	"math/rand"
 )
 
 func main() {
-    rand.Seed(time.Now().UTC().UnixNano())
+	rand.Seed(time.Now().UTC().UnixNano())
 
-    trials := 10000000
-    fmt.Printf("Estimating the probability of winning by switching doors with %d game(s).\n\n", trials)
+	trials := 10000000
+	fmt.Printf("Estimating the probability of winning by switching doors with %d game(s).\n\n", trials)
 
-    sucess := 0
-    for i := 0; i < trials; i++ {
-        new_door, prize_door := set_monty_hall()
-        if new_door == prize_door {
-            sucess++
-        }
-    }
-    probability := float64(sucess) / float64(trials)
-    theoretical_value := 2.0 / 3.0
+	sucess := 0
+	for i := 0; i < trials; i++ {
+		new_door, prize_door := set_monty_hall()
+		if new_door == prize_door {
+			sucess++
+		}
+	}
+	probability := float64(sucess) / float64(trials)
+	theoretical_value := 2.0 / 3.0
 
-    error_pct := 100*abs(probability - theoretical_value) / theoretical_value
+	error_pct := 100.0*abs(probability - theoretical_value) / theoretical_value
 
-    fmt.Printf("Estimated probability: %9f \n", probability)
-    fmt.Printf("Theoretical value: %9f \n", theoretical_value)
-    fmt.Printf("Error: %9f%%\n", error_pct)
+	fmt.Printf("Estimated probability: %9f \n", probability)
+	fmt.Printf("Theoretical value: %9f \n", theoretical_value)
+	fmt.Printf("Error: %9f%%\n", error_pct)
 }
 
 // absolute value of x
 func abs(x float64) float64 {
-    if x < 0.0 {
-        return -x
-    }
-    return x
+	if x < 0.0 {
+		return -x
+	}
+	return x
 }
 
 // randomly sets the game
 func set_monty_hall() (int, int) {
-    var montys_choice int
-    var prize_door int
-    var goat1_door int
-    var goat2_door int
-    var new_door int
+	var montys_choice int
+	var prize_door int
+	var goat1_door int
+	var goat2_door int
+	var new_door int
 
-    guest_door := rand.Intn(3)
+	guest_door := rand.Intn(3)
 
-    doors_setup := true
-    for doors_setup {
-        prize_door = rand.Intn(3)
-        goat1_door = rand.Intn(3)
-        goat2_door = rand.Intn(3)
-        if  (prize_door != goat1_door && prize_door != goat2_door && goat1_door != goat2_door) {doors_setup = false}
-    }
+	doors_setup := true
+	for doors_setup {
+		prize_door = rand.Intn(3)
+		goat1_door = rand.Intn(3)
+		goat2_door = rand.Intn(3)
+		if  (prize_door != goat1_door && prize_door != goat2_door && goat1_door != goat2_door) {doors_setup = false}
+	}
 
-    show_goat := true
-    for show_goat {
-        montys_choice = rand.Intn(3)
-        if (montys_choice != prize_door) && (montys_choice != guest_door) {
-            show_goat = false
-        }
-    }
+	show_goat := true
+	for show_goat {
+		montys_choice = rand.Intn(3)
+		if (montys_choice != prize_door) && (montys_choice != guest_door) {
+			show_goat = false
+		}
+	}
 
-    switch_door := true
-    for switch_door {
-        new_door = rand.Intn(3)
-        if (new_door != guest_door) && (new_door != montys_choice) {
-            switch_door = false
-        }
-    }
-    return new_door, prize_door
+	switch_door := true
+	for switch_door {
+		new_door = rand.Intn(3)
+		if (new_door != guest_door) && (new_door != montys_choice) {
+			switch_door = false
+		}
+	}
+	return new_door, prize_door
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/0LTSpkpODue" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run monty_hall.go
 
 Estimating the probability of winning by switching doors with 10000000 game(s).
 
-Estimated probability:  0.666744
+Estimated probability:  0.666655
 Theoretical value:  0.666667
-Error:  0.011525%
+Error:  0.001705%
 ```
 
 Therefore, contrary to popular belief, it is more advantageous to the guest to switch doors confirming the theoretical result.
@@ -493,7 +490,7 @@ We are going to use this technique to solve a classic problem. If you are a calc
 
 It involves a trick using Fubini's theorem and change in from cartesian to polar coordinates. Surprisingly, the result of this integral is $\sqrt{\pi}$. Let's use Monte Carlo integration to evaluate $$\bar{S} = \int_{-20}^{20} e^{-x^2}dx.$$
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/gaussian_func.png" style="width: 35%; margin: 2%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/gaussian.png" style="width: 35%; margin: 2%"></div>
 
 We see that $f$ rapidly decreases when moving away from $x=0$, so the definite integral in $[-20,20]$ seems to be a good approximation.
 
@@ -503,42 +500,42 @@ The corresponding Go code is:
 package main
 
 import (
-    "fmt"
-    "time"
-    "math"
-    "math/rand"
+	"fmt"
+	"time"
+	"math"
+	"math/rand"
 )
 
 func main() {
-    rand.Seed(time.Now().UTC().UnixNano())
+	rand.Seed(time.Now().UTC().UnixNano())
 
-    trials := 1000000
-    fmt.Printf("Estimating the integral of f with %d point(s).\n\n", trials)
+	trials := 1000000
+	fmt.Printf("Estimating the integral of f with %d point(s).\n\n", trials)
 
-    integral := monte_carlo_integral(gaussian, -20.0, 20.0, trials)
-    fmt.Printf("Approx. integral: %9f \n", integral)
+	integral := monte_carlo_integral(gaussian, -20.0, 20.0, trials)
+	fmt.Printf("Approx. integral: %9f \n", integral)
 }
 
 // MC integrator
 func monte_carlo_integral(function func(float64) float64, a float64, b float64, n int) float64 {
-    s := 0.0
-    for i := 0; i < n; i++ {
-        u_i := rand.Float64()
-        x_i := a + (b - a)*u_i
-        s += function(x_i)
-    }
+	s := 0.0
+	for i := 0; i < n; i++ {
+		u_i := rand.Float64()
+		x_i := a + (b - a)*u_i
+		s += function(x_i)
+	}
 
-    s = ( (b - a) / float64(n) ) * s
-    return s
+	s = ((b - a) / float64(n)) * s
+	return s
 }
 
 // function to be integrated
 func gaussian(x float64) float64 {
-    return math.Exp(-x*x)
+	return math.Exp(-x*x)
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/9-O4jcLjsVN" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run mc_integration.go
@@ -590,60 +587,59 @@ We are going to use the first set of equations, together with our Monte Carlo in
 package main
 
 import (
-    "fmt"
-    "time"
-    "math"
-    "math/rand"
+	"fmt"
+	"math"
+	"math/rand"
+	"time"
 )
 
 func main() {
-    rand.Seed(time.Now().UTC().UnixNano())
+	rand.Seed(time.Now().UTC().UnixNano())
 
-    // Parameters
-    S0 := 100.0 // initial value
-    K := 105.0 // strike price
-    T := 1.0 // maturity
-    r := 0.05 //risk free short rate
-    sigma := 0.2 //volatility
-    points := 250000
+	// Parameters
+	S0 := 100.0 // initial value
+	K := 105.0 // strike price
+	T := 1.0 // maturity
+	r := 0.05 //risk free short rate
+	sigma := 0.2 //volatility
+	points := 250000
 
-    start := time.Now()
-    option_price := bsm_call_value(S0, K, T, r, sigma, points)
-    duration := time.Since(start)
+	start := time.Now()
+	option_price := bsm_call_value(S0, K, T, r, sigma, points)
+	duration := time.Since(start)
 
-    fmt.Printf("European Option Value: %.3f\n", option_price)
-    fmt.Println("Execution time: ", duration)
+	fmt.Printf("European Option Value: %.3f\n", option_price)
+	fmt.Println("Execution time: ", duration)
 }
 
 func bsm_call_value(S0 float64, K float64, T float64, r float64, sigma float64, n int) float64 {
-    d1 := math.Log( S0 / K) + T*(r + 0.5*sigma*sigma) / (sigma * math.Sqrt(T))
-    d2 := math.Log( S0 / K) + T*(r - 0.5*sigma*sigma) / (sigma * math.Sqrt(T))
+	d1 := math.Log( S0 / K) + T*(r + 0.5*sigma*sigma) / (sigma * math.Sqrt(T))
+	d2 := math.Log( S0 / K) + T*(r - 0.5*sigma*sigma) / (sigma * math.Sqrt(T))
 
-    value := S0*monte_carlo_integral(gaussian, -20.0, d1, n) - K*math.Exp(-r*T)*monte_carlo_integral(gaussian, -20.0, d2, n)
+	value := S0*monte_carlo_integral(gaussian, -20.0, d1, n) - K*math.Exp(-r*T)*monte_carlo_integral(gaussian, -20.0, d2, n)
 
-    return value
+	return value
 }
 
 // MC integrator
 func monte_carlo_integral(function func(float64) float64, a float64, b float64, n int) float64 {
-    s := 0.0
-    for i := 0; i < n; i++ {
-        u_i := rand.Float64()
-        x_i := a + (b - a)*u_i
-        s += function(x_i)
-    }
-
-    s = ( (b - a) / float64(n) ) * s
-    return s
+	s := 0.0
+	for i := 0; i < n; i++ {
+		u_i := rand.Float64()
+		x_i := a + (b - a)*u_i
+		s += function(x_i)
+	}
+	s = ((b - a) / float64(n)) * s
+	return s
 }
 
 // function to be integrated
 func gaussian(x float64) float64 {
-    return (1 / math.Sqrt(2*math.Pi))*math.Exp(-0.5*x*x)
+	return (1 / math.Sqrt(2*math.Pi))*math.Exp(-0.5*x*x)
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/LWlbimWIjm2" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run option_pricing.go
@@ -696,8 +692,7 @@ func main() {
     sigma := 0.2 //volatility
     M := 50 // number of time steps
     dt := T / float64(M) //length of time interval
-    I := 250000 // number of paths
-
+    I := 250000 // number of paths/simulations
     var S [][]float64
 
     // Simulating I paths with M time steps
@@ -721,8 +716,8 @@ func main() {
         sum_val += rectifier(p[len(p) - 1] - K)
     }
     C0 := math.Exp(-r*T)*sum_val / float64(I)
-
     duration := time.Since(start)
+
     fmt.Printf("European Option Value: %.3f\n", C0)
     fmt.Println("Execution time: ", duration)
 }
@@ -736,7 +731,7 @@ func rectifier(x float64) float64 {
 }
 ```
 
-<a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/rcNiVBzsObv" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run black_scholes.go
