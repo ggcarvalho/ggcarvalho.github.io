@@ -22,7 +22,7 @@ func main() {
 	probability := float64(sucess) / float64(trials)
 	theoretical_value := 2.0 / 3.0
 
-	error_pct := 100*abs(probability - theoretical_value) / theoretical_value
+	error_pct := 100.0*abs(probability - theoretical_value) / theoretical_value
 
 	fmt.Printf("Estimated probability: %9f \n", probability)
 	fmt.Printf("Theoretical value: %9f \n", theoretical_value)

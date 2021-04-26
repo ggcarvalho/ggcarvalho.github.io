@@ -19,8 +19,7 @@ func main() {
     sigma := 0.2 //volatility
     M := 50 // number of time steps
     dt := T / float64(M) //length of time interval
-    I := 250000 // number of paths
-
+    I := 250000 // number of paths/simulations
     var S [][]float64
 
     // Simulating I paths with M time steps
@@ -44,8 +43,8 @@ func main() {
         sum_val += rectifier(p[len(p) - 1] - K)
     }
     C0 := math.Exp(-r*T)*sum_val / float64(I)
-
     duration := time.Since(start)
+
     fmt.Printf("European Option Value: %.3f\n", C0)
     fmt.Println("Execution time: ", duration)
 }

@@ -57,13 +57,12 @@ func main() {
 
 	// MC estimator
 	C0 := math.Exp(-r*T)*sum_val / float64(I)
-
 	duration := time.Since(start)
+
 	fmt.Printf("European Option Value: %.3f\n", C0)
 	fmt.Println("Execution time: ", duration)
 
 	// Plots
-
 	//Histogram of all simulated end-of-period index level values
 	histPlot(end, 50, "", "index level", "frequency","end_hist")
 

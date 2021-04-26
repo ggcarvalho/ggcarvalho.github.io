@@ -26,7 +26,7 @@ func monte_carlo_integral(function func(float64) float64, a float64, b float64, 
 		s += function(x_i)
 	}
 
-	s = ( (b - a) / float64(n) ) * s
+	s = ((b - a) / float64(n)) * s
 	return s
 }
 
