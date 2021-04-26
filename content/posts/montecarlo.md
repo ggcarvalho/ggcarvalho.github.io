@@ -26,7 +26,7 @@ There is no need to install anything on your computer, you can use the Go Playgr
 
 - <a href="https://tour.golang.org/welcome/1" target="_blank">A Tour of Go</a>
 
-If you see the message <strong>timeout running program</strong> when using the Go Playground, try decreasing the number of iterations.
+If you see the <strong>timeout running program</strong> message when using the Go Playground, try decreasing the number of iterations.
 
 ## What is Monte Carlo Simulation?
 
