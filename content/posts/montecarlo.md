@@ -26,7 +26,7 @@ There is no need to install anything on your computer, you can use the Go Playgr
 
 - <a href="https://tour.golang.org/welcome/1" target="_blank">A Tour of Go</a>
 
-## What is Monte Carlo Simulation?
+## Quick Introduction
 
 ---
 
