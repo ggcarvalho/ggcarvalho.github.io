@@ -152,7 +152,7 @@ We were able to approximate $\pi$ with an error of $0.053965$% ! Let's jump to t
 
 ### Estimating Euler's Number
 
-Not long ago, Lex Fridman published the following in a LinkedIn post:
+Not long ago, Lex Fridman (AI researcher, YouTuber, and Podcast Host) published the following in a LinkedIn post:
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/lex.png" style="width: 60%"></div>
 
@@ -377,15 +377,15 @@ People often believe that they are in a $50-50$ situation and therefore the swit
 The following Go code simulates this game and estimates the probability of winning if the guest chooses to switch doors. Note that we first set the game so that the doors are properly chosen (possibly not an optimal code), and then we simulate the game to estimate the desired probability.
 
 ```go
-    package main
+package main
 
-    import (
+import (
     "fmt"
     "time"
     "math/rand"
-    )
+)
 
-    func main() {
+func main() {
     rand.Seed(time.Now().UTC().UnixNano())
 
     trials := 10000000
@@ -406,18 +406,18 @@ The following Go code simulates this game and estimates the probability of winni
     fmt.Printf("Estimated probability: %9f \n", probability)
     fmt.Printf("Theoretical value: %9f \n", theoretical_value)
     fmt.Printf("Error: %9f%%\n", error_pct)
-    }
+}
 
-    // absolute value of x
-    func abs(x float64) float64 {
+// absolute value of x
+func abs(x float64) float64 {
     if x < 0.0 {
         return -x
     }
     return x
-    }
+}
 
-    // randomly sets the game
-    func set_monty_hall() (int, int) {
+// randomly sets the game
+func set_monty_hall() (int, int) {
     var montys_choice int
     var prize_door int
     var goat1_door int
@@ -450,7 +450,7 @@ The following Go code simulates this game and estimates the probability of winni
         }
     }
     return new_door, prize_door
-    }
+}
 ```
 
 <a href="https://play.golang.org/" target="_blank">Run this code in the Go Playground</a>
