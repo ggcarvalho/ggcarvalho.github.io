@@ -220,7 +220,7 @@ e:  2.718282
 Error:  0.002751%
 ```
 
-An astonishing result! 
+An astonishing result!
 
 ### The Birthday Paradox
 
@@ -554,8 +554,6 @@ In fact, $1.772819^2 \approx 3.143$. You should use the Go Playground to experim
 For the final section of this article, I have something special that draws the attention of many people: the Black-Scholes model.
 
 The Black–Scholes, or Black–Scholes–Merton model, is a mathematical model for the dynamics of a financial market containing derivative investment instruments, giving a theoretical estimate of the price of <em>European-style options</em> and shows that the option has a unique price given the risk of the security and its expected return. This work granted <a href="https://en.wikipedia.org/wiki/Fischer_Black" target="_blank">Fischer Black</a> and <a href="https://en.wikipedia.org/wiki/Myron_Scholes" target="_blank">Myron Scholes</a> their Nobel Prize in economics and has been widely used in algorithmic trading strategies around the world.
-
-Before we move on, I have a <strong>disclaimer</strong>: we will dive into some math (though not too deep)!
 
 ### The Equation
 
