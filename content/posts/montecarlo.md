@@ -6,7 +6,7 @@ date: "2021-05-19"
 image: "/img/posts/montecarlo/roulette.jpg"
 tag: "go"
 name: "go"
-hashtags: "#go #golang #scientificcomputing #montecarlo #trade #algotrade #quant #finance"
+hashtags: "#go #golang #montecarlo #trade #algotrade #quant #finance"
 draft: false
 ---
 
@@ -220,7 +220,7 @@ e:  2.718282
 Error:  0.002751%
 ```
 
-An astonishing result!
+An astonishing result! 
 
 ### The Birthday Paradox
 
