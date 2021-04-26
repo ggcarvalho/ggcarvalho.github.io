@@ -119,7 +119,7 @@ Our basic image processing toolbox will consist of:
 </table>
 
 
-## Basic concepts
+## Basic Concepts
 ---
 
 In a nutshell, digital cameras have a bidimensional array of sensors to record values proportional to the intensity of the light hitting that sensor in a given position (pixel). The digital image is then stored as a bidimensional array whose values (in a given scale) represent the intensity of light in that pixel position, as shown in the figure below.
@@ -134,7 +134,7 @@ The range of values allowed may vary. However, the two most common representatio
 
 As we will see, any image processing tool is simply a manipulation of these pixel values, either changing the actual value or its position in the array.
 
-## Grayscale images
+## Grayscale Images
 ---
 
 There are many ways to convert RGB images into grayscale images. For instance, in the RGB representation, if the intensity values of the three channels in a pixel are the same, then the result color is a shade of gray. As you can see in the figure below, the diagonal of the <em>RGB space</em>, i.e. when $R=G=B$, is a grayscale line with black corresponding to $R=G=B=0$ and white corresponding to $R=G=B=1$ (or $255$).
@@ -212,7 +212,7 @@ imageio.imwrite("zagreb_grayscale.png", gray)
 
 Cool! We have built a grayscale image converter from scratch. Let's use it to generate a halftone image.
 
-## Halftone images
+## Halftone Images
 ---
 
 Halftone is a technique to approximate shades of gray using dot patterns. Here, we want to use $10$ shades of gray, thus each gray level will be represented by a $3\times 3$ pattern of black and white dots. To generate our halftone image, we need to rescale the pixel intensities to the discrete range $[0 , 9]$ and apply the mapping given in the figure below.
@@ -309,7 +309,7 @@ imageio.imwrite("halftone.png", ht)
 
 Remember, the image on the right-hand side is a black and white (binary) picture using the dot pattern above. How amazing is that? This technique was broadly used to print photographs in newspapers to simulate shades o grays.
 
-## Cross-correlation and filters
+## Cross-Correlation and Filters
 ---
 
 Arguably, the most popularized concept used in image processing is the one of a <em>convolution</em>. It has been used, successfully, in many Deep Learning architectures and popularized by the so-called <em>Convolutional Neural Networks</em>. Notwithstanding, what people call convolution in this context is actually formally called <em>cross-correlation</em> or <em>spatial correlation</em>. But what is it and how to implement it?
@@ -469,7 +469,7 @@ The results are given in the mosaic below (in a row-major manner).
 <a href="/img/posts/image_proc/identity.png" target="_blank"><img src="/img/posts/image_proc/identity.png"  alt="Identity" style="width:25%; margin:1%"></a>
 </div>
 
-## Geometric transformations
+## Geometric Transformations
 ---
 
 Let us now see some geometric transformations. These are transformations that change the order of the pixels, not their actual values. Here we include multiples of $90^{\circ}$ rotations and flips along the vertical and horizontal axes. For more general rotations and flips we need to use some form of interpolation and, for the sake of simplicity, we will avoid them here. The main ingredient here is the <em>slice notation</em> used in Python, so if you are not familiar with it that is a great use case for it!
@@ -553,7 +553,7 @@ for key in geometric_transforms:
 <a href="/img/posts/image_proc/vertical_flip_flip.png" target="_blank"><img src="/img/posts/image_proc/vertical_flip.png"  alt="Vertical flip" style="width:25%; margin:1%"></a>
 </div>
 
-## Intensity transformations
+## Intensity Transformations
 ---
 
 Now, we are going to see how to brighten/darken an image. As we have seen, the pixel values represent, in some scale, the intensity of the light in that position. To brighten or darken an image, all we need is to multiply every value by the same amount $\lambda > 0$. If $\lambda > 1$, the resulting image will be brighter than the original, and if $\lambda < 1$ the resulting image will be darker than the original image. For $\lambda > 1$, some values might exceed the allowable range (e.g, exceed $255$ for $8-$bit images). In that case, we need to clip the result (already implemented). The corresponding Python code is given below.
@@ -580,7 +580,7 @@ imageio.imwrite("darker.png", img_darker)
 <a href="/img/posts/image_proc/darker.png" target="_blank"><img src="/img/posts/image_proc/darker.png"  alt="Darker" style="width:25%; margin:1%"></a>
 </div>
 
-## Negative images
+## Negative Images
 ---
 
 Images represented in the RGB color model consist of three components, one for each primary color. When fed into an RGB monitor, these three images combine on the screen to produce a composite color image. The secondary colors of light are cyan (C), magenta (M), and yellow (Y). They are also known as the primary colors of pigments. For instance, when a surface coated with cyan pigment is illuminated with white light, no red light is reflected from the surface. In a nutshell, cyan is the absence of red, magenta is the absence of green, and yellow is the absence of blue. Because of that, we usually interpret the RGB model to be additive, whereas the CMY is subtractive (see the image below).
@@ -625,7 +625,7 @@ Now that you know how to implement these tools yourself you can use them in your
 
 Good Luck!
 
-## Recommended reading
+## Recommended Reading
 
 - [Digital Image Processing 4th Edition - Gonzalez & Woods](https://amzn.to/3fUGrHQ)
 
@@ -634,7 +634,6 @@ Good Luck!
 - [Introduction to Computation and Programming Using Python (With Application to Understanding Data) 2nd Edition - John V. Guttag ](https://amzn.to/2Orc40t)
 
 - [Python Image Processing Cookbook: Over 60 recipes to help you perform complex image processing and computer vision tasks with ease  - Sandipan Dey](https://amzn.to/31Rx4AB)
-
 
 <div style= "text-align:center; margin: 2%">
 <a href="https://www.amazon.com/Digital-Image-Processing-Rafael-Gonzalez/dp/9353062985?dchild=1&keywords=digital+image+processing&qid=1619394295&sr=8-9&linkCode=li2&tag=ggcarvalho-20&linkId=82e572c411efc96186579d03668d5607&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=9353062985&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=9353062985" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
