@@ -21,25 +21,25 @@ Besides Python 3 you will need:
 
 Imageio: To read and write images. Installation:
 
-```
+```bash
 $ pip install imageio
 ```
 
 Numpy: Used to store and manipulate arrays. Installation:
 
-```
+```bash
 $ pip install numpy
 ```
 
 Matplotlib: Used to plot the simplified RGB space. Installation:
 
-```
+```bash
 $ pip install matplotlib
 ```
 
 tqdm: Used to generate progress bars. Installation:
 
-```
+```bash
 $ pip install tqdm
 ```
 
