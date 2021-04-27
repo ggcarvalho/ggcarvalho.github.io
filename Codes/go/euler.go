@@ -10,35 +10,27 @@ import (
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	trials := 10000000
-	fmt.Printf("Estimating e with %d trial(s).\n\n", trials)
+	numExperiments := 1_000_000
+	fmt.Printf("Estimating e with %d experiment(s).\n\n", numExperiments)
 
 	acc := 0.0
-	for i := 0; i < trials; i++ {
+	for i := 0; i < numExperiments; i++ {
 		sum := 0.0
-		num2sucess := 0
+		num2Sucess := 0
 
 		for sum <= 1 {
 			n := rand.Float64()
 			sum += n
-			num2sucess++
+			num2Sucess++
 		}
-		acc += float64(num2sucess)
+		acc += float64(num2Sucess)
 	}
 
-	expected := acc / float64(trials)
-	e := math.Exp(1)
-	error_pct := 100.0*abs(expected - e) / e
+	expected := acc / float64(numExperiments)
+	E := math.Exp(1)
+	error_pct := 100.0*math.Abs(expected - E) / E
 
 	fmt.Printf("Expected vale: %9f \n", expected)
-	fmt.Printf("e: %9f \n", e)
+	fmt.Printf("e: %9f \n", E)
 	fmt.Printf("Error: %9f%%\n", error_pct)
-}
-
-// absolute value of x
-func abs(x float64) float64 {
-	if x < 0.0 {
-		return -x
-	}
-	return x
 }

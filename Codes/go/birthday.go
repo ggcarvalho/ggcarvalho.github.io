@@ -10,24 +10,22 @@ func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	num_people := 23
-	trials := 1000000
+	trials := 1_000_000
 	sucess := 0
-
 	for i := 0; i < trials; i++ {
-		bdays := gen_bday_list(num_people)
-		uniques := unique(bdays)
+		bdays := genBdayList(num_people)
+		uniques := uniqueSlice(bdays)
 
 		if !(len(bdays)==len(uniques)) {
 			sucess++
 		}
 	}
-
 	probability := float64(sucess) / float64(trials)
 	fmt.Printf("The probability of at least 2 persons in a group of %d people share a birthday is %.2f%%\n", num_people, 100.0*probability)
 }
 
-// returns a slice with the unique elements of a given slice
-func unique(s []int) []int {
+// returns a slice with the uniqueSlice elements of a given slice
+func uniqueSlice(s []int) []int {
     keys := make(map[int]bool)
     list := []int{}
     for _, entry := range s {
@@ -40,7 +38,7 @@ func unique(s []int) []int {
 }
 
 // generates the list of birth days
-func gen_bday_list(n int) []int {
+func genBdayList(n int) []int {
 	var bdays []int
 	for i := 0; i < n; i++ {
 		bday := rand.Intn(365)

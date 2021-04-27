@@ -25,12 +25,12 @@ func main() {
 	sigma := 0.2 //volatility
 	M := 50 // number of time steps
 	dt := T / float64(M) //length of time interval
-	I := 250000 // number of paths
+	numPaths := 250_000 // number of paths
 
 	var S [][]float64
 
 	// Simulating I paths with M time steps
-	for i := 1; i < I; i++ {
+	for i := 1; i < numPaths; i++ {
 		var path []float64
 		for t := 0; t <= M; t++ {
 			if t == 0 {
@@ -46,17 +46,17 @@ func main() {
 
 	// Calculating the Monte Carlo estimator
 	// and creating lists to plot histograms
-	sum_val := 0.0
-	var end_inner []float64
+	sumVal := 0.0
+	var endInner []float64
 	var end []float64
 	for _,p := range S {
-		sum_val += rectifier(p[len(p) - 1] - K)
-		end_inner = append(end_inner, rectifier(p[len(p) - 1] - K))
+		sumVal += rectifier(p[len(p) - 1] - K)
+		endInner = append(endInner, rectifier(p[len(p) - 1] - K))
 		end = append(end, p[len(p) - 1])
 	}
 
 	// MC estimator
-	C0 := math.Exp(-r*T)*sum_val / float64(I)
+	C0 := math.Exp(-r*T)*sumVal / float64(numPaths)
 	duration := time.Since(start)
 
 	fmt.Printf("European Option Value: %.3f\n", C0)
@@ -67,7 +67,7 @@ func main() {
 	histPlot(end, 50, "", "index level", "frequency","end_hist")
 
 	// Histogram of all simulated end-of-period option inner values
-	histPlot(end_inner, 50, "", "option inner value", "frequency", "end_inner_hist")
+	histPlot(endInner, 50, "", "option inner value", "frequency", "end_inner_hist")
 
 	//Plot index paths
 	pathPlot(S, 10, "10")

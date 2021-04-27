@@ -19,11 +19,11 @@ func main() {
     sigma := 0.2 //volatility
     M := 50 // number of time steps
     dt := T / float64(M) //length of time interval
-    I := 250000 // number of paths/simulations
+    numPaths := 250_000 // number of paths/simulations
     var S [][]float64
 
     // Simulating I paths with M time steps
-    for i := 1; i < I; i++ {
+    for i := 1; i < numPaths; i++ {
         var path []float64
         for t := 0; t <= M; t++ {
             if t == 0 {
@@ -38,11 +38,11 @@ func main() {
     }
 
     // Calculating the Monte Carlo estimator
-    sum_val := 0.0
+    sumVal := 0.0
     for _,p := range S {
-        sum_val += rectifier(p[len(p) - 1] - K)
+        sumVal += rectifier(p[len(p) - 1] - K)
     }
-    C0 := math.Exp(-r*T)*sum_val / float64(I)
+    C0 := math.Exp(-r*T)*sumVal / float64(numPaths)
     duration := time.Since(start)
 
     fmt.Printf("European Option Value: %.3f\n", C0)

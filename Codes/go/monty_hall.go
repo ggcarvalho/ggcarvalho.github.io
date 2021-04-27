@@ -3,72 +3,65 @@ package main
 import (
 	"fmt"
 	"time"
+	"math"
 	"math/rand"
 )
 
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	trials := 10000000
-	fmt.Printf("Estimating the probability of winning by switching doors with %d game(s).\n\n", trials)
+	numGames := 10_000_000
+	fmt.Printf("Estimating the probability of winning by switching doors with %d game(s).\n\n", numGames)
 
 	sucess := 0
-	for i := 0; i < trials; i++ {
-		new_door, prize_door := set_monty_hall()
-		if new_door == prize_door {
+	for i := 0; i < numGames; i++ {
+		newDoor, prizeDoor := set_monty_hall()
+		if newDoor == prizeDoor {
 			sucess++
 		}
 	}
-	probability := float64(sucess) / float64(trials)
-	theoretical_value := 2.0 / 3.0
+	probability := float64(sucess) / float64(numGames)
+	theoreticalValue := 2.0 / 3.0
 
-	error_pct := 100.0*abs(probability - theoretical_value) / theoretical_value
+	errorPct := 100.0*math.Abs(probability - theoreticalValue) / theoreticalValue
 
 	fmt.Printf("Estimated probability: %9f \n", probability)
-	fmt.Printf("Theoretical value: %9f \n", theoretical_value)
-	fmt.Printf("Error: %9f%%\n", error_pct)
-}
-
-// absolute value of x
-func abs(x float64) float64 {
-	if x < 0.0 {
-		return -x
-	}
-	return x
+	fmt.Printf("Theoretical value: %9f \n", theoreticalValue)
+	fmt.Printf("Error: %9f%%\n", errorPct)
 }
 
 // randomly sets the game
 func set_monty_hall() (int, int) {
-	var montys_choice int
-	var prize_door int
-	var goat1_door int
-	var goat2_door int
-	var new_door int
+	var montysChoice int
+	var prizeDoor int
+	var goat1Door int
+	var goat2Door int
+	var newDoor int
 
-	guest_door := rand.Intn(3)
+	guestDoor := rand.Intn(3)
 
-	doors_setup := true
-	for doors_setup {
-		prize_door = rand.Intn(3)
-		goat1_door = rand.Intn(3)
-		goat2_door = rand.Intn(3)
-		if  (prize_door != goat1_door && prize_door != goat2_door && goat1_door != goat2_door) {doors_setup = false}
+	areDoorsSelected := false
+	for !areDoorsSelected {
+		prizeDoor = rand.Intn(3)
+		goat1Door = rand.Intn(3)
+		goat2Door = rand.Intn(3)
+		if  (prizeDoor != goat1Door && prizeDoor != goat2Door && goat1Door != goat2Door) {areDoorsSelected = true}
 	}
 
-	show_goat := true
-	for show_goat {
-		montys_choice = rand.Intn(3)
-		if (montys_choice != prize_door) && (montys_choice != guest_door) {
-			show_goat = false
+	showGoat := false
+	for !showGoat {
+		montysChoice = rand.Intn(3)
+		if (montysChoice != prizeDoor) && (montysChoice != guestDoor) {
+			showGoat = true
 		}
 	}
 
-	switch_door := true
-	for switch_door {
-		new_door = rand.Intn(3)
-		if (new_door != guest_door) && (new_door != montys_choice) {
-			switch_door = false
+	madeSwitch := false
+	for !madeSwitch {
+		newDoor = rand.Intn(3)
+		if (newDoor != guestDoor) && (newDoor != montysChoice) {
+			madeSwitch = true
 		}
 	}
-	return new_door, prize_door
+	return newDoor, prizeDoor
 }

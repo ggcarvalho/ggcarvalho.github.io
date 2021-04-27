@@ -10,15 +10,15 @@ import (
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	trials := 1000000
-	fmt.Printf("Estimating the integral of f with %d point(s).\n\n", trials)
+	numPoints := 1_000_000
+	fmt.Printf("Estimating the integral of f with %d point(s).\n\n", numPoints)
 
-	integral := monte_carlo_integral(gaussian, -20.0, 20.0, trials)
+	integral := monteCarloIntegrator(gaussian, -20.0, 20.0, numPoints)
 	fmt.Printf("Approx. integral: %9f \n", integral)
 }
 
 // MC integrator
-func monte_carlo_integral(function func(float64) float64, a float64, b float64, n int) float64 {
+func monteCarloIntegrator(function func(float64) float64, a float64, b float64, n int) float64 {
 	s := 0.0
 	for i := 0; i < n; i++ {
 		u_i := rand.Float64()
