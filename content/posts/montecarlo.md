@@ -102,11 +102,13 @@ func main() {
     sucess := 0
     for i := 0; i < numPoints; i++ {
         p := genRandomPoint()
-        if isInsideCircle(p[0], p[1]) {sucess++}
+        if isInsideCircle(p[0], p[1]) {
+            sucess++
+        }
     }
 
-    piApprox := 4.0*(float64(sucess) / float64(numPoints))
-    errorPct := 100.0*math.Abs(piApprox - Pi) / Pi
+    piApprox := 4.0 * (float64(sucess) / float64(numPoints))
+    errorPct := 100.0 * math.Abs(piApprox-Pi) / Pi
 
     fmt.Printf("Estimated pi: %9f \n", piApprox)
     fmt.Printf("pi: %9f \n", Pi)
@@ -122,14 +124,14 @@ func genRandomPoint() [2]float64 {
 
 // Condition to lie within the circular region
 func isInsideCircle(x float64, y float64) bool {
-    if x*x + y*y < 1 {
+    if x*x+y*y < 1 {
         return true
     }
     return false
 }
 ```
 
-<a href="https://play.golang.org/p/0m2ueFeD6GB" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/bPWYH3lxm_S" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run pi.go
@@ -185,7 +187,7 @@ func main() {
 
     expected := acc / float64(numExperiments)
     E := math.Exp(1)
-    error_pct := 100.0*math.Abs(expected - E) / E
+    error_pct := 100.0 * math.Abs(expected-E) / E
 
     fmt.Printf("Expected vale: %9f \n", expected)
     fmt.Printf("e: %9f \n", E)
@@ -193,7 +195,7 @@ func main() {
 }
 ```
 
-<a href="https://play.golang.org/p/wOUZQaTEzXn" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/nZCpFZQ6mB9" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run euler.go
@@ -235,7 +237,7 @@ func main() {
         bdays := genBdayList(num_people)
         uniques := uniqueSlice(bdays)
 
-        if !(len(bdays)==len(uniques)) {
+        if !(len(bdays) == len(uniques)) {
             sucess++
         }
     }
@@ -267,7 +269,7 @@ func genBdayList(n int) []int {
 }
 ```
 
-<a href="https://play.golang.org/p/35zfkQ4Mkfx" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/JIwEYU2BAMq" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run birthday.go
@@ -361,9 +363,9 @@ package main
 
 import (
     "fmt"
-    "time"
     "math"
     "math/rand"
+    "time"
 )
 
 func main() {
@@ -382,7 +384,7 @@ func main() {
     probability := float64(sucess) / float64(numGames)
     theoreticalValue := 2.0 / 3.0
 
-    errorPct := 100.0*math.Abs(probability - theoreticalValue) / theoreticalValue
+    errorPct := 100.0 * math.Abs(probability-theoreticalValue) / theoreticalValue
 
     fmt.Printf("Estimated probability: %9f \n", probability)
     fmt.Printf("Theoretical value: %9f \n", theoreticalValue)
@@ -404,13 +406,15 @@ func set_monty_hall() (int, int) {
         prizeDoor = rand.Intn(3)
         goat1Door = rand.Intn(3)
         goat2Door = rand.Intn(3)
-        if  (prizeDoor != goat1Door && prizeDoor != goat2Door && goat1Door != goat2Door) {areDoorsSelected = true}
+        if prizeDoor != goat1Door && prizeDoor != goat2Door && goat1Door != goat2Door {
+            areDoorsSelected = true
+        }
     }
 
     showGoat := false
     for !showGoat {
         montysChoice = rand.Intn(3)
-        if (montysChoice != prizeDoor) && (montysChoice != guestDoor) {
+        if montysChoice != prizeDoor && montysChoice != guestDoor {
             showGoat = true
         }
     }
@@ -418,15 +422,16 @@ func set_monty_hall() (int, int) {
     madeSwitch := false
     for !madeSwitch {
         newDoor = rand.Intn(3)
-        if (newDoor != guestDoor) && (newDoor != montysChoice) {
+        if newDoor != guestDoor && newDoor != montysChoice {
             madeSwitch = true
         }
     }
     return newDoor, prizeDoor
 }
+
 ```
 
-<a href="https://play.golang.org/p/IxtNJuyjVsj" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/AU2UPqQ7vea" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run monty_hall.go
@@ -511,7 +516,7 @@ func gaussian(x float64) float64 {
 }
 ```
 
-<a href="https://play.golang.org/p/zKo1norXrmc" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/JqduOVngdiS" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run mc_integration.go
@@ -571,10 +576,10 @@ func main() {
     rand.Seed(time.Now().UTC().UnixNano())
 
     // Parameters
-    S0 := 100.0 // initial value
-    K := 105.0 // strike price
-    T := 1.0 // maturity
-    r := 0.05 //risk free short rate
+    S0 := 100.0  // initial value
+    K := 105.0   // strike price
+    T := 1.0     // maturity
+    r := 0.05    //risk free short rate
     sigma := 0.2 //volatility
     numPoints := 250_000
 
@@ -587,8 +592,8 @@ func main() {
 }
 
 func bsmCallValue(S0 float64, K float64, T float64, r float64, sigma float64, n int) float64 {
-    d1 := math.Log( S0 / K) + T*(r + 0.5*sigma*sigma) / (sigma * math.Sqrt(T))
-    d2 := math.Log( S0 / K) + T*(r - 0.5*sigma*sigma) / (sigma * math.Sqrt(T))
+    d1 := math.Log(S0/K) + T*(r+0.5*sigma*sigma)/(sigma*math.Sqrt(T))
+    d2 := math.Log(S0/K) + T*(r-0.5*sigma*sigma)/(sigma*math.Sqrt(T))
 
     value := S0*monteCarloIntegrator(gaussian, -20.0, d1, n) - K*math.Exp(-r*T)*monteCarloIntegrator(gaussian, -20.0, d2, n)
 
@@ -600,7 +605,7 @@ func monteCarloIntegrator(function func(float64) float64, a float64, b float64, 
     s := 0.0
     for i := 0; i < n; i++ {
         u_i := rand.Float64()
-        x_i := a + (b - a)*u_i
+        x_i := a + (b-a)*u_i
         s += function(x_i)
     }
     s = ((b - a) / float64(n)) * s
@@ -609,11 +614,11 @@ func monteCarloIntegrator(function func(float64) float64, a float64, b float64, 
 
 // function to be integrated
 func gaussian(x float64) float64 {
-    return (1 / math.Sqrt(2*math.Pi))*math.Exp(-0.5*x*x)
+    return (1 / math.Sqrt(2*math.Pi)) * math.Exp(-0.5*x*x)
 }
 ```
 
-<a href="https://play.golang.org/p/iI-vskrB0C7" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/gUNpYZOvzJX" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run option_pricing.go
@@ -649,9 +654,9 @@ package main
 
 import (
     "fmt"
-    "time"
     "math"
     "math/rand"
+    "time"
 )
 
 func main() {
@@ -659,14 +664,14 @@ func main() {
     start := time.Now()
 
     // Parameters
-    S0 := 100.0 // initial value
-    K := 105.0 // strike price
-    T := 1.0 // maturity
-    r := 0.05 //risk free short rate
-    sigma := 0.2 //volatility
-    M := 50 // number of time steps
+    S0 := 100.0          // initial value
+    K := 105.0           // strike price
+    T := 1.0             // maturity
+    r := 0.05            //risk free short rate
+    sigma := 0.2         //volatility
+    M := 50              // number of time steps
     dt := T / float64(M) //length of time interval
-    numPaths := 250_000 // number of paths/simulations
+    numPaths := 250_000  // number of paths/simulations
     var S [][]float64
 
     // Simulating I paths with M time steps
@@ -677,7 +682,7 @@ func main() {
                 path = append(path, S0)
             } else {
                 z := rand.NormFloat64()
-                St := path[t - 1]*math.Exp((r - 0.5*(sigma*sigma))*dt + sigma*math.Sqrt(dt)*z)
+                St := path[t-1] * math.Exp((r-0.5*(sigma*sigma))*dt+sigma*math.Sqrt(dt)*z)
                 path = append(path, St)
             }
         }
@@ -686,10 +691,10 @@ func main() {
 
     // Calculating the Monte Carlo estimator
     sumVal := 0.0
-    for _,p := range S {
-        sumVal += rectifier(p[len(p) - 1] - K)
+    for _, p := range S {
+        sumVal += rectifier(p[len(p)-1] - K)
     }
-    C0 := math.Exp(-r*T)*sumVal / float64(numPaths)
+    C0 := math.Exp(-r*T) * sumVal / float64(numPaths)
     duration := time.Since(start)
 
     fmt.Printf("European Option Value: %.3f\n", C0)
@@ -703,9 +708,10 @@ func rectifier(x float64) float64 {
     }
     return 0.0
 }
+
 ```
 
-<a href="https://play.golang.org/p/XXruR-2fnIi" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/aCLWjT5LygK" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run black_scholes.go
