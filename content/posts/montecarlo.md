@@ -85,47 +85,47 @@ Now, let's turn this idea into a Go code.
 package main
 
 import (
-	"fmt"
-	"math"
-	"math/rand"
-	"time"
+    "fmt"
+    "math"
+    "math/rand"
+    "time"
 )
 
 const Pi float64 = math.Pi
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	numPoints := 1_000_000
-	fmt.Printf("Estimating pi with %d point(s).\n\n", numPoints)
+    numPoints := 1_000_000
+    fmt.Printf("Estimating pi with %d point(s).\n\n", numPoints)
 
-	sucess := 0
-	for i := 0; i < numPoints; i++ {
-		p := genRandomPoint()
-		if isInsideCircle(p[0], p[1]) {sucess++}
-	}
+    sucess := 0
+    for i := 0; i < numPoints; i++ {
+        p := genRandomPoint()
+        if isInsideCircle(p[0], p[1]) {sucess++}
+    }
 
-	piApprox := 4.0*(float64(sucess) / float64(numPoints))
-	errorPct := 100.0*math.Abs(piApprox - Pi) / Pi
+    piApprox := 4.0*(float64(sucess) / float64(numPoints))
+    errorPct := 100.0*math.Abs(piApprox - Pi) / Pi
 
-	fmt.Printf("Estimated pi: %9f \n", piApprox)
-	fmt.Printf("pi: %9f \n", Pi)
-	fmt.Printf("Error: %9f%%\n", errorPct)
+    fmt.Printf("Estimated pi: %9f \n", piApprox)
+    fmt.Printf("pi: %9f \n", Pi)
+    fmt.Printf("Error: %9f%%\n", errorPct)
 }
 
 // generates a random point p = (px, py)
 func genRandomPoint() [2]float64 {
-	px := 2.0*rand.Float64() - 1.0
-	py := 2.0*rand.Float64() - 1.0
-	return [2]float64{px, py}
+    px := 2.0*rand.Float64() - 1.0
+    py := 2.0*rand.Float64() - 1.0
+    return [2]float64{px, py}
 }
 
 // Condition to lie within the circular region
 func isInsideCircle(x float64, y float64) bool {
-	if x*x + y*y < 1 {
-		return true
-	}
-	return false
+    if x*x + y*y < 1 {
+        return true
+    }
+    return false
 }
 ```
 
@@ -158,38 +158,38 @@ I wrote an equivalent Go code to solve this problem. Here it is:
 package main
 
 import (
-	"fmt"
-	"math"
-	"math/rand"
-	"time"
+    "fmt"
+    "math"
+    "math/rand"
+    "time"
 )
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	numExperiments := 1_000_000
-	fmt.Printf("Estimating e with %d experiment(s).\n\n", numExperiments)
+    numExperiments := 1_000_000
+    fmt.Printf("Estimating e with %d experiment(s).\n\n", numExperiments)
 
-	acc := 0.0
-	for i := 0; i < numExperiments; i++ {
-		sum := 0.0
-		num2Sucess := 0
+    acc := 0.0
+    for i := 0; i < numExperiments; i++ {
+        sum := 0.0
+        num2Sucess := 0
 
-		for sum <= 1 {
-			n := rand.Float64()
-			sum += n
-			num2Sucess++
-		}
-		acc += float64(num2Sucess)
-	}
+        for sum <= 1 {
+            n := rand.Float64()
+            sum += n
+            num2Sucess++
+        }
+        acc += float64(num2Sucess)
+    }
 
-	expected := acc / float64(numExperiments)
-	E := math.Exp(1)
-	error_pct := 100.0*math.Abs(expected - E) / E
+    expected := acc / float64(numExperiments)
+    E := math.Exp(1)
+    error_pct := 100.0*math.Abs(expected - E) / E
 
-	fmt.Printf("Expected vale: %9f \n", expected)
-	fmt.Printf("e: %9f \n", E)
-	fmt.Printf("Error: %9f%%\n", error_pct)
+    fmt.Printf("Expected vale: %9f \n", expected)
+    fmt.Printf("e: %9f \n", E)
+    fmt.Printf("Error: %9f%%\n", error_pct)
 }
 ```
 
@@ -220,27 +220,27 @@ The corresponding Go code:
 package main
 
 import (
-	"fmt"
-	"math/rand"
-	"time"
+    "fmt"
+    "math/rand"
+    "time"
 )
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	num_people := 23
-	trials := 1_000_000
-	sucess := 0
-	for i := 0; i < trials; i++ {
-		bdays := genBdayList(num_people)
-		uniques := uniqueSlice(bdays)
+    num_people := 23
+    trials := 1_000_000
+    sucess := 0
+    for i := 0; i < trials; i++ {
+        bdays := genBdayList(num_people)
+        uniques := uniqueSlice(bdays)
 
-		if !(len(bdays)==len(uniques)) {
-			sucess++
-		}
-	}
-	probability := float64(sucess) / float64(trials)
-	fmt.Printf("The probability of at least 2 persons in a group of %d people share a birthday is %.2f%%\n", num_people, 100.0*probability)
+        if !(len(bdays)==len(uniques)) {
+            sucess++
+        }
+    }
+    probability := float64(sucess) / float64(trials)
+    fmt.Printf("The probability of at least 2 persons in a group of %d people share a birthday is %.2f%%\n", num_people, 100.0*probability)
 }
 
 // returns a slice with the uniqueSlice elements of a given slice
@@ -258,12 +258,12 @@ func uniqueSlice(s []int) []int {
 
 // generates the list of birth days
 func genBdayList(n int) []int {
-	var bdays []int
-	for i := 0; i < n; i++ {
-		bday := rand.Intn(365)
-		bdays = append(bdays, bday)
-	}
-	return bdays
+    var bdays []int
+    for i := 0; i < n; i++ {
+        bday := rand.Intn(365)
+        bdays = append(bdays, bday)
+    }
+    return bdays
 }
 ```
 
@@ -360,69 +360,69 @@ The following Go code simulates this game and estimates the probability of winni
 package main
 
 import (
-	"fmt"
-	"time"
-	"math"
-	"math/rand"
+    "fmt"
+    "time"
+    "math"
+    "math/rand"
 )
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	numGames := 10_000_000
-	fmt.Printf("Estimating the probability of winning by switching doors with %d game(s).\n\n", numGames)
+    numGames := 10_000_000
+    fmt.Printf("Estimating the probability of winning by switching doors with %d game(s).\n\n", numGames)
 
-	sucess := 0
-	for i := 0; i < numGames; i++ {
-		newDoor, prizeDoor := set_monty_hall()
-		if newDoor == prizeDoor {
-			sucess++
-		}
-	}
-	probability := float64(sucess) / float64(numGames)
-	theoreticalValue := 2.0 / 3.0
+    sucess := 0
+    for i := 0; i < numGames; i++ {
+        newDoor, prizeDoor := set_monty_hall()
+        if newDoor == prizeDoor {
+            sucess++
+        }
+    }
+    probability := float64(sucess) / float64(numGames)
+    theoreticalValue := 2.0 / 3.0
 
-	errorPct := 100.0*math.Abs(probability - theoreticalValue) / theoreticalValue
+    errorPct := 100.0*math.Abs(probability - theoreticalValue) / theoreticalValue
 
-	fmt.Printf("Estimated probability: %9f \n", probability)
-	fmt.Printf("Theoretical value: %9f \n", theoreticalValue)
-	fmt.Printf("Error: %9f%%\n", errorPct)
+    fmt.Printf("Estimated probability: %9f \n", probability)
+    fmt.Printf("Theoretical value: %9f \n", theoreticalValue)
+    fmt.Printf("Error: %9f%%\n", errorPct)
 }
 
 // randomly sets the game
 func set_monty_hall() (int, int) {
-	var montysChoice int
-	var prizeDoor int
-	var goat1Door int
-	var goat2Door int
-	var newDoor int
+    var montysChoice int
+    var prizeDoor int
+    var goat1Door int
+    var goat2Door int
+    var newDoor int
 
-	guestDoor := rand.Intn(3)
+    guestDoor := rand.Intn(3)
 
-	areDoorsSelected := false
-	for !areDoorsSelected {
-		prizeDoor = rand.Intn(3)
-		goat1Door = rand.Intn(3)
-		goat2Door = rand.Intn(3)
-		if  (prizeDoor != goat1Door && prizeDoor != goat2Door && goat1Door != goat2Door) {areDoorsSelected = true}
-	}
+    areDoorsSelected := false
+    for !areDoorsSelected {
+        prizeDoor = rand.Intn(3)
+        goat1Door = rand.Intn(3)
+        goat2Door = rand.Intn(3)
+        if  (prizeDoor != goat1Door && prizeDoor != goat2Door && goat1Door != goat2Door) {areDoorsSelected = true}
+    }
 
-	showGoat := false
-	for !showGoat {
-		montysChoice = rand.Intn(3)
-		if (montysChoice != prizeDoor) && (montysChoice != guestDoor) {
-			showGoat = true
-		}
-	}
+    showGoat := false
+    for !showGoat {
+        montysChoice = rand.Intn(3)
+        if (montysChoice != prizeDoor) && (montysChoice != guestDoor) {
+            showGoat = true
+        }
+    }
 
-	madeSwitch := false
-	for !madeSwitch {
-		newDoor = rand.Intn(3)
-		if (newDoor != guestDoor) && (newDoor != montysChoice) {
-			madeSwitch = true
-		}
-	}
-	return newDoor, prizeDoor
+    madeSwitch := false
+    for !madeSwitch {
+        newDoor = rand.Intn(3)
+        if (newDoor != guestDoor) && (newDoor != montysChoice) {
+            madeSwitch = true
+        }
+    }
+    return newDoor, prizeDoor
 }
 ```
 
@@ -476,38 +476,38 @@ The corresponding Go code is:
 package main
 
 import (
-	"fmt"
-	"time"
-	"math"
-	"math/rand"
+    "fmt"
+    "time"
+    "math"
+    "math/rand"
 )
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	numPoints := 1_000_000
-	fmt.Printf("Estimating the integral of f with %d point(s).\n\n", numPoints)
+    numPoints := 1_000_000
+    fmt.Printf("Estimating the integral of f with %d point(s).\n\n", numPoints)
 
-	integral := monteCarloIntegrator(gaussian, -20.0, 20.0, numPoints)
-	fmt.Printf("Approx. integral: %9f \n", integral)
+    integral := monteCarloIntegrator(gaussian, -20.0, 20.0, numPoints)
+    fmt.Printf("Approx. integral: %9f \n", integral)
 }
 
 // MC integrator
 func monteCarloIntegrator(function func(float64) float64, a float64, b float64, n int) float64 {
-	s := 0.0
-	for i := 0; i < n; i++ {
-		u_i := rand.Float64()
-		x_i := a + (b - a)*u_i
-		s += function(x_i)
-	}
+    s := 0.0
+    for i := 0; i < n; i++ {
+        u_i := rand.Float64()
+        x_i := a + (b - a)*u_i
+        s += function(x_i)
+    }
 
-	s = ((b - a) / float64(n)) * s
-	return s
+    s = ((b - a) / float64(n)) * s
+    return s
 }
 
 // function to be integrated
 func gaussian(x float64) float64 {
-	return math.Exp(-x*x)
+    return math.Exp(-x*x)
 }
 ```
 
@@ -561,55 +561,55 @@ We are going to use the first set of equations, together with our Monte Carlo in
 package main
 
 import (
-	"fmt"
-	"math"
-	"math/rand"
-	"time"
+    "fmt"
+    "math"
+    "math/rand"
+    "time"
 )
 
 func main() {
-	rand.Seed(time.Now().UTC().UnixNano())
+    rand.Seed(time.Now().UTC().UnixNano())
 
-	// Parameters
-	S0 := 100.0 // initial value
-	K := 105.0 // strike price
-	T := 1.0 // maturity
-	r := 0.05 //risk free short rate
-	sigma := 0.2 //volatility
-	numPoints := 250_000
+    // Parameters
+    S0 := 100.0 // initial value
+    K := 105.0 // strike price
+    T := 1.0 // maturity
+    r := 0.05 //risk free short rate
+    sigma := 0.2 //volatility
+    numPoints := 250_000
 
-	start := time.Now()
-	optionPrice := bsmCallValue(S0, K, T, r, sigma, numPoints)
-	duration := time.Since(start)
+    start := time.Now()
+    optionPrice := bsmCallValue(S0, K, T, r, sigma, numPoints)
+    duration := time.Since(start)
 
-	fmt.Printf("European Option Value: %.3f\n", optionPrice)
-	fmt.Println("Execution time: ", duration)
+    fmt.Printf("European Option Value: %.3f\n", optionPrice)
+    fmt.Println("Execution time: ", duration)
 }
 
 func bsmCallValue(S0 float64, K float64, T float64, r float64, sigma float64, n int) float64 {
-	d1 := math.Log( S0 / K) + T*(r + 0.5*sigma*sigma) / (sigma * math.Sqrt(T))
-	d2 := math.Log( S0 / K) + T*(r - 0.5*sigma*sigma) / (sigma * math.Sqrt(T))
+    d1 := math.Log( S0 / K) + T*(r + 0.5*sigma*sigma) / (sigma * math.Sqrt(T))
+    d2 := math.Log( S0 / K) + T*(r - 0.5*sigma*sigma) / (sigma * math.Sqrt(T))
 
-	value := S0*monteCarloIntegrator(gaussian, -20.0, d1, n) - K*math.Exp(-r*T)*monteCarloIntegrator(gaussian, -20.0, d2, n)
+    value := S0*monteCarloIntegrator(gaussian, -20.0, d1, n) - K*math.Exp(-r*T)*monteCarloIntegrator(gaussian, -20.0, d2, n)
 
-	return value
+    return value
 }
 
 // MC integrator
 func monteCarloIntegrator(function func(float64) float64, a float64, b float64, n int) float64 {
-	s := 0.0
-	for i := 0; i < n; i++ {
-		u_i := rand.Float64()
-		x_i := a + (b - a)*u_i
-		s += function(x_i)
-	}
-	s = ((b - a) / float64(n)) * s
-	return s
+    s := 0.0
+    for i := 0; i < n; i++ {
+        u_i := rand.Float64()
+        x_i := a + (b - a)*u_i
+        s += function(x_i)
+    }
+    s = ((b - a) / float64(n)) * s
+    return s
 }
 
 // function to be integrated
 func gaussian(x float64) float64 {
-	return (1 / math.Sqrt(2*math.Pi))*math.Exp(-0.5*x*x)
+    return (1 / math.Sqrt(2*math.Pi))*math.Exp(-0.5*x*x)
 }
 ```
 
