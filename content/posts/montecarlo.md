@@ -6,7 +6,7 @@ date: "2021-05-19"
 image: "/img/posts/montecarlo/roulette.jpg"
 tag: "go"
 name: "go"
-hashtags: "#go #golang #montecarlo #trade #algotrade #quant #finance"
+hashtags: "#go #golang #montecarlo #quantitativeresearch #trade #algotrade #quant #finance"
 draft: false
 ---
 
@@ -794,4 +794,3 @@ We have seen how one can use the Monte Carlo method to find answers to certain p
 </div>
 
 By clicking and buying any of these from Amazon after visiting the links above, I might get a commission from their <a href="https://affiliate-program.amazon.com/" target="_blank">Affiliate program</a>, and you will be contributing to the growth of this blog :)
-cd
