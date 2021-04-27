@@ -29,7 +29,7 @@ func main() {
 
 	var S [][]float64
 
-	// Simulating I paths with M time steps
+	// Simulating numPaths paths with M time steps
 	for i := 1; i < numPaths; i++ {
 		var path []float64
 		for t := 0; t <= M; t++ {
