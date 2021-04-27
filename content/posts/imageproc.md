@@ -3,7 +3,7 @@ title: "Introduction to image processing using Python"
 type: post
 description: "Writing a basic image processing toolbox from scratch."
 date: "2021-04-19"
-image: "/img/posts/image_proc/code.jpeg"
+image: "/img/posts/image_proc/coding.jpeg"
 tag: "python"
 name: "python"
 hashtags: "#python #imageprocessing"
