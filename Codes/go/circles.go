@@ -33,7 +33,7 @@ func main() {
 	}
 
 	s.Shape = draw.CircleGlyph{}
-	s.Color = color.RGBA{R:0, G: 135, B: 200, A: 255}
+	s.Color = color.RGBA{R: 0, G: 135, B: 200, A: 255}
 
 	p.Add(upper, lower, s)
 	p.X.Min = -1

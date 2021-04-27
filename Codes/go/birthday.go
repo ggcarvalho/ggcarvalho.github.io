@@ -16,7 +16,7 @@ func main() {
 		bdays := genBdayList(num_people)
 		uniques := uniqueSlice(bdays)
 
-		if !(len(bdays)==len(uniques)) {
+		if !(len(bdays) == len(uniques)) {
 			sucess++
 		}
 	}
@@ -26,15 +26,15 @@ func main() {
 
 // returns a slice with the uniqueSlice elements of a given slice
 func uniqueSlice(s []int) []int {
-    keys := make(map[int]bool)
-    list := []int{}
-    for _, entry := range s {
-        if _, value := keys[entry]; !value {
-            keys[entry] = true
-            list = append(list, entry)
-        }
-    }
-    return list
+	keys := make(map[int]bool)
+	list := []int{}
+	for _, entry := range s {
+		if _, value := keys[entry]; !value {
+			keys[entry] = true
+			list = append(list, entry)
+		}
+	}
+	return list
 }
 
 // generates the list of birth days

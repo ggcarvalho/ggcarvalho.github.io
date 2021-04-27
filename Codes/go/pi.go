@@ -18,11 +18,13 @@ func main() {
 	sucess := 0
 	for i := 0; i < numPoints; i++ {
 		p := genRandomPoint()
-		if isInsideCircle(p[0], p[1]) {sucess++}
+		if isInsideCircle(p[0], p[1]) {
+			sucess++
+		}
 	}
 
-	piApprox := 4.0*(float64(sucess) / float64(numPoints))
-	errorPct := 100.0*math.Abs(piApprox - Pi) / Pi
+	piApprox := 4.0 * (float64(sucess) / float64(numPoints))
+	errorPct := 100.0 * math.Abs(piApprox-Pi) / Pi
 
 	fmt.Printf("Estimated pi: %9f \n", piApprox)
 	fmt.Printf("pi: %9f \n", Pi)
@@ -38,7 +40,7 @@ func genRandomPoint() [2]float64 {
 
 // Condition to lie within the circular region
 func isInsideCircle(x float64, y float64) bool {
-	if x*x + y*y < 1 {
+	if x*x+y*y < 1 {
 		return true
 	}
 	return false

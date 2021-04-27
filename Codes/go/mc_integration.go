@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"time"
 	"math"
 	"math/rand"
+	"time"
 )
 
 func main() {
@@ -22,7 +22,7 @@ func monteCarloIntegrator(function func(float64) float64, a float64, b float64, 
 	s := 0.0
 	for i := 0; i < n; i++ {
 		u_i := rand.Float64()
-		x_i := a + (b - a)*u_i
+		x_i := a + (b-a)*u_i
 		s += function(x_i)
 	}
 
@@ -32,5 +32,5 @@ func monteCarloIntegrator(function func(float64) float64, a float64, b float64, 
 
 // function to be integrated
 func gaussian(x float64) float64 {
-	return math.Exp(-x*x)
+	return math.Exp(-x * x)
 }

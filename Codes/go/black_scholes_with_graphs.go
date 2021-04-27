@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"time"
 	"image/color"
 	"math"
 	"math/rand"
+	"time"
 
 	"gonum.org/v1/plot"
 	"gonum.org/v1/plot/plotter"
@@ -18,14 +18,14 @@ func main() {
 	start := time.Now()
 
 	// Parameters
-	S0 := 100.0 // initial value
-	K := 105.0 // strike price
-	T := 1.0 // maturity
-	r := 0.05 //risk free short rate
-	sigma := 0.2 //volatility
-	M := 50 // number of time steps
+	S0 := 100.0          // initial value
+	K := 105.0           // strike price
+	T := 1.0             // maturity
+	r := 0.05            //risk free short rate
+	sigma := 0.2         //volatility
+	M := 50              // number of time steps
 	dt := T / float64(M) //length of time interval
-	numPaths := 250_000 // number of paths
+	numPaths := 250_000  // number of paths
 
 	var S [][]float64
 
@@ -37,7 +37,7 @@ func main() {
 				path = append(path, S0)
 			} else {
 				z := rand.NormFloat64()
-				St := path[t - 1]*math.Exp((r - 0.5*(sigma*sigma))*dt + sigma*math.Sqrt(dt)*z)
+				St := path[t-1] * math.Exp((r-0.5*(sigma*sigma))*dt+sigma*math.Sqrt(dt)*z)
 				path = append(path, St)
 			}
 		}
@@ -49,14 +49,14 @@ func main() {
 	sumVal := 0.0
 	var endInner []float64
 	var end []float64
-	for _,p := range S {
-		sumVal += rectifier(p[len(p) - 1] - K)
-		endInner = append(endInner, rectifier(p[len(p) - 1] - K))
-		end = append(end, p[len(p) - 1])
+	for _, p := range S {
+		sumVal += rectifier(p[len(p)-1] - K)
+		endInner = append(endInner, rectifier(p[len(p)-1]-K))
+		end = append(end, p[len(p)-1])
 	}
 
 	// MC estimator
-	C0 := math.Exp(-r*T)*sumVal / float64(numPaths)
+	C0 := math.Exp(-r*T) * sumVal / float64(numPaths)
 	duration := time.Since(start)
 
 	fmt.Printf("European Option Value: %.3f\n", C0)
@@ -64,7 +64,7 @@ func main() {
 
 	// Plots
 	//Histogram of all simulated end-of-period index level values
-	histPlot(end, 50, "", "index level", "frequency","end_hist")
+	histPlot(end, 50, "", "index level", "frequency", "end_hist")
 
 	// Histogram of all simulated end-of-period option inner values
 	histPlot(endInner, 50, "", "option inner value", "frequency", "end_inner_hist")
@@ -109,28 +109,28 @@ func pathPlot(Path [][]float64, num_paths int, savename string) {
 	}
 
 	// Save the plot to a PNG file.
-	if err := p.Save(6*vg.Inch, 4*vg.Inch, savename + ".png"); err != nil {
+	if err := p.Save(6*vg.Inch, 4*vg.Inch, savename+".png"); err != nil {
 		panic(err)
 	}
 }
 
 func histPlot(values plotter.Values, bins int, title string, xLabel string, yLabel string, savename string) {
-    p := plot.New()
-    p.Title.Text = title
+	p := plot.New()
+	p.Title.Text = title
 	p.X.Label.Text = xLabel
-    p.Y.Label.Text = yLabel
-    hist, err := plotter.NewHist(values, bins)
-    if err != nil {
-        panic(err)
-    }
+	p.Y.Label.Text = yLabel
+	hist, err := plotter.NewHist(values, bins)
+	if err != nil {
+		panic(err)
+	}
 
-	hist.FillColor = color.RGBA{R:0, G: 135, B: 200, A: 255}
+	hist.FillColor = color.RGBA{R: 0, G: 135, B: 200, A: 255}
 
 	p.Add(hist)
 
-    if err := p.Save(8*vg.Inch, 6*vg.Inch, savename + ".png"); err != nil {
-        panic(err)
-    }
+	if err := p.Save(8*vg.Inch, 6*vg.Inch, savename+".png"); err != nil {
+		panic(err)
+	}
 }
 
 func points(path []float64) plotter.XYs {

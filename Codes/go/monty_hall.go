@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"time"
 	"math"
 	"math/rand"
+	"time"
 )
 
 func main() {
@@ -23,7 +23,7 @@ func main() {
 	probability := float64(sucess) / float64(numGames)
 	theoreticalValue := 2.0 / 3.0
 
-	errorPct := 100.0*math.Abs(probability - theoreticalValue) / theoreticalValue
+	errorPct := 100.0 * math.Abs(probability-theoreticalValue) / theoreticalValue
 
 	fmt.Printf("Estimated probability: %9f \n", probability)
 	fmt.Printf("Theoretical value: %9f \n", theoreticalValue)
@@ -45,13 +45,15 @@ func set_monty_hall() (int, int) {
 		prizeDoor = rand.Intn(3)
 		goat1Door = rand.Intn(3)
 		goat2Door = rand.Intn(3)
-		if  (prizeDoor != goat1Door && prizeDoor != goat2Door && goat1Door != goat2Door) {areDoorsSelected = true}
+		if prizeDoor != goat1Door && prizeDoor != goat2Door && goat1Door != goat2Door {
+			areDoorsSelected = true
+		}
 	}
 
 	showGoat := false
 	for !showGoat {
 		montysChoice = rand.Intn(3)
-		if (montysChoice != prizeDoor) && (montysChoice != guestDoor) {
+		if montysChoice != prizeDoor && montysChoice != guestDoor {
 			showGoat = true
 		}
 	}
@@ -59,7 +61,7 @@ func set_monty_hall() (int, int) {
 	madeSwitch := false
 	for !madeSwitch {
 		newDoor = rand.Intn(3)
-		if (newDoor != guestDoor) && (newDoor != montysChoice) {
+		if newDoor != guestDoor && newDoor != montysChoice {
 			madeSwitch = true
 		}
 	}

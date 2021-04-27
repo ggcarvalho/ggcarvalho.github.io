@@ -15,7 +15,7 @@ func main() {
 	p.X.Label.Text = "x"
 	p.Y.Label.Text = "y"
 
-	gauss := plotter.NewFunction(func(x float64) float64 { return math.Exp(-x*x) })
+	gauss := plotter.NewFunction(func(x float64) float64 { return math.Exp(-x * x) })
 	gauss.Samples = 1000
 	gauss.Color = color.RGBA{B: 255, A: 255}
 

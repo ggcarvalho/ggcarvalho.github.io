@@ -28,7 +28,7 @@ func main() {
 
 	expected := acc / float64(numExperiments)
 	E := math.Exp(1)
-	error_pct := 100.0*math.Abs(expected - E) / E
+	error_pct := 100.0 * math.Abs(expected-E) / E
 
 	fmt.Printf("Expected vale: %9f \n", expected)
 	fmt.Printf("e: %9f \n", E)
