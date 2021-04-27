@@ -15,7 +15,7 @@ func main() {
 
 	sucess := 0
 	for i := 0; i < numGames; i++ {
-		newDoor, prizeDoor := set_monty_hall()
+		newDoor, prizeDoor := setMontyHallGame()
 		if newDoor == prizeDoor {
 			sucess++
 		}
@@ -31,7 +31,7 @@ func main() {
 }
 
 // randomly sets the game
-func set_monty_hall() (int, int) {
+func setMontyHallGame() (int, int) {
 	var montysChoice int
 	var prizeDoor int
 	var goat1Door int

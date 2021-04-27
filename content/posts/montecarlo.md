@@ -26,6 +26,8 @@ There is no need to install anything on your computer, you can use the Go Playgr
 
 - <a href="https://tour.golang.org/welcome/1" target="_blank">A Tour of Go</a>
 
+The Go programming language is deemed to be the most promising programming language today due to its speed and simplicity, and I recommend you to, at least, get acquainted with it.
+
 ## Quick Introduction
 
 ---
@@ -376,7 +378,7 @@ func main() {
 
     sucess := 0
     for i := 0; i < numGames; i++ {
-        newDoor, prizeDoor := set_monty_hall()
+        newDoor, prizeDoor := setMontyHallGame()
         if newDoor == prizeDoor {
             sucess++
         }
@@ -392,7 +394,7 @@ func main() {
 }
 
 // randomly sets the game
-func set_monty_hall() (int, int) {
+func setMontyHallGame() (int, int) {
     var montysChoice int
     var prizeDoor int
     var goat1Door int
@@ -428,10 +430,9 @@ func set_monty_hall() (int, int) {
     }
     return newDoor, prizeDoor
 }
-
 ```
 
-<a href="https://play.golang.org/p/AU2UPqQ7vea" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/1j5oSdmBJjt" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run monty_hall.go
