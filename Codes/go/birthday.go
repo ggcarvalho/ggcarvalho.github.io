@@ -9,11 +9,11 @@ import (
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	num_people := 23
+	numPeople := 23
 	trials := 1_000_000
 	sucess := 0
 	for i := 0; i < trials; i++ {
-		bdays := genBdayList(num_people)
+		bdays := genBdayList(numPeople)
 		uniques := uniqueSlice(bdays)
 
 		if !(len(bdays) == len(uniques)) {
@@ -21,7 +21,7 @@ func main() {
 		}
 	}
 	probability := float64(sucess) / float64(trials)
-	fmt.Printf("The probability of at least 2 persons in a group of %d people share a birthday is %.2f%%\n", num_people, 100.0*probability)
+	fmt.Printf("The probability of at least 2 persons in a group of %d people share a birthday is %.2f%%\n", numPeople, 100.0*probability)
 }
 
 // returns a slice with the uniqueSlice elements of a given slice
