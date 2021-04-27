@@ -20,7 +20,7 @@ Put your adventure helmets on!
 
 ## Requirements
 
-There is no need to install anything on your computer, you can use the Go Playground. However, if you wish to run the programs locally on your computer (which I recommend), you should <a href="https://golang.org/" target="_blank">download and install Go</a> (I use Go $1.16.3$). If you want to learn the Go Programming Language, check the "Recommended Reading" section at the end of this article, as well as
+As stated previously, there is no need to install anything on your computer, you can use the Go Playground. However, if you wish to run the programs locally on your computer (which I recommend), you should <a href="https://golang.org/" target="_blank">download and install Go</a> (I use Go $1.16.3$). If you want to learn the Go Programming Language, check the "Recommended Reading" section at the end of this article, as well as
 
 - <a href="https://gobyexample.com/" target="_blank">Go by Example</a>
 
