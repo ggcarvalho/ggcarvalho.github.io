@@ -10,7 +10,7 @@ hashtags: "#go #golang #montecarlo #quantitativeresearch #trade #algotrade #quan
 draft: false
 ---
 
-In this article, we will explore some examples and applications of Monte Carlo simulations using the Go programming language. To keep this article interactive, after each Go code provided you will find a link to the <em>Go Playground</em>, where you can run it without installing Go on your machine.
+In this article, we will explore some examples and applications of Monte Carlo simulations using the Go programming language. To keep this article fun and interactive, after each Go code provided you will find a link to the <em>Go Playground</em>, where you can run it without installing Go on your machine.
 
 Put your adventure helmets on!
 
@@ -26,16 +26,22 @@ As stated previously, there is no need to install anything on your computer, you
 
 - <a href="https://tour.golang.org/welcome/1" target="_blank">A Tour of Go</a>
 
-The Go programming language is deemed to be the most promising programming language today due to its speed and simplicity, and I recommend you to, at least, get acquainted with it.
+- <a href="https://golang.org/doc/effective_go" target="_blank">Effective Go</a>
+
+- <a href="https://golang.org/doc/code" target="_blank">How to Write Go Code</a>
+
+The Go programming language is deemed to be <strong>the most promising programming language</strong> today due to its speed and simplicity, and I recommend you to at least get acquainted with it.
 
 ## Quick Introduction
 
 ---
 
-Generally speaking, Monte Carlo methods consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used throughout areas such as physics, finance, engineering, project management, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable.
+Generally speaking, Monte Carlo methods (or simulations) consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used throughout areas such as physics, finance, engineering, project management, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable.
 
-Here is an excerpt from N.T. Thomopoulos' book, "Essentials of Monte Carlo Simulation: Statistical Methods
-for Building Simulation Models":
+It was invented by <a href="https://en.wikipedia.org/wiki/John_von_Neumann" target="_blank">John von Neumann</a>, <a href="https://en.wikipedia.org/wiki/Stanislaw_Ulam" target="_blank">Stanisław Ulam</a>, and <a href="https://en.wikipedia.org/wiki/Nicholas_Metropolis" target="_blank">Nicholas Metropolis</a>, who were employed on a secret assignment in the Los Alamos National Laboratory, while working on a nuclear weapon project called the Manhattan Project. It was named after a well-known casino town, called Monaco since chance and randomness are core to the modeling approach, similar to a game of roulette.
+
+To wrap up this quick introduction, here are two excerpts taken from books on Monte Carlo simulations. The first comes from N.T. Thomopoulos' "Essentials of Monte Carlo Simulation: Statistical Methods for Building Simulation Models", and the second comes from Paul Glasserman's "Monte Carlo Methods in Financial Engineering (Stochastic Modelling and Applied Probability)".
+
 >To apply the Monte Carlo method, the analyst constructs a mathematical model that
 simulates a real system. A large number of random sampling of the model is applied
 yielding a large number of random samples of output results from the model. [...]
@@ -45,9 +51,6 @@ variable. Since each input is random, the outcomes are random. In the same way,
 they generated thousands of such samples and achieved thousands of outcomes for
 each output variable.
 
-It was invented by <a href="https://en.wikipedia.org/wiki/John_von_Neumann" target="_blank">John von Neumann</a>, <a href="https://en.wikipedia.org/wiki/Stanislaw_Ulam" target="_blank">Stanisław Ulam</a>, and <a href="https://en.wikipedia.org/wiki/Nicholas_Metropolis" target="_blank">Nicholas Metropolis</a>, who were employed on a secret assignment in the Los Alamos National Laboratory, while working on a nuclear weapon project called the Manhattan Project. It was named after a well-known casino town, called Monaco since chance and randomness are core to the modeling approach, similar to a game of roulette.
-
-Here is an excerpt from Paul Glasserman's "Monte Carlo Methods in Financial Engineering (Stochastic Modelling and Applied Probability)" summarizing the principles of the Monte Carlo method:
 >Monte Carlo methods are based on the analogy between probability and volume. The mathematics of measure formalizes the intuitive notion of probability, associating an event with a set of outcomes and defining the probability of
 the event to be its volume or measure relative to that of a universe of possible
 outcomes. Monte Carlo uses this identity in reverse, calculating the volume
@@ -63,7 +66,7 @@ after a finite number of draws.
 
 ---
 
-Let's start our journey with some basic, and even textbook, examples of Monte Carlo simulations. You're going to notice a pattern when implementing this method. Use it to create or try your examples.
+Let's start our journey with some basic, and even textbook, examples of Monte Carlo simulations. You're going to notice a pattern when implementing this method. Use it when implementing your simulations.
 
 ### Estimating $\pi$
 
@@ -145,7 +148,7 @@ pi:  3.141593
 Error:  0.040468%
 ```
 
-We were able to approximate $\pi$ with an error of $0.053965$% ! Let's jump to the next example.
+We were able to approximate $\pi$ with an error of $0.040468$% ! Let's jump to the next example.
 
 ### Estimating Euler's Number
 
@@ -174,7 +177,7 @@ func main() {
     numExperiments := 1_000_000
     fmt.Printf("Estimating e with %d experiment(s).\n\n", numExperiments)
 
-    acc := 0.0
+    acc := 0
     for i := 0; i < numExperiments; i++ {
         sum := 0.0
         num2Sucess := 0
@@ -184,10 +187,10 @@ func main() {
             sum += n
             num2Sucess++
         }
-        acc += float64(num2Sucess)
+        acc += num2Sucess
     }
 
-    expected := acc / float64(numExperiments)
+    expected := float64(acc) / float64(numExperiments)
     E := math.Exp(1)
     error_pct := 100.0 * math.Abs(expected-E) / E
 
@@ -197,7 +200,7 @@ func main() {
 }
 ```
 
-<a href="https://play.golang.org/p/nZCpFZQ6mB9" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/XH0wYDYHHcP" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run euler.go
@@ -216,7 +219,7 @@ An astonishing result!
 This is a famous problem in statistics:
 >In a group of $23$ people, the probability of a shared birthday exceeds $50$%.
 
-That sounds weird at first, but if you're good enough with math you can easily prove this statement. However, we are not interested in formal proofs here. That is the whole point of these simulations. The idea is very simple: create a list with $n$ ($23$, in our case) random numbers between $1$ and $365$ representing the birth day of each person and if (at least) two of them coincide, you increment the `success` variable. Do it a certain number of times and calculate the probability dividing the number of successes by the total number of simulations.
+That sounds weird at first, but if you're good enough with math you can easily prove this statement. However, we are not interested in formal proofs here. That is the whole point of these simulations. The idea is very simple: create a list with $n$ random numbers (in our case $n = 23$) between $0$ and $364$ representing the birth day of each person and if (at least) two of them coincide, you increment the `success` variable. Do it a certain number of times and calculate the probability dividing the number of successes by the total number of simulations.
 
 The corresponding Go code:
 
@@ -349,7 +352,7 @@ Of course, for $n \geq 365$ you don't need any calculations, it's a straightforw
 
 ---
 
-That is a problem that has been disturbing people for ages. Just like the birthday problem, you can solve it using basic math/probability theory, which we won't do. Let's state the problem and provide a Monte Carlo simulation to solve it.
+This is a problem that has been disturbing people for ages. Just like the birthday problem, you can solve it using basic math/probability theory, which we won't do. Let's state the problem and provide a Monte Carlo simulation to solve it.
 
 The problem is:
 >Suppose you're on a game show, and you're given the choice of three doors: Behind one door is a valuable prize; behind the others, goats. You pick a door, say No. $1$, and the host, who knows what's behind the doors, opens another door, say No. $3$, which has a goat. He then says to you, "Do you want to pick door No. $2$?" Is it to your advantage to switch your choice?
@@ -358,7 +361,7 @@ The problem is:
 
 People often believe that they are in a $50-50$ situation and therefore the switch is not very relevant. But if you carefully solve this problem, you will find that there is a probability of $2/3 \approx 66.7$% to win the prize if you decide to switch doors.
 
-The following Go code simulates this game and estimates the probability of winning if the guest chooses to switch doors. Note that we first set the game so that the doors are properly chosen (possibly not an optimal code), and then we simulate the game to estimate the desired probability.
+The following Go code simulates this game and estimates the probability of winning if the guest chooses to switch doors. Note that we first set the game so that the doors are properly chosen at random, and then we simulate several games to estimate the desired probability.
 
 ```go
 package main
@@ -450,7 +453,7 @@ Therefore, contrary to popular belief, it is more advantageous to the guest to s
 
 ---
 
-Now, let's see how we can use the Monte Carlo method to find the value of definite integrals of continuous functions in a specified range.
+Now, let's see how we can use the Monte Carlo method to find the value of definite integrals of continuous functions in a specified range. This method is particularly useful for higher-dimensional integrals.
 
 Just as a reminder, if $f: [a,b] \rightarrow \mathbb{R}$ is a continuous function, then the quantity $$S = \int_a^b f(x)dx,$$
 represents the area of the region between the graph of $f$ and the $x-$axis.
@@ -460,13 +463,7 @@ represents the area of the region between the graph of $f$ and the $x-$axis.
 One important feature of this property is that this area has a sign, having negative values if the region is below the $x-$axis.
 
 There are some ways to approximate this area, such as Newton-Cotes rules, trapezoidal rule, and Simpson's rule. However, one clever way to numerically integrate continuous functions is using the formula  $$S \approx \frac{b-a}{n}\sum_{i=1}^n f(a + (b-a)U_i),$$
-where $U_i \sim \mathcal{U}(0,1)$, i.e. the $U_i$ are uniformly distributed in $[0,1]$ (feel free to try different probability distributions and compare the results). The main idea, then, is to draw random points, and increment the sum above until the total number of iterations is achieved.
-
-From Paul Glasserman's book:
->[...] for a Monte Carlo estimate based on $n$ draws from the domain $[0, 1]^d$. In particular, the $O(n^{−1/2})$ convergence rate holds for all $d$. In contrast, the error in a product trapezoidal rule in d dimensions is $O(n^{−2/d} )$ for twice continuously differentiable integrands; this degradation in convergence
-rate with increasing dimension is characteristic of all deterministic integration
-methods. Thus, Monte Carlo methods are attractive in evaluating integrals in
-high dimensions.
+where $U_i \sim \mathcal{U}(0,1)$, i.e. the $U_i$ are uniformly distributed in $[0,1]$ (feel free to try different probability distributions and compare the results). The Monte Carlo integration is
 
 We are going to use this technique to solve a classic problem. If you are a calculus geek, you might know how difficult it is to calculate the integral $$S = \int_{-\infty}^{\infty} e^{-x^2}dx.$$
 
@@ -533,7 +530,7 @@ In fact, $1.771559^2 \approx 3.138$. You should use the Go Playground to experim
 
 ---
 
-For the final section of this article, I have something special that draws the attention of many people: the Black-Scholes model.
+For the final section of this article, I have something special that draws a lot of attention: the Black-Scholes model.
 
 The Black–Scholes, or Black–Scholes–Merton model, is a mathematical model for the dynamics of a financial market containing derivative investment instruments, giving a theoretical estimate of the price of <em>European-style options</em> and shows that the option has a unique price given the risk of the security and its expected return. This work granted <a href="https://en.wikipedia.org/wiki/Fischer_Black" target="_blank">Fischer Black</a> and <a href="https://en.wikipedia.org/wiki/Myron_Scholes" target="_blank">Myron Scholes</a> their Nobel Prize in economics and has been widely used in algorithmic trading strategies around the world.
 
@@ -628,7 +625,7 @@ European Option Value: 7.964
 Execution time:  12.171679ms
 ```
 
-This is our benchmark value for the Monte Carlo estimator to follow (you will get different values each time you run the code, although they are fairly close to each other).
+This is our benchmark value for the Monte Carlo estimator to follow.
 
 ### The Simulation
 
@@ -637,8 +634,7 @@ We follow the steps:
 1. Divide the time interval $[0, T]$ in equidistant subintervals of length $\Delta t$.
 2. Start iterating $i = 1, 2,..., I$.
     - For every time step $t  \in \\{\Delta t, 2\Delta t,..., T \\}$, draw pseudorandom numbers $z_t(i)$.
-    - Determine the time $T$ value of the index level $S_T(i)$ by applying the pseudo-
-    random numbers time step by time step to the discretized equation.
+    - Determine the time $T$ value of the index level $S_T(i)$ by applying the pseudo-random numbers time step by time step to the discretized equation.
     - Determine the inner value $h_T$ of the European call option at $T$ as $h_T(S_T(i)) =
     \max(S_T(i) – K, 0)$.
     - Iterate until $i = I$.
@@ -672,11 +668,11 @@ func main() {
     sigma := 0.2         //volatility
     M := 50              // number of time steps
     dt := T / float64(M) //length of time interval
-    numPaths := 250_000  // number of paths/simulations
+    I := 250_000         // number of paths/simulations
     var S [][]float64
 
     // Simulating numPaths paths with M time steps
-    for i := 1; i < numPaths; i++ {
+    for i := 1; i < I; i++ {
         var path []float64
         for t := 0; t <= M; t++ {
             if t == 0 {
@@ -695,7 +691,7 @@ func main() {
     for _, p := range S {
         sumVal += rectifier(p[len(p)-1] - K)
     }
-    C0 := math.Exp(-r*T) * sumVal / float64(numPaths)
+    C0 := math.Exp(-r*T) * sumVal / float64(I)
     duration := time.Since(start)
 
     fmt.Printf("European Option Value: %.3f\n", C0)
@@ -709,10 +705,9 @@ func rectifier(x float64) float64 {
     }
     return 0.0
 }
-
 ```
 
-<a href="https://play.golang.org/p/tK4zfdSjyis" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/tcEbs3jZgNu" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run black_scholes.go
@@ -765,7 +760,9 @@ As you can see, the majority of the simulated values are zero, indicating that t
 
 ---
 
-We have seen how one can use the Monte Carlo method to find answers to certain problems. We also have seen two major applications, the numerical integration and how to estimate an option price using the Black-Scholes-Merton model. By now, you should've realized that the Monte Carlo method gives you immense problem-solving powers, even if you're not very familiar with the underlying theory or even if such a theory doesn't exist (for instance, see the <a href="https://rstudio-pubs-static.s3.amazonaws.com/241232_eebe419a0aaa4eb89398ee2a61ad3dc2.html" target="_blank">percolation problem</a>, where no mathematical solution for determining the percolation threshold $p^{\ast}$ has yet been derived) - and that's the joy of solving problems using Monte Carlo simulations!
+We have seen how one can use the Monte Carlo method to find answers to certain problems. We also have seen two major applications, the numerical integration and how to estimate an option price using the Black-Scholes-Merton model. By now, you should've realized that the Monte Carlo method gives you immense problem-solving powers, even if you're not very familiar with the underlying theory or even if such a theory doesn't exist (for instance, see the <a href="https://rstudio-pubs-static.s3.amazonaws.com/241232_eebe419a0aaa4eb89398ee2a61ad3dc2.html" target="_blank">percolation problem</a>, where no mathematical solution for determining the percolation threshold $p^{\ast}$ has yet been derived).
+
+I hope you can use this technique in your scientific/research problems and discover the joy of solving problems using Monte Carlo simulations!
 
 ## Recommended Reading
 

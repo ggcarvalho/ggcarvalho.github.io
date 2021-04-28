@@ -13,7 +13,7 @@ func main() {
 	numExperiments := 1_000_000
 	fmt.Printf("Estimating e with %d experiment(s).\n\n", numExperiments)
 
-	acc := 0.0
+	acc := 0
 	for i := 0; i < numExperiments; i++ {
 		sum := 0.0
 		num2Sucess := 0
@@ -23,10 +23,10 @@ func main() {
 			sum += n
 			num2Sucess++
 		}
-		acc += float64(num2Sucess)
+		acc += num2Sucess
 	}
 
-	expected := acc / float64(numExperiments)
+	expected := float64(acc) / float64(numExperiments)
 	E := math.Exp(1)
 	error_pct := 100.0 * math.Abs(expected-E) / E
 
