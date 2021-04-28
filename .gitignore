@@ -1,2 +1,6 @@
 # folders
 public/
+Codes/go/images/
+
+# code
+Codes/go/gen_animation_images.go
