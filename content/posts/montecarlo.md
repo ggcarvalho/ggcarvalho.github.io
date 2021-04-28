@@ -73,7 +73,7 @@ This is by far the most famous example of Monte Carlo simulations, considered to
 
 If we were to draw random points in this square, some will fall within the circle and some won't. But the ratio between points inside the circular region and the total amount of points we draw will be closer and closer to the ratio between the area of the circle and the area of the square as we draw more of these random points.
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/circle_dots.png" style="width: 30%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/simulation.gif" style="width: 30%"></div>
 
 As you might know, the area of the circular region is $A_{\circ} = \pi\cdot r^2$ and the area of the square is $A_{\square} = (2r)^2 = 4r^2$. Thus, $$\pi = 4\cdot \frac{A_{\circ}}{A_{\square}}.$$
 
