@@ -3,7 +3,7 @@ languageCode = "en-us"
 title = "Gabriel Carvalho"
 theme = "ggcarvalho"
 sectionPagesMenu = "main"
-googleAnalytics = "G-KJHMZ80TK4"
+googleAnalytics = "UA-193118179-1"
 pygmentsStyle = "monokai"
 
 [markup]
