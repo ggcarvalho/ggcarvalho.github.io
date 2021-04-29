@@ -42,25 +42,11 @@ It was invented by <a href="https://en.wikipedia.org/wiki/John_von_Neumann" targ
 
 To wrap up this quick introduction, here are two excerpts taken from books on Monte Carlo simulations. The first comes from N.T. Thomopoulos' "Essentials of Monte Carlo Simulation: Statistical Methods for Building Simulation Models", and the second comes from Paul Glasserman's "Monte Carlo Methods in Financial Engineering (Stochastic Modelling and Applied Probability)".
 
->To apply the Monte Carlo method, the analyst constructs a mathematical model that
-simulates a real system. A large number of random sampling of the model is applied
-yielding a large number of random samples of output results from the model. [...]
-The method is based on running the model many times as in random sampling.
-For each sample, random variates are generated on each input variable; computations are run through the model yielding random outcomes on each output
-variable. Since each input is random, the outcomes are random. In the same way,
-they generated thousands of such samples and achieved thousands of outcomes for
-each output variable.
+>To apply the Monte Carlo method, the analyst constructs a mathematical model that simulates a real system. A large number of random sampling of the model is applied yielding a large number of random samples of output results from the model. [...] The method is based on running the model many times as in random sampling. For each sample, random variates are generated on each input variable; computations are run through the model yielding random outcomes on each output variable. Since each input is random, the outcomes are random. In the same way, they generated thousands of such samples and achieved thousands of outcomes for each output variable.
 
->Monte Carlo methods are based on the analogy between probability and volume. The mathematics of measure formalizes the intuitive notion of probability, associating an event with a set of outcomes and defining the probability of
-the event to be its volume or measure relative to that of a universe of possible
-outcomes. Monte Carlo uses this identity in reverse, calculating the volume
-of a set by interpreting the volume as a probability. In the simplest case, this
-means sampling randomly from a universe of possible outcomes and taking
-the fraction of random draws that fall in a given set as an estimate of the set’s
-volume. The law of large numbers ensures that this estimate converges to the
-correct value as the number of draws increases. The central limit theorem
-provides information about the likely magnitude of the error in the estimate
-after a finite number of draws.
+>Monte Carlo methods are based on the analogy between probability and volume. The mathematics of measure formalizes the intuitive notion of probability, associating an event with a set of outcomes and defining the probability of the event to be its volume or measure relative to that of a universe of possible outcomes. Monte Carlo uses this identity in reverse, calculating the volume of a set by interpreting the volume as a probability. In the simplest case, this means sampling randomly from a universe of possible outcomes and taking the fraction of random draws that fall in a given set as an estimate of the set’s volume. The law of large numbers ensures that this estimate converges to the correct value as the number of draws increases. The central limit theorem provides information about the likely magnitude of the error in the estimate after a finite number of draws.
+
+If you are new to the subject, keep these ideas in mind as they will help you to understand what follows next.
 
 ## First Examples
 
@@ -78,7 +64,7 @@ If we were to draw random points in this square, some will fall within the circl
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/pi_simulation.gif" style="width: 30%"></div>
 
-As you might know, the area of the circular region is $A_{\circ} = \pi\cdot r^2$ and the area of the square is $A_{\square} = (2r)^2 = 4r^2$. Thus, $$\pi = 4\cdot \frac{A_{\circ}}{A_{\square}}.$$
+As you might know, the area of the circular region is $A_{\bigcirc} = \pi\cdot r^2$ and the area of the square is $A_{\square} = (2r)^2 = 4r^2$. Thus, $$\pi = 4\cdot \frac{A_{\bigcirc}}{A_{\square}}.$$
 
 As a result, we can estimate $\pi$ as
 $$\pi \approx 4\cdot \frac{\text{$\\#$ points inside the circle}}{\text{$\\#$ points}}.$$
@@ -352,7 +338,7 @@ Of course, for $n \geq 365$ you don't need any calculations, it's a straightforw
 
 ---
 
-This is a problem that has been disturbing people for ages. Just like the birthday problem, you can solve it using basic math/probability theory, which we won't do. Let's state the problem and provide a Monte Carlo simulation to solve it.
+This is a problem that has been confusing people for ages. Just like the birthday problem, you can solve it using basic math/probability theory, which we won't do. Let's state the problem and provide a Monte Carlo simulation to solve it.
 
 The problem is:
 >Suppose you're on a game show, and you're given the choice of three doors: Behind one door is a valuable prize; behind the others, goats. You pick a door, say No. $1$, and the host, who knows what's behind the doors, opens another door, say No. $3$, which has a goat. He then says to you, "Do you want to pick door No. $2$?" Is it to your advantage to switch your choice?
@@ -447,13 +433,13 @@ Theoretical value:  0.666667
 Error:  0.032950%
 ```
 
-Therefore, contrary to popular belief, it is more advantageous to the guest to switch doors confirming the theoretical result.
+Therefore, contrary to popular belief, it is more advantageous to the guest to switch doors, confirming the theoretical result.
 
 ## Integration Using Monte Carlo Simulations
 
 ---
 
-Now, let's see how we can use the Monte Carlo method to find the value of definite integrals of continuous functions in a specified range. This method is particularly useful for higher-dimensional integrals.
+Now, let's see how we can use the Monte Carlo method to find the value of definite integrals of continuous functions in a specified range. This method is particularly useful for higher-dimensional integrals, due to its convergence properties.
 
 Just as a reminder, if $f: [a,b] \rightarrow \mathbb{R}$ is a continuous function, then the quantity $$S = \int_a^b f(x)dx,$$
 represents the area of the region between the graph of $f$ and the $x-$axis.
@@ -532,7 +518,7 @@ In fact, $1.771559^2 \approx 3.138$. You should use the Go Playground to experim
 
 For the final section of this article, I have something special that draws a lot of attention: the Black-Scholes model.
 
-The Black–Scholes, or Black–Scholes–Merton model, is a mathematical model for the dynamics of a financial market containing derivative investment instruments, giving a theoretical estimate of the price of <em>European-style options</em> and shows that the option has a unique price given the risk of the security and its expected return. This work granted <a href="https://en.wikipedia.org/wiki/Fischer_Black" target="_blank">Fischer Black</a> and <a href="https://en.wikipedia.org/wiki/Myron_Scholes" target="_blank">Myron Scholes</a> their Nobel Prize in economics and has been widely used in algorithmic trading strategies around the world.
+The Black–Scholes, or Black–Scholes–Merton model (<a href="https://en.wikipedia.org/wiki/Fischer_Black" target="_blank">Fischer Black</a>, <a href="https://en.wikipedia.org/wiki/Myron_Scholes" target="_blank">Myron Scholes</a>, and <a href="https://en.wikipedia.org/wiki/Robert_C._Merton" target="_blank">Robert C Merton</a>) , is a mathematical model for the dynamics of a financial market containing derivative investment instruments, giving a theoretical estimate of the price of <em>European-style options</em> and shows that the option has a unique price given the risk of the security and its expected return. This work granted Myron Scholes and Robert C Merton their Nobel Prize in Economics ($1997$), and has been widely used in algorithmic trading strategies around the world.
 
 ### The Equation
 
@@ -762,7 +748,7 @@ As you can see, the majority of the simulated values are zero, indicating that t
 
 We have seen how one can use the Monte Carlo method to find answers to certain problems. We also have seen two major applications, the numerical integration and how to estimate an option price using the Black-Scholes-Merton model. By now, you should've realized that the Monte Carlo method gives you immense problem-solving powers, even if you're not very familiar with the underlying theory or even if such a theory doesn't exist (for instance, see the <a href="https://rstudio-pubs-static.s3.amazonaws.com/241232_eebe419a0aaa4eb89398ee2a61ad3dc2.html" target="_blank">percolation problem</a>, where no mathematical solution for determining the percolation threshold $p^{\ast}$ has yet been derived).
 
-I hope you can use this technique in your scientific/research problems and discover the joy of solving problems using Monte Carlo simulations!
+I hope you can apply this technique to your problems and discover the joy of solving problems using Monte Carlo simulations!
 
 ## Recommended Reading
 
