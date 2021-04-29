@@ -621,14 +621,11 @@ We follow the steps:
 2. Start iterating $i = 1, 2,..., I$.
     - For every time step $t  \in \\{\Delta t, 2\Delta t,..., T \\}$, draw pseudorandom numbers $z_t(i)$.
     - Determine the time $T$ value of the index level $S_T(i)$ by applying the pseudo-random numbers time step by time step to the discretized equation.
-    - Determine the inner value $h_T$ of the European call option at $T$ as $h_T(S_T(i)) =
-    \max(S_T(i) – K, 0)$.
+    - Determine the inner value $h_T$ of the European call option at $T$ as $h_T(S_T(i)) = \max(S_T(i) – K, 0)$.
     - Iterate until $i = I$.
 
-3. Sum up the inner values, average, and discount them back with the riskless short
-rate according to the formula
-$$C_0 \approx e^{-rT} \frac{1}{I} \sum_I h_T(S_T(i)),$$
-called the Monte Carlo estimator for the European call option.
+3. Sum up the inner values, average, and discount them back with the riskless short rate according to the formula
+$$C_0 \approx e^{-rT} \frac{1}{I} \sum_I h_T(S_T(i)),$$ called the Monte Carlo estimator for the European call option.
 
 Without any further ado, here is the corresponding Go code:
 
@@ -732,7 +729,7 @@ Second, we want to see the frequency of the simulated index levels at the end of
 <a href="/img/posts/montecarlo/end_hist.png" target="_blank"><img src="/img/posts/montecarlo/end_hist.png"  alt="Sharpen" style="width:50%; margin:1%"></a>
 </div>
 
-We can see that the histogram above is in accordance with the depiction of every simulated path.
+We can see that the histogram above agrees with the depiction of every simulated path.
 
 Finally, let's take a look at the option’s end-of-period (maturity) inner values.
 
