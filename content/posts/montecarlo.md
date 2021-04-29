@@ -2,7 +2,7 @@
 title: "The art of solving problems with Monte Carlo simulations"
 type: post
 description: "Using the power of randomness to answer scientific questions."
-date: "2021-05-19"
+date: "2021-04-30"
 image: "/img/posts/montecarlo/dies.jpg"
 tag: "go"
 name: "go"
@@ -745,7 +745,7 @@ We have seen basic examples and how one can use the Monte Carlo method to find a
 
 By now, you should've realized that the Monte Carlo method gives you immense problem-solving powers, even if you're not very familiar with the underlying theory or even if such a theory doesn't exist. For instance, see the <a href="https://rstudio-pubs-static.s3.amazonaws.com/241232_eebe419a0aaa4eb89398ee2a61ad3dc2.html" target="_blank">percolation problem</a>, where no mathematical solution for determining the percolation threshold $p^{\ast}$ has yet been derived.
 
-Now you can successfully apply this technique to your problems and become a practitioner of the art of solving problems using Monte Carlo simulations!
+Now you can successfully apply this technique to your problems and become a practitioner of the art of solving problems using Monte Carlo simulations! Good Luck!
 
 ## Recommended Reading
 
