@@ -20,7 +20,7 @@ Put your adventure helmets on!
 
 ## Requirements
 
-As stated previously, there is no need to install anything on your computer, you can use the Go Playground. However, if you wish to run the programs locally on your computer (which I recommend), you should <a href="https://golang.org/" target="_blank">download and install Go</a> (I use Go $1.16.3$). If you want to learn the Go Programming Language, check the "Recommended Reading" section at the end of this article, as well as
+As stated previously, there is no need to install anything on your computer, you can use the Go Playground. However, if you wish to run the programs locally on your computer (which I recommend), you should <a href="https://golang.org/" target="_blank">download and install Go</a>. If you want to learn the Go Programming Language, check the "Recommended Reading" section at the end of this article, as well as
 
 - <a href="https://gobyexample.com/" target="_blank">Go by Example</a>
 
@@ -40,7 +40,7 @@ Generally speaking, Monte Carlo methods (or simulations) consist of a broad clas
 
 It was invented by <a href="https://en.wikipedia.org/wiki/John_von_Neumann" target="_blank">John von Neumann</a>, <a href="https://en.wikipedia.org/wiki/Stanislaw_Ulam" target="_blank">Stanisław Ulam</a>, and <a href="https://en.wikipedia.org/wiki/Nicholas_Metropolis" target="_blank">Nicholas Metropolis</a>, who were employed on a secret assignment in the Los Alamos National Laboratory, while working on a nuclear weapon project called the Manhattan Project. It was named after a well-known casino town, called Monaco since chance and randomness are core to the modeling approach, similar to a game of roulette.
 
-To wrap up this quick introduction, here are two excerpts taken from books on Monte Carlo simulations. The first comes from N.T. Thomopoulos' "Essentials of Monte Carlo Simulation: Statistical Methods for Building Simulation Models", and the second comes from Paul Glasserman's "Monte Carlo Methods in Financial Engineering (Stochastic Modelling and Applied Probability)".
+Here are two excerpts taken from books on Monte Carlo simulations. The first comes from N.T. Thomopoulos' "Essentials of Monte Carlo Simulation: Statistical Methods for Building Simulation Models", and the second comes from Paul Glasserman's "Monte Carlo Methods in Financial Engineering (Stochastic Modelling and Applied Probability)":
 
 >To apply the Monte Carlo method, the analyst constructs a mathematical model that simulates a real system. A large number of random sampling of the model is applied yielding a large number of random samples of output results from the model. [...] The method is based on running the model many times as in random sampling. For each sample, random variates are generated on each input variable; computations are run through the model yielding random outcomes on each output variable. Since each input is random, the outcomes are random. In the same way, they generated thousands of such samples and achieved thousands of outcomes for each output variable.
 
@@ -268,7 +268,7 @@ $ go run birthday.go
 The probability of at least 2 persons in a group of 23 people share a birthday is 50.67%
 ```
 
-You can tweak this code to reproduce the following table from <a href="https://en.wikipedia.org/wiki/Birthday_problem" target="_blank">Wikipedia</a>:
+You can modify this code to reproduce the following table from <a href="https://en.wikipedia.org/wiki/Birthday_problem" target="_blank">Wikipedia</a>:
 
 <table class="table table-striped">
   <thead>
@@ -340,7 +340,7 @@ Of course, for $n \geq 365$ you don't need any calculations, it's a straightforw
 
 This is a problem that has been confusing people for ages. Just like the birthday problem, you can solve it using basic math/probability theory, which we won't do. Let's state the problem and provide a Monte Carlo simulation to solve it.
 
-The problem is:
+Here is the problem:
 >Suppose you're on a game show, and you're given the choice of three doors: Behind one door is a valuable prize; behind the others, goats. You pick a door, say No. $1$, and the host, who knows what's behind the doors, opens another door, say No. $3$, which has a goat. He then says to you, "Do you want to pick door No. $2$?" Is it to your advantage to switch your choice?
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/montyhall.png" style="width: 60%; margin: 2%"></div>
@@ -453,7 +453,7 @@ where $U_i \sim \mathcal{U}(0,1)$, i.e. the $U_i$ are uniformly distributed in $
 
 We are going to use this technique to solve a classic problem. If you are a calculus geek, you might know how difficult it is to calculate the integral $$S = \int_{-\infty}^{\infty} e^{-x^2}dx.$$
 
-It involves a trick using Fubini's theorem and change in from cartesian to polar coordinates. Surprisingly, the result of this integral is $\sqrt{\pi}$. Let's use Monte Carlo integration to evaluate $$\bar{S} = \int_{-20}^{20} e^{-x^2}dx.$$
+It involves a trick using Fubini's theorem and a change from cartesian to polar coordinates. Surprisingly, the result of this integral is $\sqrt{\pi}$. Let's use Monte Carlo integration to evaluate $$\bar{S} = \int_{-20}^{20} e^{-x^2}dx.$$
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/gaussian.png" style="width: 35%; margin: 2%"></div>
 
@@ -619,7 +619,7 @@ We follow the steps:
 
 1. Divide the time interval $[0, T]$ in equidistant subintervals of length $\Delta t$.
 2. Start iterating $i = 1, 2,..., I$.
-    - For every time step $t  \in \\{\Delta t, 2\Delta t,..., T \\}$, draw pseudorandom numbers $z_t(i)$.
+    - For every time step $t  \in \\{\Delta t, 2\Delta t,..., T \\}$, draw pseudo-random numbers $z_t(i)$.
     - Determine the time $T$ value of the index level $S_T(i)$ by applying the pseudo-random numbers time step by time step to the discretized equation.
     - Determine the inner value $h_T$ of the European call option at $T$ as $h_T(S_T(i)) = \max(S_T(i) – K, 0)$.
     - Iterate until $i = I$.
@@ -711,7 +711,7 @@ Nearly the same result in a fraction of the time! To be completely fair, when th
 
 ### Graphical Analysis
 
-First, let's plot the simulated index levels (the paths taken during the simulation). The figures below represent the first $10$, the first $100$, and all simulated index levels respectively.
+First, let's plot the simulated index levels (the paths taken during the simulation). The figures below represent the first $10$, the first $100$, and $250,000$ (total number of paths) simulated index levels respectively.
 
 <div style= "text-align:center">
 <a href="/img/posts/montecarlo/10.png" target="_blank"><img src="/img/posts/montecarlo/10.png"  alt="Mean" style="width:45%; margin:1%"></a>
@@ -729,8 +729,6 @@ Second, we want to see the frequency of the simulated index levels at the end of
 <a href="/img/posts/montecarlo/end_hist.png" target="_blank"><img src="/img/posts/montecarlo/end_hist.png"  alt="Sharpen" style="width:50%; margin:1%"></a>
 </div>
 
-We can see that the histogram above agrees with the depiction of every simulated path.
-
 Finally, let's take a look at the option’s end-of-period (maturity) inner values.
 
 <div style= "text-align:center">
@@ -743,9 +741,11 @@ As you can see, the majority of the simulated values are zero, indicating that t
 
 ---
 
-We have seen how one can use the Monte Carlo method to find answers to certain problems. We also have seen two major applications, the numerical integration and how to estimate an option price using the Black-Scholes-Merton model. By now, you should've realized that the Monte Carlo method gives you immense problem-solving powers, even if you're not very familiar with the underlying theory or even if such a theory doesn't exist (for instance, see the <a href="https://rstudio-pubs-static.s3.amazonaws.com/241232_eebe419a0aaa4eb89398ee2a61ad3dc2.html" target="_blank">percolation problem</a>, where no mathematical solution for determining the percolation threshold $p^{\ast}$ has yet been derived).
+We have seen basic examples and how one can use the Monte Carlo method to find answers to certain problems. We also have seen two major applications, the numerical integration and how to estimate an option price using the Black-Scholes-Merton model.
 
-I hope you can apply this technique to your problems and discover the joy of solving problems using Monte Carlo simulations!
+By now, you should've realized that the Monte Carlo method gives you immense problem-solving powers, even if you're not very familiar with the underlying theory or even if such a theory doesn't exist. For instance, see the <a href="https://rstudio-pubs-static.s3.amazonaws.com/241232_eebe419a0aaa4eb89398ee2a61ad3dc2.html" target="_blank">percolation problem</a>, where no mathematical solution for determining the percolation threshold $p^{\ast}$ has yet been derived.
+
+Now you can successfully apply this technique to your problems and discover the joy of solving problems using Monte Carlo simulations!
 
 ## Recommended Reading
 
