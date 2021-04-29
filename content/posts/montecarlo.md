@@ -2,7 +2,7 @@
 title: "The art of solving problems with Monte Carlo simulations"
 type: post
 description: "Using the power of randomness to answer scientific questions."
-date: "2021-04-30"
+date: "2021-05-03"
 image: "/img/posts/montecarlo/dies.jpg"
 tag: "go"
 name: "go"
