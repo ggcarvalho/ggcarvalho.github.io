@@ -630,8 +630,6 @@ Congratulations! You have built your first image processing toolbox! Although we
 
 Now that you know how to implement these tools yourself you can use them in your application. Be creative, combine and tweak these tools to your liking. I know you will find many use cases for it! For instance, I have been using some of these implementations for data augmentation purposes in Machine Learning, since they are fairly easy to implement on the fly and prevent you to store several additional images on your computer.
 
-Good Luck!
-
 ## Recommended Reading
 
 - [Digital Image Processing 4th Edition - Gonzalez & Woods](https://amzn.to/3fUGrHQ)
