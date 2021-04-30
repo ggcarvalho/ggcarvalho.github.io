@@ -711,11 +711,11 @@ We got a very satisfactory result using the Monte Carlo estimator (remember that
 
 Let's compare the results with the same simulation in Python (taken from Yves Hilpisch's "Python for Finance"):
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/yves.png" style="width: 50%; margin: 2%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/yves_no_vec.png" style="width: 50%; margin: 2%"></div>
 
 Nearly the same result in a fraction of the time! To be completely fair, when the author uses full Numpy vectorization the results are much better in terms of performance, although we still have a clear winner.
 
-<div style="text-align:center"><img src="/img/posts/montecarlo/yves2.png" style="width: 50%; margin: 2%"></div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/yves_full_vec.png" style="width: 50%; margin: 2%"></div>
 
 ### Graphical Analysis
 
