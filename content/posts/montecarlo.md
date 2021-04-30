@@ -134,7 +134,15 @@ pi:  3.141593
 Error:  0.040468%
 ```
 
-We were able to approximate $\pi$ with an error of $0.040468$% ! Let's jump to the next example.
+We were able to approximate $\pi$ with an error of $0.040468$% ! Check this video to see how many digits of $\pi$ you really need.
+
+<div class="container" style="width:50%">
+  <div class="center">
+    {{<youtube l-vHGf4j90Y>}}
+  </div>
+</div>
+
+Let's jump to the next example.
 
 ### Estimating Euler's Number
 
@@ -735,7 +743,7 @@ Finally, let's take a look at the option’s end-of-period (maturity) inner valu
 <a href="/img/posts/montecarlo/end_inner_hist.png" target="_blank"><img src="/img/posts/montecarlo/end_inner_hist.png"  alt="Sharpen" style="width:50%; margin:1%"></a>
 </div>
 
-As you can see, the majority of the simulated values are zero, indicating that the European call option expires worthless in many cases.
+As you can see, the majority of the simulated values are zero, indicating that the European call option expires worthless in these cases.
 
 ## Conclusion
 
