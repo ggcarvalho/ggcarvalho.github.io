@@ -3,7 +3,7 @@ title: "Introduction to image processing using Python"
 type: post
 description: "Writing a basic image processing toolbox from scratch."
 date: "2021-04-19"
-image: "/img/posts/image_proc/coding.jpeg"
+image: "/img/posts/image_proc/banner.jpg"
 tag: "python"
 name: "python"
 hashtags: "#python #imageprocessing"
@@ -207,8 +207,8 @@ imageio.imwrite("zagreb_grayscale.png", gray)
 ```
 
 <div style= "text-align:center">
-<a href="/img/posts/image_proc/zagreb.jpg" target="_blank"><img src="/img/posts/image_proc/zagreb.jpg" style="width:40%; margin:4%"></a>
-<a href="/img/posts/image_proc/zagreb_grayscale.png" target="_blank"><img src="/img/posts/image_proc/zagreb_grayscale.png" style="width:40%; margin:4%"></a>
+<a href="/img/posts/image_proc/zagreb.jpg" target="_blank"><img src="/img/posts/image_proc/zagreb_resized.png" style="width:40%; margin:4%"></a>
+<a href="/img/posts/image_proc/zagreb_grayscale.png" target="_blank"><img src="/img/posts/image_proc/zagreb_grayscale_resized.png" style="width:40%; margin:4%"></a>
 </div>
 
 Cool! We have built a grayscale image converter from scratch. Let's use it to generate a halftone image.
@@ -618,8 +618,8 @@ imageio.imwrite("zagreb_negative.png", img)
 ```
 
 <div style= "text-align:center">
-<a href="/img/posts/image_proc/zagreb.jpg" target="_blank"><img src="/img/posts/image_proc/zagreb.jpg"  alt="Original" style="width:45%; margin:1%"r></a>
-<a href="/img/posts/image_proc/negative.png" target="_blank"><img src="/img/posts/image_proc/negative.png"  alt="Negative" style="width:45%; margin:1%"></a>
+<a href="/img/posts/image_proc/zagreb.jpg" target="_blank"><img src="/img/posts/image_proc/zagreb_resized.png" style="width:40%; margin:4%"></a>
+<a href="/img/posts/image_proc/negative.png" target="_blank"><img src="/img/posts/image_proc/negative_resized.png" style="width:40%; margin:4%"></a>
 </div>
 
 ## Conclusion
