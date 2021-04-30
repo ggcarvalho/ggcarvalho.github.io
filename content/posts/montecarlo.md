@@ -146,7 +146,7 @@ Let's jump to the next example.
 
 ### Estimating Euler's Number
 
-Not long ago, Lex Fridman (AI researcher, YouTuber, and Podcast Host) published the following in a LinkedIn post:
+Not long ago, Lex Fridman (AI researcher, YouTuber, and Podcast Host) published the following in a <a href="https://www.linkedin.com/posts/lexfridman_select-numbers-between-0-and-1-randomly-until-activity-6774714449338150912-SLOS" target="_blank">LinkedIn post</a>:
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/lex.png" style="width: 60%"></div>
 
