@@ -632,13 +632,13 @@ Now that you know how to implement these tools yourself you can use them in your
 
 ## Recommended Reading
 
-- [Digital Image Processing 4th Edition - Gonzalez & Woods](https://amzn.to/3fUGrHQ)
+- <a href="https://amzn.to/3fUGrHQ" target="_blank">Digital Image Processing 4th Edition - Gonzalez & Woods</a>
 
-- [Think Python - Allen B. Downey](https://amzn.to/3ukAIzg)
+- <a href="https://amzn.to/3ukAIzg" target="_blank">Think Python - Allen B. Downey</a>
 
-- [Introduction to Computation and Programming Using Python (With Application to Understanding Data) 2nd Edition - John V. Guttag ](https://amzn.to/2Orc40t)
+- <a href="https://amzn.to/2Orc40t" target="_blank">Introduction to Computation and Programming Using Python (With Application to Understanding Data) 2nd Edition - John V. Guttag</a>
 
-- [Python Image Processing Cookbook: Over 60 recipes to help you perform complex image processing and computer vision tasks with ease  - Sandipan Dey](https://amzn.to/31Rx4AB)
+- <a href="https://amzn.to/31Rx4AB" target="_blank">Python Image Processing Cookbook: Over 60 recipes to help you perform complex image processing and computer vision tasks with ease  - Sandipan Dey</a>
 
 <div style= "text-align:center; margin: 2%">
 <a href="https://www.amazon.com/Digital-Image-Processing-Rafael-Gonzalez/dp/9353062985?dchild=1&keywords=digital+image+processing&qid=1619394295&sr=8-9&linkCode=li2&tag=ggcarvalho-20&linkId=82e572c411efc96186579d03668d5607&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=9353062985&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=9353062985" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
