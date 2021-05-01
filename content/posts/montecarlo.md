@@ -722,11 +722,11 @@ Nearly the same result in a fraction of the time! To be completely fair, when th
 First, let's plot the simulated index levels (the paths taken during the simulation). The figures below represent the first $10$, the first $100$, and $250,000$ (total number of paths) simulated index levels respectively.
 
 <div style= "text-align:center">
-<a href="/img/posts/montecarlo/10.png" target="_blank"><img src="/img/posts/montecarlo/10.png"  alt="Mean" style="width:45%; margin:1%"></a>
-<a href="/img/posts/montecarlo/100.png" target="_blank"><img src="/img/posts/montecarlo/100.png"  alt="Gaussian" style="width:45%; margin:1%"></a>
+<a href="/img/posts/montecarlo/10.png" target="_blank"><img src="/img/posts/montecarlo/10.png"  alt="10" style="width:45%; margin:1%"></a>
+<a href="/img/posts/montecarlo/100.png" target="_blank"><img src="/img/posts/montecarlo/100.png"  alt="100" style="width:45%; margin:1%"></a>
 </div>
 <div style= "text-align:center">
-<a href="/img/posts/montecarlo/all.png" target="_blank"><img src="/img/posts/montecarlo/all.png"  alt="Sharpen" style="width:45%; margin:1%"></a>
+<a href="/img/posts/montecarlo/all.png" target="_blank"><img src="/img/posts/montecarlo/all.png"  alt="250000" style="width:45%; margin:1%"></a>
 </div>
 
 You need to appreciate the fact that each path taken by the index level is an actual possible path, and the option price is calculated by taking every possibility into account.
@@ -734,13 +734,13 @@ You need to appreciate the fact that each path taken by the index level is an ac
 Second, we want to see the frequency of the simulated index levels at the end of the simulation period.
 
 <div style= "text-align:center">
-<a href="/img/posts/montecarlo/end_hist.png" target="_blank"><img src="/img/posts/montecarlo/end_hist.png"  alt="Sharpen" style="width:50%; margin:1%"></a>
+<a href="/img/posts/montecarlo/end_hist.png" target="_blank"><img src="/img/posts/montecarlo/end_hist.png"  alt="End values distribution" style="width:50%; margin:1%"></a>
 </div>
 
 Finally, let's take a look at the option’s end-of-period (maturity) inner values.
 
 <div style= "text-align:center">
-<a href="/img/posts/montecarlo/end_inner_hist.png" target="_blank"><img src="/img/posts/montecarlo/end_inner_hist.png"  alt="Sharpen" style="width:50%; margin:1%"></a>
+<a href="/img/posts/montecarlo/end_inner_hist.png" target="_blank"><img src="/img/posts/montecarlo/end_inner_hist.png"  alt="End inner values distribution" style="width:50%; margin:1%"></a>
 </div>
 
 As you can see, the majority of the simulated values are zero, indicating that the European call option expires worthless in these cases.
