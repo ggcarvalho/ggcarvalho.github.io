@@ -524,7 +524,7 @@ In fact, $1.771559^2 \approx 3.138$. You should use the Go Playground to experim
 
 ---
 
-For the final section of this article, I have something special that draws a lot of attention: the Black-Scholes model.
+For the final section of this article, I have something special that draws a lot of attention, the Black-Scholes model. Our goal is to study the evolution of a stock index over time and use the Black-Scholes model to calculate the corresponding option price using Monte Carlo simulations, considered to be a cornerstone for numerical option pricing.
 
 The Black–Scholes, or Black–Scholes–Merton model (<a href="https://en.wikipedia.org/wiki/Fischer_Black" target="_blank">Fischer Black</a>, <a href="https://en.wikipedia.org/wiki/Myron_Scholes" target="_blank">Myron Scholes</a>, and <a href="https://en.wikipedia.org/wiki/Robert_C._Merton" target="_blank">Robert C Merton</a>) , is a mathematical model for the dynamics of a financial market containing derivative investment instruments, giving a theoretical estimate of the price of <em>European-style options</em> and shows that the option has a unique price given the risk of the security and its expected return. This work granted Myron Scholes and Robert C Merton their Nobel Prize in Economics ($1997$), and has been widely used in algorithmic trading strategies around the world.
 
@@ -757,21 +757,23 @@ Now you can successfully apply this technique to your problems and become a prac
 
 ## Recommended Reading
 
-- [Go Programming Language 1st Edition - Donovan & Kernighan](https://amzn.to/32zSNNN)
+- <a href="https://amzn.to/32zSNNN" target="_blank">Go Programming Language 1st Edition - Donovan & Kernighan</a>
 
-- [Go in Action 1st Edition  -  William Kennedy, Brian Ketelsen, Erik St. Martin](https://amzn.to/2P8ZFP8)
+- <a href="https://amzn.to/2P8ZFP8" target="_blank">Go in Action 1st Edition  -  William Kennedy, Brian Ketelsen, Erik St. Martin</a>
 
-- [Learning Go: An Idiomatic Approach to Real-World Go Programming 1st Edition - Jon Bodner](https://amzn.to/3aq87Ru)
+- <a href="https://amzn.to/3aq87Ru" target="_blank">Learning Go: An Idiomatic Approach to Real-World Go Programming 1st Edition - Jon Bodner</a>
 
-- [Essentials of Monte Carlo Simulation: Statistical Methods for Building Simulation Models 2013th Edition  - Nick T. Thomopoulos](https://amzn.to/3n9gyWy)
+- <a href="https://amzn.to/3n9gyWy" target="_blank">Essentials of Monte Carlo Simulation: Statistical Methods for Building Simulation Models 2013th Edition  - Nick T. Thomopoulos</a>
 
-- [Options, Futures, and Other Derivatives 10th Edition - John C Hull](https://amzn.to/3v6vbN2)
+- <a href="https://amzn.to/3v6vbN2" target="_blank">Options, Futures, and Other Derivatives 10th Edition - John C Hull</a>
 
-- [Financial Calculus: An Introduction to Derivative Pricing 1st Edition - Martin Baxter and Andrew Rennie](https://amzn.to/3dWysst)
+- <a href="https://amzn.to/3dWysst" target="_blank">Financial Calculus: An Introduction to Derivative Pricing 1st Edition - Martin Baxter and Andrew Rennie</a>
 
-- [Monte Carlo Methods in Financial Engineering (Stochastic Modelling and Applied Probability - Paul Glasserman](https://amzn.to/3sDOI5O)
+- <a href="https://amzn.to/3sDOI5O" target="_blank">Monte Carlo Methods in Financial Engineering (Stochastic Modelling and Applied Probability - Paul Glasserman</a>
 
-- [Python for Finance: Mastering Data-Driven Finance 2nd Edition - Yves Hilpisch](https://amzn.to/3vfANVv)
+- <a href="https://amzn.to/3vfANVv" target="_blank">Python for Finance: Mastering Data-Driven Finance 2nd Edition - Yves Hilpisch</a>
+
+- <a href="https://amzn.to/3gTWq9S" target="_blank">Derivatives Analytics with Python: Data Analysis, Models, Simulation, Calibration and Hedging (The Wiley Finance Series) - Yves Hilpisch</a>
 
 <div style= "text-align:center; margin: 2%">
 <a href="https://www.amazon.com/Programming-Language-Addison-Wesley-Professional-Computing/dp/0134190440?dchild=1&keywords=go+programming&qid=1619031216&sr=8-1&linkCode=li2&tag=ggcarvalho-20&linkId=4eda68e7e635de0acfe6d799ac104eea&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0134190440&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=0134190440" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
@@ -782,6 +784,7 @@ Now you can successfully apply this technique to your problems and become a prac
 <a href="https://www.amazon.com/Financial-Calculus-Introduction-Derivative-Pricing/dp/0521552893?dchild=1&keywords=Financial+Calculus%3A+An+Introduction+to+Derivative+Pricing&qid=1619543170&sr=8-1&linkCode=li2&tag=ggcarvalho-20&linkId=3be2d3ba804e3b91057442a664098a33&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0521552893&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=0521552893" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 <a href="https://www.amazon.com/Financial-Engineering-Stochastic-Modelling-Probability/dp/0387004513?dchild=1&keywords=monte+carlo+simulation&qid=1619031483&sr=8-7&linkCode=li2&tag=ggcarvalho-20&linkId=9aadabc08118c855b9ee8176857c90c5&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0387004513&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=0387004513" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 <a href="https://www.amazon.com/Python-Finance-Mastering-Data-Driven/dp/1492024333?crid=39PRDWB4NE6UI&dchild=1&keywords=yves+hilpisch&qid=1619037117&sprefix=yves+h%2Caps%2C245&sr=8-4&linkCode=li2&tag=ggcarvalho-20&linkId=d79beb0dfb8a9e6d06acbb038e10642c&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1492024333&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=1492024333" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<a href="https://www.amazon.com/Derivatives-Analytics-Python-Simulation-Calibration/dp/1119037999?crid=9404KSHPEW7&dchild=1&keywords=yves+hilpisch&qid=1619868115&sprefix=yves+h%2Caps%2C282&sr=8-3&linkCode=li2&tag=ggcarvalho-20&linkId=e7a2e90cc3593f08f51b47ff7b39870d&language=en_US&ref_=as_li_ss_il" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1119037999&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=ggcarvalho-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=ggcarvalho-20&language=en_US&l=li2&o=1&a=1119037999" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 </div>
 
 By clicking and buying any of these from Amazon after visiting the links above, I might get a commission from their <a href="https://affiliate-program.amazon.com/" target="_blank">Affiliate program</a>, and you will be contributing to the growth of this blog :)
