@@ -449,7 +449,7 @@ Therefore, contrary to popular belief, it is more advantageous to the guest to s
 
 ---
 
-Now, let's see how we can use the Monte Carlo method to find the value of definite integrals of continuous functions in a specified range of its domain. This method is particularly useful for higher-dimensional integrals, due to its convergence properties.
+Now, let's see how we can use the Monte Carlo method to find the value of definite integrals of continuous functions in a specified range of its domain. Due to its convergence properties, this method is particularly useful for higher-dimensional integrals.
 
 Just as a reminder, if $f: [a,b] \rightarrow \mathbb{R}$ is a continuous function, then the quantity $$S = \int_a^b f(x)dx,$$
 represents the <em>net signed area</em> of the region between the graph of $f$ and the $x-$axis.
