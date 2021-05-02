@@ -10,7 +10,7 @@ hashtags: "#go #golang #montecarlo #trade #quant #finance"
 draft: false
 ---
 
-In this article, we will explore some examples and applications of Monte Carlo simulations using the Go programming language. To keep this article fun and interactive, after each Go code provided you will find a link to the <em>Go Playground</em>, where you can run it without installing Go on your machine.
+This article will explore some examples and applications of Monte Carlo simulations using the Go programming language. To keep this article fun and interactive, after each Go code provided, you will find a link to the Go Playground, where you can run it without installing Go on your machine.
 
 Put your adventure helmets on!
 
@@ -38,7 +38,7 @@ The Go programming language is deemed to be <strong>the most promising programmi
 
 Generally speaking, Monte Carlo methods (or simulations) consist of a broad class of computational algorithms that rely on repeated random sampling to obtain numerical results. This technique is used throughout areas such as physics, finance, engineering, project management, insurance, and transportation, where a numerical result is needed and the underlying theory is difficult and/or unavailable.
 
-It was invented by <a href="https://en.wikipedia.org/wiki/John_von_Neumann" target="_blank">John von Neumann</a>, <a href="https://en.wikipedia.org/wiki/Stanislaw_Ulam" target="_blank">Stanisław Ulam</a>, and <a href="https://en.wikipedia.org/wiki/Nicholas_Metropolis" target="_blank">Nicholas Metropolis</a>, who were employed on a secret assignment in the Los Alamos National Laboratory, while working on a nuclear weapon project called the Manhattan Project. It was named after a well-known casino town, called Monaco since chance and randomness are core to the modeling approach, similar to a game of roulette.
+It was invented by <a href="https://en.wikipedia.org/wiki/John_von_Neumann" target="_blank">John von Neumann</a>, <a href="https://en.wikipedia.org/wiki/Stanislaw_Ulam" target="_blank">Stanisław Ulam</a>, and <a href="https://en.wikipedia.org/wiki/Nicholas_Metropolis" target="_blank">Nicholas Metropolis</a>, who were employed on a secret assignment in the Los Alamos National Laboratory, while working on a nuclear weapon project called the Manhattan Project. It was named after a well-known casino town called Monaco, since chance and randomness are core to the modeling approach, similar to a game of roulette.
 
 Here are two excerpts taken from books on Monte Carlo simulations. The first comes from N.T. Thomopoulos' "Essentials of Monte Carlo Simulation: Statistical Methods for Building Simulation Models", and the second comes from Paul Glasserman's "Monte Carlo Methods in Financial Engineering (Stochastic Modelling and Applied Probability)":
 
@@ -46,7 +46,7 @@ Here are two excerpts taken from books on Monte Carlo simulations. The first com
 
 >Monte Carlo methods are based on the analogy between probability and volume. The mathematics of measure formalizes the intuitive notion of probability, associating an event with a set of outcomes and defining the probability of the event to be its volume or measure relative to that of a universe of possible outcomes. Monte Carlo uses this identity in reverse, calculating the volume of a set by interpreting the volume as a probability. In the simplest case, this means sampling randomly from a universe of possible outcomes and taking the fraction of random draws that fall in a given set as an estimate of the set’s volume. The law of large numbers ensures that this estimate converges to the correct value as the number of draws increases. The central limit theorem provides information about the likely magnitude of the error in the estimate after a finite number of draws.
 
-If you are new to the subject, keep these ideas in mind as they will help you to understand what follows next.
+If you are new to the subject, keep these ideas in mind to help you understand what follows next.
 
 ## First Examples
 
@@ -82,47 +82,39 @@ import (
     "time"
 )
 
-const Pi float64 = math.Pi
-
 func main() {
     rand.Seed(time.Now().UTC().UnixNano())
 
-    numPoints := 1_000_000
-    fmt.Printf("Estimating pi with %d point(s).\n\n", numPoints)
+    const points = 1_000_000
+    fmt.Printf("Estimating pi with %d point(s).\n\n", points)
 
-    sucess := 0
-    for i := 0; i < numPoints; i++ {
-        p := genRandomPoint()
-        if isInsideCircle(p[0], p[1]) {
+    var sucess int
+    for i := 0; i < points; i++ {
+        x, y := genRandomPoint()
+
+        // Check if point lies within the circular region:
+        if x*x+y*y < 1 {
             sucess++
         }
     }
 
-    piApprox := 4.0 * (float64(sucess) / float64(numPoints))
-    errorPct := 100.0 * math.Abs(piApprox-Pi) / Pi
+    piApprox := 4.0 * (float64(sucess) / float64(points))
+    errorPct := 100.0 * math.Abs(piApprox-math.Pi) / math.Pi
 
     fmt.Printf("Estimated pi: %9f \n", piApprox)
-    fmt.Printf("pi: %9f \n", Pi)
+    fmt.Printf("pi: %9f \n", math.Pi)
     fmt.Printf("Error: %9f%%\n", errorPct)
 }
 
-// generates a random point p = (px, py)
-func genRandomPoint() [2]float64 {
-    px := 2.0*rand.Float64() - 1.0
-    py := 2.0*rand.Float64() - 1.0
-    return [2]float64{px, py}
-}
-
-// Condition to lie within the circular region
-func isInsideCircle(x float64, y float64) bool {
-    if x*x+y*y < 1 {
-        return true
-    }
-    return false
+// generates a random point p = (x, y)
+func genRandomPoint() (x, y float64) {
+    x = 2.0*rand.Float64() - 1.0
+    y = 2.0*rand.Float64() - 1.0
+    return x, y
 }
 ```
 
-<a href="https://play.golang.org/p/bPWYH3lxm_S" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/9I_ChD7Ydb-" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run pi.go
@@ -142,7 +134,7 @@ We were able to approximate $\pi$ with an error of $0.040468$% ! Check this vide
   </div>
 </div>
 
-Let's jump to the next example.
+Let's jump to the following example.
 
 ### Estimating Euler's Number
 
@@ -168,33 +160,38 @@ import (
 func main() {
     rand.Seed(time.Now().UTC().UnixNano())
 
-    numExperiments := 1_000_000
-    fmt.Printf("Estimating e with %d experiment(s).\n\n", numExperiments)
+    const (
+        e           = math.E
+        experiments = 1_000_000
+    )
 
-    acc := 0
-    for i := 0; i < numExperiments; i++ {
-        sum := 0.0
-        num2Sucess := 0
+    fmt.Printf("Estimating e with %d experiment(s).\n\n", experiments)
+
+    var acc int
+    for i := 0; i < experiments; i++ {
+        var (
+            sum         float64
+            num2Success int
+        )
 
         for sum <= 1 {
             n := rand.Float64()
             sum += n
-            num2Sucess++
+            num2Success++
         }
-        acc += num2Sucess
+        acc += num2Success
     }
 
-    expected := float64(acc) / float64(numExperiments)
-    E := math.Exp(1)
-    error_pct := 100.0 * math.Abs(expected-E) / E
+    expected := float64(acc) / float64(experiments)
+    errorPct := 100.0 * math.Abs(expected-e) / e
 
     fmt.Printf("Expected vale: %9f \n", expected)
-    fmt.Printf("e: %9f \n", E)
-    fmt.Printf("Error: %9f%%\n", error_pct)
+    fmt.Printf("e: %9f \n", e)
+    fmt.Printf("Error: %9f%%\n", errorPct)
 }
 ```
 
-<a href="https://play.golang.org/p/XH0wYDYHHcP" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/MGkPqmeffJM" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run euler.go
@@ -213,7 +210,7 @@ An astonishing result!
 This is a famous problem in statistics:
 >In a group of $23$ people, the probability of a shared birthday exceeds $50$%.
 
-That sounds weird at first, but if you're good enough with math you can easily prove this statement. However, we are not interested in formal proofs here. That is the whole point of these simulations. The idea is very simple: create a list with $n$ random numbers (in our case $n = 23$) between $0$ and $364$ representing the birth day of each person and if (at least) two of them coincide, you increment the `success` variable. Do it a certain number of times and calculate the probability dividing the number of successes by the total number of simulations.
+That sounds weird at first but, given you're good enough with math, you can easily prove this statement! However, we are not interested in formal proofs here. That is the whole point of these simulations. The idea is elementary: create a list with $n$ random numbers (in our case $n=23$) between $0$ and $364$ representing each person's birthday, and if (at least) two of them coincide, you increment the `success` variable. Do it a certain number of times and calculate the probability dividing the number of successes by the total number of simulations.
 
 The corresponding Go code:
 
@@ -229,28 +226,32 @@ import (
 func main() {
     rand.Seed(time.Now().UTC().UnixNano())
 
-    numPeople := 23
-    trials := 1_000_000
-    sucess := 0
+    var (
+        numPeople = 23
+        trials    = 1_000_000
+        success   = 0
+    )
     for i := 0; i < trials; i++ {
         bdays := genBdayList(numPeople)
         uniques := uniqueSlice(bdays)
 
-        if !(len(bdays) == len(uniques)) {
-            sucess++
+        if len(bdays) != len(uniques) {
+            success++
         }
     }
-    probability := float64(sucess) / float64(trials)
-    fmt.Printf("The probability of at least 2 persons in a group of %d people share a birthday is %.2f%%\n", numPeople, 100.0*probability)
+    probability := float64(success) / float64(trials)
+    fmt.Printf("The probability of at least 2 persons in a group of %d people sharing a birthday is %.2f%%\n", numPeople, 100.0*probability)
 }
 
 // returns a slice with the uniqueSlice elements of a given slice
 func uniqueSlice(s []int) []int {
-    keys := make(map[int]bool)
+    keys := make(map[int]struct{}) // Could also be a map[int]bool
     list := []int{}
     for _, entry := range s {
-        if _, value := keys[entry]; !value {
-            keys[entry] = true
+        // We check if the key to the empty value exists.
+        // By not storing a boolean value, we save memory.
+        if _, ok := keys[entry]; !ok {
+            keys[entry] = struct{}{}
             list = append(list, entry)
         }
     }
@@ -259,16 +260,15 @@ func uniqueSlice(s []int) []int {
 
 // generates the list of birth days
 func genBdayList(n int) []int {
-    var bdays []int
+    var bdays = make([]int, n)
     for i := 0; i < n; i++ {
-        bday := rand.Intn(365)
-        bdays = append(bdays, bday)
+        bdays[i] = rand.Intn(365) // Let's not bother about Leap years
     }
     return bdays
 }
 ```
 
-<a href="https://play.golang.org/p/SdX37thwMYK" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/HghgDuhU0BY" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run birthday.go
@@ -370,23 +370,23 @@ import (
 func main() {
     rand.Seed(time.Now().UTC().UnixNano())
 
-    numGames := 10_000_000
-    fmt.Printf("Estimating the probability of winning by switching doors with %d game(s).\n\n", numGames)
+    games := 10_000_000
+    fmt.Printf("Estimating the probability of winning by switching doors with %d game(s).\n\n", games)
 
-    sucess := 0
-    for i := 0; i < numGames; i++ {
+    var sucess int
+    for i := 0; i < games; i++ {
         newDoor, prizeDoor := setMontyHallGame()
         if newDoor == prizeDoor {
             sucess++
         }
     }
-    probability := float64(sucess) / float64(numGames)
-    theoreticalValue := 2.0 / 3.0
+    probability := float64(sucess) / float64(games)
+    const theoreticalValue = 2. / 3.
 
-    errorPct := 100.0 * math.Abs(probability-theoreticalValue) / theoreticalValue
+    errorPct := 100. * math.Abs(probability-theoreticalValue) / theoreticalValue
 
-    fmt.Printf("Estimated probability: %9f \n", probability)
-    fmt.Printf("Theoretical value: %9f \n", theoreticalValue)
+    fmt.Printf("Estimated probability: %9f\n", probability)
+    fmt.Printf("Theoretical value: %9f\n", theoreticalValue)
     fmt.Printf("Error: %9f%%\n", errorPct)
 }
 
@@ -429,7 +429,7 @@ func setMontyHallGame() (int, int) {
 }
 ```
 
-<a href="https://play.golang.org/p/1j5oSdmBJjt" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/RTqEergCuS9" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run monty_hall.go
@@ -450,12 +450,12 @@ Therefore, contrary to popular belief, it is more advantageous to the guest to s
 Now, let's see how we can use the Monte Carlo method to find the value of definite integrals of continuous functions in a specified range. This method is particularly useful for higher-dimensional integrals, due to its convergence properties.
 
 Just as a reminder, if $f: [a,b] \rightarrow \mathbb{R}$ is a continuous function, then the quantity $$S = \int_a^b f(x)dx,$$
-represents the net signed area of the region between the graph of $f$ and the $x-$axis.
+represents the <em>net signed area</em> of the region between the graph of $f$ and the $x-$axis.
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/integralarea.png" style="width: 30%; margin: 2%"></div>
 
 There are some ways to approximate this area, such as Newton-Cotes rules, trapezoidal rule, and Simpson's rule. However, one clever way to numerically integrate continuous functions is using the formula  $$S \approx \frac{b-a}{n}\sum_{i=1}^n f(a + (b-a)U_i),$$
-where $U_i \sim \mathcal{U}(0,1)$, i.e. the $U_i$ are uniformly distributed in $[0,1]$ (feel free to try different probability distributions and compare the results). The Monte Carlo integration is
+where $U_i \sim \mathcal{U}(0,1)$, i.e. the $U_i$ are uniformly distributed in $[0,1]$ (feel free to try different probability distributions and compare the results).
 
 We are going to use this technique to solve a classic problem. If you are a calculus geek, you might know how difficult it is to calculate the integral $$S = \int_{-\infty}^{\infty} e^{-x^2}dx.$$
 
@@ -463,7 +463,7 @@ It involves a trick using Fubini's theorem and a change from cartesian to polar 
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/gaussian.png" style="width: 35%; margin: 2%"></div>
 
-We see that $f$ rapidly decreases when moving away from $x=0$, so the definite integral in $[-20,20]$ seems to be a good approximation.
+As we can see, $f$ rapidly decreases when moving away from $x=0$, so the definite integral in $[-20,20]$ seems to be a good approximation.
 
 The corresponding Go code is:
 
@@ -472,9 +472,9 @@ package main
 
 import (
     "fmt"
-    "time"
     "math"
     "math/rand"
+    "time"
 )
 
 func main() {
@@ -487,13 +487,13 @@ func main() {
     fmt.Printf("Approx. integral: %9f \n", integral)
 }
 
-// MC integrator
-func monteCarloIntegrator(function func(float64) float64, a float64, b float64, n int) float64 {
-    s := 0.0
+// monteCarloIntegrator receives a function to be integrated.
+func monteCarloIntegrator(f func(float64) float64, a float64, b float64, n int) float64 {
+    var s float64
     for i := 0; i < n; i++ {
-        u_i := rand.Float64()
-        x_i := a + (b - a)*u_i
-        s += function(x_i)
+        ui := rand.Float64()
+        xi := a + (b-a)*ui
+        s += f(xi)
     }
 
     s = ((b - a) / float64(n)) * s
@@ -502,11 +502,11 @@ func monteCarloIntegrator(function func(float64) float64, a float64, b float64, 
 
 // function to be integrated
 func gaussian(x float64) float64 {
-    return math.Exp(-x*x)
+    return math.Exp(-x * x)
 }
 ```
 
-<a href="https://play.golang.org/p/JqduOVngdiS" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/_o5B2ExBQiE" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run mc_integration.go
@@ -541,7 +541,7 @@ In the equations above $S_t$ is the price of the underlying at time $t$, $\sigma
 The Black-Scholes-Merton ($1973$) stochastic differential equation is given by $$dS_t = rS_t dt + \sigma S_t dZ_t,$$
 where $Z(t)$ is the random component of the model (a Brownian motion). In this model, the risky underlying follows, under risk neutrality, a geometric Brownian motion with a stochastic differential equation (SDE).
 
-We will look at the discretized version of the BSM model (Euler discretization), given by $$S_t = S_{t-\Delta t}  +  \exp\left(\left(r - \frac{\sigma^2}{2}\right)\Delta t + \sigma\sqrt{\Delta t}z_t \right).$$
+We will look at the discretized version of the BSM model (Euler discretization), given by $$S_t = S_{t-\Delta t}    \exp\left(\left(r - \frac{\sigma^2}{2}\right)\Delta t + \sigma\sqrt{\Delta t}z_t \right).$$
 
 The variable $z$ is a standard normally distributed random variable, $0 < \Delta t < T$, a (small
 enough) time interval. It also holds $0 < t \leq T$ with $T$ the final time horizon.
@@ -581,23 +581,25 @@ func main() {
     fmt.Println("Execution time: ", duration)
 }
 
-func bsmCallValue(S0 float64, K float64, T float64, r float64, sigma float64, n int) float64 {
+func bsmCallValue(S0, K, T, r, sigma float64, n int) float64 {
     d1 := math.Log(S0/K) + T*(r+0.5*sigma*sigma)/(sigma*math.Sqrt(T))
     d2 := math.Log(S0/K) + T*(r-0.5*sigma*sigma)/(sigma*math.Sqrt(T))
 
-    value := S0*monteCarloIntegrator(gaussian, -20.0, d1, n) - K*math.Exp(-r*T)*monteCarloIntegrator(gaussian, -20.0, d2, n)
+    mciD1 := monteCarloIntegrator(gaussian, -20.0, d1, n)
+    mciD2 := monteCarloIntegrator(gaussian, -20.0, d2, n)
 
-    return value
+    return S0*mciD1 - K*math.Exp(-r*T)*mciD2
 }
 
 // MC integrator
-func monteCarloIntegrator(function func(float64) float64, a float64, b float64, n int) float64 {
-    s := 0.0
+func monteCarloIntegrator(f func(float64) float64, a float64, b float64, n int) float64 {
+    var s float64
     for i := 0; i < n; i++ {
-        u_i := rand.Float64()
-        x_i := a + (b-a)*u_i
-        s += function(x_i)
+        ui := rand.Float64()
+        xi := a + (b-a)*ui
+        s += f(xi)
     }
+
     s = ((b - a) / float64(n)) * s
     return s
 }
@@ -608,7 +610,7 @@ func gaussian(x float64) float64 {
 }
 ```
 
-<a href="https://play.golang.org/p/gUNpYZOvzJX" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/Qpe0fNo-4GK" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run option_pricing.go
@@ -684,7 +686,7 @@ func main() {
     duration := time.Since(start)
 
     fmt.Printf("European Option Value: %.3f\n", C0)
-    fmt.Println("Execution time: ", duration)
+    fmt.Println("Execution time:", duration)
 }
 
 // calculates max(x, 0)
@@ -696,7 +698,7 @@ func rectifier(x float64) float64 {
 }
 ```
 
-<a href="https://play.golang.org/p/tcEbs3jZgNu" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/sZrrLl-o5TD" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run black_scholes.go
