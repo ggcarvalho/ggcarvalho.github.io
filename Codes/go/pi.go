@@ -7,41 +7,33 @@ import (
 	"time"
 )
 
-const Pi float64 = math.Pi
-
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	numPoints := 1_000_000
-	fmt.Printf("Estimating pi with %d point(s).\n\n", numPoints)
+	const points = 1_000_000
+	fmt.Printf("Estimating pi with %d point(s).\n\n", points)
 
-	sucess := 0
-	for i := 0; i < numPoints; i++ {
-		p := genRandomPoint()
-		if isInsideCircle(p[0], p[1]) {
+	var sucess int
+	for i := 0; i < points; i++ {
+		x, y := genRandomPoint()
+
+		// Check if point lies within the circular region:
+		if x*x+y*y < 1 {
 			sucess++
 		}
 	}
 
-	piApprox := 4.0 * (float64(sucess) / float64(numPoints))
-	errorPct := 100.0 * math.Abs(piApprox-Pi) / Pi
+	piApprox := 4.0 * (float64(sucess) / float64(points))
+	errorPct := 100.0 * math.Abs(piApprox-math.Pi) / math.Pi
 
 	fmt.Printf("Estimated pi: %9f \n", piApprox)
-	fmt.Printf("pi: %9f \n", Pi)
+	fmt.Printf("pi: %9f \n", math.Pi)
 	fmt.Printf("Error: %9f%%\n", errorPct)
 }
 
-// generates a random point p = (px, py)
-func genRandomPoint() [2]float64 {
-	px := 2.0*rand.Float64() - 1.0
-	py := 2.0*rand.Float64() - 1.0
-	return [2]float64{px, py}
-}
-
-// Condition to lie within the circular region
-func isInsideCircle(x float64, y float64) bool {
-	if x*x+y*y < 1 {
-		return true
-	}
-	return false
+// generates a random point p = (x, y)
+func genRandomPoint() (x, y float64) {
+	x = 2.0*rand.Float64() - 1.0
+	y = 2.0*rand.Float64() - 1.0
+	return x, y
 }

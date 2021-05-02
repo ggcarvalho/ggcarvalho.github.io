@@ -9,28 +9,32 @@ import (
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	numPeople := 23
-	trials := 1_000_000
-	sucess := 0
+	var (
+		numPeople = 23
+		trials    = 1_000_000
+		success   = 0
+	)
 	for i := 0; i < trials; i++ {
 		bdays := genBdayList(numPeople)
 		uniques := uniqueSlice(bdays)
 
-		if !(len(bdays) == len(uniques)) {
-			sucess++
+		if len(bdays) != len(uniques) {
+			success++
 		}
 	}
-	probability := float64(sucess) / float64(trials)
-	fmt.Printf("The probability of at least 2 persons in a group of %d people share a birthday is %.2f%%\n", numPeople, 100.0*probability)
+	probability := float64(success) / float64(trials)
+	fmt.Printf("The probability of at least 2 persons in a group of %d people sharing a birthday is %.2f%%\n", numPeople, 100.0*probability)
 }
 
 // returns a slice with the uniqueSlice elements of a given slice
 func uniqueSlice(s []int) []int {
-	keys := make(map[int]bool)
+	keys := make(map[int]struct{}) // Could also be a map[int]bool
 	list := []int{}
 	for _, entry := range s {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
+		// We check if the key to the empty value exists.
+		// By not storing a boolean value, we save memory.
+		if _, ok := keys[entry]; !ok {
+			keys[entry] = struct{}{}
 			list = append(list, entry)
 		}
 	}
@@ -39,10 +43,9 @@ func uniqueSlice(s []int) []int {
 
 // generates the list of birth days
 func genBdayList(n int) []int {
-	var bdays []int
+	var bdays = make([]int, n)
 	for i := 0; i < n; i++ {
-		bday := rand.Intn(365)
-		bdays = append(bdays, bday)
+		bdays[i] = rand.Intn(365) // Let's not bother about Leap year
 	}
 	return bdays
 }

@@ -46,7 +46,7 @@ func main() {
 	duration := time.Since(start)
 
 	fmt.Printf("European Option Value: %.3f\n", C0)
-	fmt.Println("Execution time: ", duration)
+	fmt.Println("Execution time:", duration)
 }
 
 // calculates max(x, 0)

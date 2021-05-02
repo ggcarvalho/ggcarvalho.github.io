@@ -17,13 +17,13 @@ func main() {
 	fmt.Printf("Approx. integral: %9f \n", integral)
 }
 
-// MC integrator
-func monteCarloIntegrator(function func(float64) float64, a float64, b float64, n int) float64 {
-	s := 0.0
+// monteCarloIntegrator receives a function to be integrated.
+func monteCarloIntegrator(f func(float64) float64, a float64, b float64, n int) float64 {
+	var s float64
 	for i := 0; i < n; i++ {
-		u_i := rand.Float64()
-		x_i := a + (b-a)*u_i
-		s += function(x_i)
+		ui := rand.Float64()
+		xi := a + (b-a)*ui
+		s += f(xi)
 	}
 
 	s = ((b - a) / float64(n)) * s

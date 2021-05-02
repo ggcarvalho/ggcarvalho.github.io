@@ -10,23 +10,23 @@ import (
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	numGames := 10_000_000
-	fmt.Printf("Estimating the probability of winning by switching doors with %d game(s).\n\n", numGames)
+	games := 10_000_000
+	fmt.Printf("Estimating the probability of winning by switching doors with %d game(s).\n\n", games)
 
-	sucess := 0
-	for i := 0; i < numGames; i++ {
+	var sucess int
+	for i := 0; i < games; i++ {
 		newDoor, prizeDoor := setMontyHallGame()
 		if newDoor == prizeDoor {
 			sucess++
 		}
 	}
-	probability := float64(sucess) / float64(numGames)
-	theoreticalValue := 2.0 / 3.0
+	probability := float64(sucess) / float64(games)
+	const theoreticalValue = 2. / 3.
 
-	errorPct := 100.0 * math.Abs(probability-theoreticalValue) / theoreticalValue
+	errorPct := 100. * math.Abs(probability-theoreticalValue) / theoreticalValue
 
-	fmt.Printf("Estimated probability: %9f \n", probability)
-	fmt.Printf("Theoretical value: %9f \n", theoreticalValue)
+	fmt.Printf("Estimated probability: %9f\n", probability)
+	fmt.Printf("Theoretical value: %9f\n", theoreticalValue)
 	fmt.Printf("Error: %9f%%\n", errorPct)
 }
 
