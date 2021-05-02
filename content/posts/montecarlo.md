@@ -516,7 +516,7 @@ Estimating the integral of f with 1000000 point(s).
 Approx. integral:  1.771559
 ```
 
-In fact, $1.771559^2 \approx 3.138$. You should use the Go Playground to experiment with different functions (quadratic, cubic, polynomials, or even more complicated functions).
+In fact, $1.771559^2 \approx 3.138$. You should use the Go Playground to experiment with different functions (quadratic, cubic, polynomials in general, or even more complicated functions).
 
 ## Option Pricing Using the Black-Scholes Model
 
