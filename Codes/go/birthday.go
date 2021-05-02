@@ -9,16 +9,16 @@ import (
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
+	const trials = 1_000_000
 	var (
 		numPeople = 23
-		trials    = 1_000_000
 		success   = 0
 	)
 	for i := 0; i < trials; i++ {
 		bdays := genBdayList(numPeople)
 		uniques := uniqueSlice(bdays)
 
-		if len(bdays) != len(uniques) {
+		if len(uniques) != numPeople {
 			success++
 		}
 	}

@@ -10,7 +10,7 @@ import (
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	numPoints := 1_000_000
+	const numPoints = 1_000_000
 	fmt.Printf("Estimating the integral of f with %d point(s).\n\n", numPoints)
 
 	integral := monteCarloIntegrator(gaussian, -20.0, 20.0, numPoints)

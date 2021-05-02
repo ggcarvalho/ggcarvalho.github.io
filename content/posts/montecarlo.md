@@ -10,7 +10,7 @@ hashtags: "#go #golang #montecarlo #trade #quant #finance"
 draft: false
 ---
 
-This article will explore some examples and applications of Monte Carlo simulations using the Go programming language. To keep this article fun and interactive, after each Go code provided, you will find a link to the Go Playground, where you can run it without installing Go on your machine.
+This article will explore some examples and applications of Monte Carlo simulations using the Go programming language. To keep this article fun and interactive, after each Go code provided, you will find a link to the <em>Go Playground</em>, where you can run it without installing Go on your machine.
 
 Put your adventure helmets on!
 
@@ -226,16 +226,16 @@ import (
 func main() {
     rand.Seed(time.Now().UTC().UnixNano())
 
+    const trials = 1_000_000
     var (
         numPeople = 23
-        trials    = 1_000_000
         success   = 0
     )
     for i := 0; i < trials; i++ {
         bdays := genBdayList(numPeople)
         uniques := uniqueSlice(bdays)
 
-        if len(bdays) != len(uniques) {
+        if len(uniques) != numPeople {
             success++
         }
     }
@@ -268,7 +268,7 @@ func genBdayList(n int) []int {
 }
 ```
 
-<a href="https://play.golang.org/p/HghgDuhU0BY" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/xcjCzeMZrB7" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run birthday.go
@@ -370,7 +370,7 @@ import (
 func main() {
     rand.Seed(time.Now().UTC().UnixNano())
 
-    games := 10_000_000
+    const games = 10_000_000
     fmt.Printf("Estimating the probability of winning by switching doors with %d game(s).\n\n", games)
 
     var sucess int
@@ -392,11 +392,13 @@ func main() {
 
 // randomly sets the game
 func setMontyHallGame() (int, int) {
-    var montysChoice int
-    var prizeDoor int
-    var goat1Door int
-    var goat2Door int
-    var newDoor int
+    var (
+        montysChoice int
+        prizeDoor int
+        goat1Door int
+        goat2Door int
+        newDoor int
+    )
 
     guestDoor := rand.Intn(3)
 
@@ -429,7 +431,7 @@ func setMontyHallGame() (int, int) {
 }
 ```
 
-<a href="https://play.golang.org/p/RTqEergCuS9" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/pGpPVpdzaYB" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run monty_hall.go
@@ -447,7 +449,7 @@ Therefore, contrary to popular belief, it is more advantageous to the guest to s
 
 ---
 
-Now, let's see how we can use the Monte Carlo method to find the value of definite integrals of continuous functions in a specified range. This method is particularly useful for higher-dimensional integrals, due to its convergence properties.
+Now, let's see how we can use the Monte Carlo method to find the value of definite integrals of continuous functions in a specified range of its domain. This method is particularly useful for higher-dimensional integrals, due to its convergence properties.
 
 Just as a reminder, if $f: [a,b] \rightarrow \mathbb{R}$ is a continuous function, then the quantity $$S = \int_a^b f(x)dx,$$
 represents the <em>net signed area</em> of the region between the graph of $f$ and the $x-$axis.
@@ -480,7 +482,7 @@ import (
 func main() {
     rand.Seed(time.Now().UTC().UnixNano())
 
-    numPoints := 1_000_000
+    const numPoints = 1_000_000
     fmt.Printf("Estimating the integral of f with %d point(s).\n\n", numPoints)
 
     integral := monteCarloIntegrator(gaussian, -20.0, 20.0, numPoints)
@@ -506,7 +508,7 @@ func gaussian(x float64) float64 {
 }
 ```
 
-<a href="https://play.golang.org/p/_o5B2ExBQiE" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/jk_icQq_hbO" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run mc_integration.go

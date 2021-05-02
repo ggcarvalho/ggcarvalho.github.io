@@ -10,7 +10,7 @@ import (
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	games := 10_000_000
+	const games = 10_000_000
 	fmt.Printf("Estimating the probability of winning by switching doors with %d game(s).\n\n", games)
 
 	var sucess int
@@ -32,11 +32,13 @@ func main() {
 
 // randomly sets the game
 func setMontyHallGame() (int, int) {
-	var montysChoice int
-	var prizeDoor int
-	var goat1Door int
-	var goat2Door int
-	var newDoor int
+	var (
+		montysChoice int
+		prizeDoor int
+		goat1Door int
+		goat2Door int
+		newDoor int
+	)
 
 	guestDoor := rand.Intn(3)
 
