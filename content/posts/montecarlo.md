@@ -6,7 +6,7 @@ date: "2021-05-03"
 image: "/img/posts/montecarlo/dies.jpg"
 tag: "go"
 name: "go"
-hashtags: "#go #golang #montecarlo #quantitativeresearch #trade #algotrade #quant #finance"
+hashtags: "#go #golang #montecarlo #trade #quant #finance"
 draft: false
 ---
 
@@ -450,11 +450,9 @@ Therefore, contrary to popular belief, it is more advantageous to the guest to s
 Now, let's see how we can use the Monte Carlo method to find the value of definite integrals of continuous functions in a specified range. This method is particularly useful for higher-dimensional integrals, due to its convergence properties.
 
 Just as a reminder, if $f: [a,b] \rightarrow \mathbb{R}$ is a continuous function, then the quantity $$S = \int_a^b f(x)dx,$$
-represents the area of the region between the graph of $f$ and the $x-$axis.
+represents the net signed area of the region between the graph of $f$ and the $x-$axis.
 
 <div style="text-align:center"><img src="/img/posts/montecarlo/integralarea.png" style="width: 30%; margin: 2%"></div>
-
-One important feature of this property is that this area has a sign, having negative values if the region is below the $x-$axis.
 
 There are some ways to approximate this area, such as Newton-Cotes rules, trapezoidal rule, and Simpson's rule. However, one clever way to numerically integrate continuous functions is using the formula  $$S \approx \frac{b-a}{n}\sum_{i=1}^n f(a + (b-a)U_i),$$
 where $U_i \sim \mathcal{U}(0,1)$, i.e. the $U_i$ are uniformly distributed in $[0,1]$ (feel free to try different probability distributions and compare the results). The Monte Carlo integration is
