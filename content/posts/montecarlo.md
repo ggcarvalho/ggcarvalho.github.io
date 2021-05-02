@@ -528,7 +528,7 @@ The Black–Scholes, or Black–Scholes–Merton model (<a href="https://en.wiki
 
 ### The Equation
 
-We start with the Black-Scholes-Merton formula ($1973$) for the pricing of European call options on an underlying (e.g stocks and indexes) without dividends:
+We start with the Black-Scholes-Merton formula ($1973$) for the pricing of European call options on an underlying (e.g. stocks and indexes) without dividends:
 \begin{eqnarray*}
 C(S_t, K, t, T, r, \sigma) &=& S_t\cdot N(d_1) - e^{-r(T-t)}\cdot K \cdot N(d_2)\newline\newline
 N(d) &=& \frac{1}{\sqrt{2\pi}}\int_{-\infty}^d e^{-\frac{1}{2}x^2}dx \newline\newline
