@@ -140,11 +140,7 @@ Let's jump to the following example.
 
 Not long ago, Lex Fridman (AI researcher, YouTuber, and Podcast Host) published the following in a <a href="https://www.linkedin.com/posts/lexfridman_select-numbers-between-0-and-1-randomly-until-activity-6774714449338150912-SLOS" target="_blank">LinkedIn post</a>:
 
-<div class="container">
-  <div class="center">
-    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:6774714448797081600" width="100%" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
-  </div>
-</div>
+<div style="text-align:center"><img src="/img/posts/montecarlo/lex.png" style="width: 60%"></div>
 
 This is very intriguing! Since I have no idea how to prove this statement, I decided to write a simple Python program to test it myself. I wrote my code as a response to Lex's post, and people were surprised by it (this is the actual motivation to write this blog post).
 This, once again, showed me the power of Monte Carlo simulations in scientific computing, where you can find precise numerical answers to your problems without relying on any theoretical background (they might not even exist!).
