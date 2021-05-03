@@ -6,7 +6,18 @@
     <description>Recent content in blog posts on Gabriel Carvalho</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ggcarvalho.dev/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 03 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ggcarvalho.dev/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The art of solving problems with Monte Carlo simulations</title>
+      <link>https://ggcarvalho.dev/posts/montecarlo/</link>
+      <pubDate>Mon, 03 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ggcarvalho.dev/posts/montecarlo/</guid>
+      <description>This article will explore some examples and applications of Monte Carlo simulations using the Go programming language. To keep this article fun and interactive, after each Go code provided, you will find a link to the Go Playground, where you can run it without installing Go on your machine.
+Put your adventure helmets on!
+   Table of Contents show | hide     Requirements Quick Introduction First Examples  Estimating $\pi$ Estimating Euler&amp;rsquo;s Number The Birthday Paradox   The (In)Famous Monty Hall Problem Integration Using Monte Carlo Simulations Option Pricing Using the Black-Scholes Model  The Model Option Pricing The Simulation Graphical Analysis   Conclusion Recommended Reading      Requirements As stated previously, there is no need to install anything on your computer, you can use the Go Playground.</description>
+    </item>
+    
     <item>
       <title>Introduction to image processing using Python</title>
       <link>https://ggcarvalho.dev/posts/imageproc/</link>
