@@ -210,7 +210,7 @@ An astonishing result!
 This is a famous problem in statistics:
 >In a group of $23$ people, the probability of a shared birthday exceeds $50$%.
 
-That sounds weird at first but, given you're good enough with math, you can easily prove this statement! However, we are not interested in formal proofs here. That is the whole point of these simulations. The idea is elementary: create a list with $n$ random numbers (in our case $n=23$) between $0$ and $364$ representing each person's birthday, and if (at least) two of them coincide, you increment the `success` variable. Do it a certain number of times and calculate the probability dividing the number of successes by the total number of simulations.
+That sounds weird at first but, given you're good enough with math, you can easily prove this statement. However, we are not interested in formal proofs here. That is the whole point of these simulations. The idea is elementary: create a list with $n$ random numbers (in our case $n=23$) between $0$ and $364$ representing each person's birthday, and if (at least) two of them coincide, you increment the `success` variable. Do it a certain number of times and calculate the probability dividing the number of successes by the total number of simulations.
 
 The corresponding Go code:
 
@@ -268,7 +268,7 @@ func genBdayList(n int) []int {
 }
 ```
 
-<a href="https://play.golang.org/p/xcjCzeMZrB7" target="_blank">Run this code in the Go Playground</a>
+<a href="https://play.golang.org/p/ISQ2B3LBo1y" target="_blank">Run this code in the Go Playground</a>
 
 ```bash
 $ go run birthday.go
@@ -457,7 +457,7 @@ represents the <em>net signed area</em> of the region between the graph of $f$ a
 <div style="text-align:center"><img src="/img/posts/montecarlo/integralarea.png" style="width: 30%; margin: 2%"></div>
 
 There are some ways to approximate this area, such as Newton-Cotes rules, trapezoidal rule, and Simpson's rule. However, one clever way to numerically integrate continuous functions is using the formula  $$S \approx \frac{b-a}{n}\sum_{i=1}^n f(a + (b-a)U_i),$$
-where $U_i \sim \mathcal{U}(0,1)$, i.e. the $U_i$ are uniformly distributed in $[0,1]$ (feel free to try different probability distributions and compare the results).
+where $U_i \sim \mathcal{U}(0,1)$, i.e. the $U_i$ are uniformly distributed in $[0,1]$ (feel free to try different probability distributions in $[0,1]$ and compare the results).
 
 We are going to use this technique to solve a classic problem. If you are a calculus geek, you might know how difficult it is to calculate the integral $$S = \int_{-\infty}^{\infty} e^{-x^2}dx.$$
 
@@ -528,7 +528,7 @@ For the final section of this article, I have something special that draws a lot
 
 The Black–Scholes, or Black–Scholes–Merton model (<a href="https://en.wikipedia.org/wiki/Fischer_Black" target="_blank">Fischer Black</a>, <a href="https://en.wikipedia.org/wiki/Myron_Scholes" target="_blank">Myron Scholes</a>, and <a href="https://en.wikipedia.org/wiki/Robert_C._Merton" target="_blank">Robert C Merton</a>) , is a mathematical model for the dynamics of a financial market containing derivative investment instruments, giving a theoretical estimate of the price of <em>European-style options</em> and shows that the option has a unique price given the risk of the security and its expected return. This work granted Myron Scholes and Robert C Merton their Nobel Prize in Economics ($1997$), and has been widely used in algorithmic trading strategies around the world.
 
-### The Equation
+### The Model
 
 We start with the Black-Scholes-Merton formula ($1973$) for the pricing of European call options on an underlying (e.g. stocks and indexes) without dividends:
 \begin{eqnarray*}
