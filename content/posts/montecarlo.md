@@ -140,9 +140,9 @@ Let's jump to the following example.
 
 Not long ago, Lex Fridman (AI researcher, YouTuber, and Podcast Host) published the following in a <a href="https://www.linkedin.com/posts/lexfridman_select-numbers-between-0-and-1-randomly-until-activity-6774714449338150912-SLOS" target="_blank">LinkedIn post</a>:
 
-<div class="container" style="width:50%">
+<div class="container">
   <div class="center">
-    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:6774714448797081600" height="347" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
+    <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:6774714448797081600" width="100%" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>
   </div>
 </div>
 
