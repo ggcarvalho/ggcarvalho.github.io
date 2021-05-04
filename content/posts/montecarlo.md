@@ -340,7 +340,7 @@ You can modify this code to reproduce the following table from <a href="https://
     </tr>
 </table>
 
-Of course, for $n \geq 365$ you don't need any calculations, it's a straightforward consequence of the <a href="https://en.wikipedia.org/wiki/Pigeonhole_principle" target="_blank"><em>pigeonhole principle</em></a>.
+Of course, for $n > 365$ you don't need any calculations, it's a straightforward consequence of the <a href="https://en.wikipedia.org/wiki/Pigeonhole_principle" target="_blank"><em>pigeonhole principle</em></a>.
 
 ## The (In)Famous Monty Hall Problem
 
