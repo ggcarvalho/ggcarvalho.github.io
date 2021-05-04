@@ -335,12 +335,12 @@ You can modify this code to reproduce the following table from <a href="https://
       <td>$99.99997$%</td>
     </tr>
     <tr>
-      <th scope="row">$\geq 365$</th>
+      <th scope="row">$\geq 366$</th>
       <td>$100$%</td>
     </tr>
 </table>
 
-Of course, for $n > 365$ you don't need any calculations, it's a straightforward consequence of the <a href="https://en.wikipedia.org/wiki/Pigeonhole_principle" target="_blank"><em>pigeonhole principle</em></a>.
+Of course, for $n \geq 366$ you don't need any calculations, it's a straightforward consequence of the <a href="https://en.wikipedia.org/wiki/Pigeonhole_principle" target="_blank"><em>pigeonhole principle</em></a>.
 
 ## The (In)Famous Monty Hall Problem
 
